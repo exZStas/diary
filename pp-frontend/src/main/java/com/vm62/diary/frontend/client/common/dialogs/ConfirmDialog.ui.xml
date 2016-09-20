@@ -1,0 +1,45 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:m="urn:import:gwt.material.design.client.ui">
+
+    <ui:with field="i18n" type="com.vm62.diary.frontend.client.common.messages.MessagesProvider"/>
+    <ui:style>
+        .center {
+            text-align: center;
+        }
+
+        .label {
+            padding-bottom: 7px;
+            white-space: pre-wrap;
+            word-wrap: normal;
+
+        }
+
+        .dateLabel {
+            padding-bottom: 7px;
+        }
+
+        .yesButton{
+            margin: 5px;
+            min-width: 120px;
+        }
+
+        .closeButton{
+            min-width: 120px;
+            margin: 5px;
+        }
+
+
+    </ui:style>
+    <m:MaterialPanel addStyleNames="{style.center}">
+        <m:MaterialSection>
+            <m:MaterialLabel ui:field="topLabel" addStyleNames="{style.label}" text="up label"/>
+            <m:MaterialLabel ui:field="middleLabel" addStyleNames="{style.label}" text="middlelabel"/>
+            <m:MaterialLabel ui:field="bottomLabel" addStyleNames="{style.dateLabel}" text="bottom label"/>
+        </m:MaterialSection>
+        <m:MaterialSection>
+            <m:MaterialButton ui:field="yesButton" text="yes" addStyleNames="{style.yesButton}" />
+            <m:MaterialButton ui:field="closeButton" text="close" addStyleNames="{style.closeButton}" />
+        </m:MaterialSection>
+    </m:MaterialPanel>
+
+</ui:UiBinder>

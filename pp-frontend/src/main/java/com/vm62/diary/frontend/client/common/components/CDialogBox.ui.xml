@@ -1,0 +1,35 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:m="urn:import:gwt.material.design.client.ui">
+    <ui:style>
+        .modal {
+            max-height: 82% !important;
+        }
+
+        .header {
+            background-color: #2196F3;
+            color: white;
+            position: relative !important;
+            overflow: hidden !important;
+            width: auto !important;
+            height: auto !important;
+        }
+
+        .headerSplitter {
+            padding-bottom: 0px;
+        }
+
+        .content{
+            margin-bottom: 0 !important;
+        }
+    </ui:style>
+    <m:MaterialModal type="WINDOW" dismissable="false" inDuration="500" outDuration="500" addStyleNames="{style.modal}">
+        <m:MaterialTitle title="" description="" addStyleNames="{style.header}"/>
+        <m:MaterialRow addStyleNames="{style.headerSplitter}"/>
+        <m:MaterialModalContent>
+            <m:MaterialRow addStyleNames="{style.content}">
+
+            </m:MaterialRow>
+        </m:MaterialModalContent>
+    </m:MaterialModal>
+</ui:UiBinder>

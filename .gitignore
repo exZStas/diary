@@ -1,0 +1,9 @@
+.gradle/
+.idea/
+*.iml
+build/
+local.properties
+out/
+/.idea/
+tomcat/
+pp-backend/target/

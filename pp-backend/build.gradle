@@ -1,0 +1,22 @@
+apply plugin: 'java'
+
+sourceSets.main.output.resourcesDir = sourceSets.main.output.classesDir
+
+processResources {
+    from('src/main/java') {
+        include '**/*.properties'
+        include '**/*.xml'
+    }
+}
+
+dependencies {
+    compile project(':pp-common')
+
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '4.3.10.Final'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.34'
+    compile group: 'org.unitils', name: 'unitils-core', version: '3.4'
+
+
+    testCompile project(':pp-common').sourceSets.test.output
+}
+

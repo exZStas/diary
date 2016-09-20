@@ -1,0 +1,21 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+dependencies {
+    compile project(':pp-frontend')
+    compile project(':pp-common')
+    compile project(':pp-backend')
+
+    compile 'javax.cache:cache-api:1.0.0'
+    compile 'org.ehcache:ehcache:3.1.1'
+
+    provided 'javax.servlet:javax.servlet-api:3.1.0'
+}
+
+war {
+    from(project(':pp-frontend').file('src/main/webapp'))
+    from(project(':pp-frontend').file('build/gwt/out'))
+}
+
+
+

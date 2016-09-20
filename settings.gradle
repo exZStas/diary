@@ -1,0 +1,5 @@
+rootProject.name = 'diary'
+include 'pp-common'
+include 'pp-backend'
+include 'pp-frontend'
+include 'pp-integration'

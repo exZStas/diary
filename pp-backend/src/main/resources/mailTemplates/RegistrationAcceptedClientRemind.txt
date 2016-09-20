@@ -1,0 +1,6 @@
+<p>Beste $CLIENT_FIRSTNAME$ $CLIENT_INSERTION$ $CLIENT_LASTNAME$,<br/>
+Uw aanmelding is verwerkt. U kunt vanaf nu gebruik maken van onze online diensten.</p>
+
+<p>Met vriendelijke groet,<br/>
+$COMPANY_NAME$</p>
+

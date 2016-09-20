@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="GWT" type="GWT.ConfigurationType" factoryName="GWT Configuration">
+    <module name="pp-frontend_main" />
+    <option name="SHELL_PARAMETERS" value="-startupUrl http://localhost:8080/index.html?locale=ru -logLevel INFO -noserver -codeServerPort 9997" />
+    <option name="RUN_PAGE" value="index.html" />
+    <option name="OPEN_IN_BROWSER" value="false" />
+    <option name="BROWSER" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+    <option name="WORKING_DIRECTORY" value="" />
+    <method>
+      <option name="Make" enabled="false" />
+    </method>
+  </configuration>
+</component>

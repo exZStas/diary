@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <contextName>pp</contextName>
+    <jmxConfigurator/>
+
+    <!-- console -->
+    <appender name="Stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%d{dd/MM/yyyy HH:mm:ss}]] %-5level - %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org" level="INFO"/>
+    <logger name="com" level="INFO" />
+    <logger name="net" level="INFO"/>
+    <logger name="com.wix.mysql" level="WARN"/>
+
+    <!-- Hibernate logging -->
+    <logger name="org.hibernate" level="WARN"/>
+
+
+    <logger name="com.vm62" level="INFO"/>
+
+    <!-- root logger -->
+    <root level="INFO">
+        <appender-ref ref="Stdout"/>
+    </root>
+</configuration>

@@ -1,0 +1,6 @@
+<p>Beste $CLIENT_FIRSTNAME$ $CLIENT_INSERTION$ $CLIENT_LASTNAME$,<br/>
+U heeft een afspraak gemaakt bij:<br/>
+$CONSULTANT_NAME$ op $DAY_OF_WEEK$ $DAY$ $MONTH$ om $TIME$.</p>
+<p>Er wordt contact met u opgenomen op het moment dat deze afspraak niet door kan gaan. Mocht u zelf uw afspraken willen wijzigen of annuleren, dan kunt u dit doen via uw persoonlijke gezondheidsportaal.</p>
+<p>Met vriendelijke groet,<br/>
+$COMPANY_NAME$</p>

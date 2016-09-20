@@ -1,0 +1,25 @@
+.gwt-cal {
+    height: 65.5% !important;
+    padding-bottom: 0 !important;
+}
+
+.gwt-cal .gwt-calendar-header .year-cell {
+    color: white;
+}
+
+.gwt-cal .major-time-interval {
+    background: #c2ffc5 !important;
+}
+
+.gwt-cal .day-separator {
+    border-right: none !important;
+}
+
+/*override default style*/
+.gwt-PopupPanel {
+    height: 100% !important;
+    width: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+
+}

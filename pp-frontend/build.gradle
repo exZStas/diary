@@ -1,0 +1,51 @@
+apply plugin: 'gwt'
+apply plugin: 'war'
+
+dependencies {
+    compile project(':pp-common')
+            provided project(path: ':pp-common', configuration: 'sourceJar')
+
+    compile ('com.google.gwt.inject:gin:2.1.2') {
+        exclude module: 'asm'
+    }
+
+    compile group: 'com.google.guava', name: 'guava-gwt', version: '16.0.1'
+    compile group: 'com.github.gwtmaterialdesign', name: 'gwt-material', version: '1.6.1'
+    compile group: 'com.github.gwtmaterialdesign', name: 'gwt-material-themes', version: '1.6.0'
+    compile group: 'com.github.gwtmaterialdesign', name: 'gwt-material-addins', version: '1.6.0'
+    compile group: 'com.googlecode.gwt-charts', name: 'gwt-charts', version: '0.9.9'
+
+    runtime 'com.google.gwt:gwt-servlet:2.7.0'
+
+    provided group: 'com.google.gwt', name: 'gwt-user', version: '2.7.0'
+    provided ('com.google.gwt:gwt-dev:2.7.0')
+}
+
+gwt {
+    maxHeapSize = '1024M'
+    logLevel = 'INFO'
+
+    gwtVersion='2.7.0'
+
+    modules 'com.vm62.diary.frontend.frontend'
+
+    compiler {
+        localWorkers = 4
+        compileReport = false
+        devWar = file("${buildDir}/exploded")
+//        incrementalCompileWarnings = true
+    }
+
+    gwtDev {
+        noserver = true
+        port = 8080
+        logLevel = 'SPAM'
+        codeServerPort = 9997
+        startupUrl = 'http://localhost:8080/index.html'
+        superDevMode= false
+    }
+}
+
+war {
+    from(project(':pp-frontend').file('build/gwt/out'))
+}

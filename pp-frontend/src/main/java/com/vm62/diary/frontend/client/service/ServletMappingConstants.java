@@ -1,0 +1,19 @@
+package com.vm62.diary.frontend.client.service;
+
+/**
+ *
+ * Contains servlet names, url-mappings, relative-paths and servlet param-names used
+ * to declare and make calls to various servlets in GWT client application.
+ * These includes GWT-RPC service interfaces and servlet implementations,
+ * login servlets, file upload servlets and so on.
+ */
+public abstract class ServletMappingConstants {
+
+	/** relative path to GWT RPC service URL */
+	public final static String GWT_MODULE = "frontend";
+
+	// user service
+	public final static String USER_SERVICE_NAME = "UserService";
+	public final static String USER_SERVICE_RELATIVE_PATH = "userService";
+	public final static String USER_SERVICE_URL = "/" + GWT_MODULE + "/" + USER_SERVICE_RELATIVE_PATH;
+}

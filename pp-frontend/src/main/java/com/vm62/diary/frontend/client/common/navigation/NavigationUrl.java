@@ -1,0 +1,36 @@
+package com.vm62.diary.frontend.client.common.navigation;
+
+public enum NavigationUrl {
+
+    // top
+    URL_MAIN,
+
+    //Afspraak
+    URL_APPOINTMENT_OVERVIEW,
+    URL_CLIENT_AGENDA,
+    URL_CANCEL_APPOINTMENT,
+    URL_CREATE_APPOINTMENT,
+    URL_EDIT_APPOINTMENT,
+    //EConsult
+    URL_ECONSULT_OVERVIEW,
+    URL_CREATE_ECONSULT,
+    URL_ECONSULT_CONVERSATION,
+    //Prescription
+    URL_PRESCRIPTION_OVERVIEW,
+    URL_REPEAT_MEDICATION,
+
+    //REGISTRATION
+    URL_REGISTRATION,
+
+    //Admin
+    URL_ADMIN_LOGIN,
+    URL_ADMIN_HOME,
+    URL_ADMIN_MAIL_TEMPLATES,
+    URL_ADMIN_HOLIDAYS_TEMPLATES,
+    URL_ADMIN_STATISTICS,
+    URL_EDIT_PAGE_CONTENT,
+    URL_HOLIDAY_PRACTICE;
+
+    private NavigationUrl() {
+    }
+}

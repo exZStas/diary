@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+    <Resource name="jdbc/connection-source" auth="Container" type="javax.sql.DataSource"
+              username="root"
+              password="developer"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://192.168.2.8:3306/pazio_promedico?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;tcpKeepAlive=true&amp;autoReconnectForPools=true&amp;"
+              maxActive="15"
+              maxIdle="7"
+              defaultTransactionIsolation="READ_COMMITTED"
+              testWhileIdle="true"
+              testOnBorrow="true"
+              validationQuery="Select 1"/>
+
+    <Environment name="smtpHost" value="smtp.gmail.com" type="java.lang.String" override="true" />
+    <Environment name="smtpUser" value="pazio.promedico@gmail.com" type="java.lang.String" override="true" />
+    <Environment name="smtpPassword" value="paziotest" type="java.lang.String" override="true" />
+
+    <Environment name="applicationUrl" value="http://127.0.0.1:9090" type="java.lang.String" override="true" />
+    <Environment name="pazioPortalUrl" value="http://127.0.0.1:9090" type="java.lang.String" override="true" />
+
+    <Environment name="oAuthKey" value="ACC_ProPaZio" type="java.lang.String" override="true" />
+    <Environment name="oAuthSecret" value="ACC_ProPaZio_paziotest" type="java.lang.String" override="true" />
+
+    <Environment name="keystoreUrl" value="pharmeon_keystore.jks" type="java.lang.String" override="true" />
+    <Environment name="keystoreType" value="jks" type="java.lang.String" override="true" />
+    <Environment name="keyPassword" value="changeit" type="java.lang.String" override="true" />
+    <Environment name="keystorePassword" value="changeit" type="java.lang.String" override="true" />
+    <Environment name="keyAlias" value="pharmeon" type="java.lang.String" override="true" />
+
+    <Environment name="promedicoRequestTimeout" value="5000" type="java.lang.Integer" override="true" />
+    <!-- userSessionTimeout 15 minutes = 15 * 60 -->
+    <Environment name="userSessionTimeout" value="900" type="java.lang.Integer" override="true" />
+
+    <Environment name="promedicoAgendaWsdlUrl" value="http://192.168.2.11:18080/AgendaService/PortalAgendaService?wsdl" type="java.lang.String" override="true" />
+    <Environment name="promedicoRegistrationWsdlUrl" value="http://192.168.2.11:18080/PatientRegistrationService/PatientRegistrationService?wsdl" type="java.lang.String" override="true" />
+    <Environment name="promedicoEconsultWsdlUrl" value="http://192.168.2.11:18080/PortalEconsultService/PortalEconsultService?wsdl" type="java.lang.String" override="true" />
+    <Environment name="promedicoPrescriptionWsdlUrl" value="http://192.168.2.11:18080/PrescriptionService/PrescriptionService?wsdl" type="java.lang.String" override="true" />
+    <Environment name="promedicoPatientWsdlUrl" value="http://192.168.2.11:18080/PatientDataService/PatientDataService?wsdl" type="java.lang.String" override="true" />
+</Context>
