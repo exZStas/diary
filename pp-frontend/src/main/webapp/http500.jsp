@@ -53,7 +53,7 @@
     <p> ${param.error} </p>
 </div>
 <div class="footer">
-    <p>(C) Pazio 2016</p>
+    <p>(C) vm62 design group</p>
 </div>
 
 </body>

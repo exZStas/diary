@@ -4,7 +4,7 @@ import com.vm62.diary.frontend.client.activity.MainPanelActivity;
 import com.vm62.diary.frontend.client.activity.MainPanelView;
 import com.vm62.diary.frontend.client.activity.admin.AdminLoginDialog;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
-import com.vm62.diary.frontend.client.injection.InjectorPazioPromedico;
+import com.vm62.diary.frontend.client.injection.InjectorDiary;
 import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -16,9 +16,9 @@ import gwt.material.design.client.MaterialDesign;
 /**
  * Entry point classes define <code>onModuleLoad()</code>
  */
-public class PazioPromedicoEntryPoint extends MaterialDesign {
+public class DiaryEntryPoint extends MaterialDesign {
 
-    public static final InjectorPazioPromedico injector = InjectorPazioPromedico.INSTANCE;
+    public static final InjectorDiary injector = InjectorDiary.INSTANCE;
     private NavigationManager navigationManager;
     private AdminLoginDialog adminLoginDialog;
 

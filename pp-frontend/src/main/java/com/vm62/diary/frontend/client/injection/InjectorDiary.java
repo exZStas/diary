@@ -18,10 +18,10 @@ import com.google.inject.Provider;
  * for 'root' components instantiation.
  *
  */
-@GinModules(GinModulePazioPromedico.class)
-public interface InjectorPazioPromedico extends Ginjector {
+@GinModules(GinModuleDiary.class)
+public interface InjectorDiary extends Ginjector {
 
-    InjectorPazioPromedico INSTANCE = GWT.create(InjectorPazioPromedico.class);
+    InjectorDiary INSTANCE = GWT.create(InjectorDiary.class);
 
     AdminLoginDialog getAdminLoginDialog();
 

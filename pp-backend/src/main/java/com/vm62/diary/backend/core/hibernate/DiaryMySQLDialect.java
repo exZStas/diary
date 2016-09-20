@@ -5,8 +5,8 @@ import org.hibernate.dialect.function.SQLFunctionTemplate;
 import org.hibernate.type.StandardBasicTypes;
 
 
-public class PazioPromedicoMySQLDialect extends MySQLDialect{
-    public PazioPromedicoMySQLDialect() {
+public class DiaryMySQLDialect extends MySQLDialect{
+    public DiaryMySQLDialect() {
         super();
         /**
          * Function to evaluate regexp in MySQL

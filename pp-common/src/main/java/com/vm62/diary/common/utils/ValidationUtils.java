@@ -19,7 +19,6 @@ import java.util.regex.Pattern;
  * <br>Is-methods perform validation and return boolean result.
  * <br>If-methods perform validation and throw {@link ServiceException} exception.
  * <br>
- * Adopted from legacy nl.promedico.algemeen.core.util.ArgumentValidator.
  */
 public abstract class ValidationUtils {
 

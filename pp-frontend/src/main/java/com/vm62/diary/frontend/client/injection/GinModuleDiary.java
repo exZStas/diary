@@ -6,7 +6,7 @@ import com.vm62.diary.frontend.client.activity.MainPanelView;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
 
-public class GinModulePazioPromedico extends AbstractGinModule {
+public class GinModuleDiary extends AbstractGinModule {
 
 	@Override
     protected void configure() {

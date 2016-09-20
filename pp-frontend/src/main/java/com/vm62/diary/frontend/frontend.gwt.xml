@@ -19,7 +19,7 @@
 
     <!-- Specify the app entry point class.                   -->
     <inherits name="common"/>
-    <entry-point class='com.vm62.diary.frontend.client.PazioPromedicoEntryPoint'/>
+    <entry-point class='com.vm62.diary.frontend.client.DiaryEntryPoint'/>
 
     <source path="client"/>
 
