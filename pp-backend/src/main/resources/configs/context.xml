@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+    <Resource name="jdbc/connection-source" auth="Container" type="javax.sql.DataSource"
+              username="root"
+              password=""
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/diary?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;tcpKeepAlive=true&amp;autoReconnectForPools=true&amp;"
+              maxActive="15"
+              maxIdle="7"
+              defaultTransactionIsolation="READ_COMMITTED"
+              testWhileIdle="true"
+              testOnBorrow="true"
+              validationQuery="Select 1"/>
+
+    <Environment name="smtpHost" value="smtp.gmail.com" type="java.lang.String" override="true" />
+    <Environment name="smtpUser" value="your_email@gmail.com" type="java.lang.String" override="true" />
+    <Environment name="smtpPassword" value="pw" type="java.lang.String" override="true" />
+
+    <!-- userSessionTimeout 15 minutes = 15 * 60 -->
+    <Environment name="userSessionTimeout" value="900" type="java.lang.Integer" override="true" />
+</Context>

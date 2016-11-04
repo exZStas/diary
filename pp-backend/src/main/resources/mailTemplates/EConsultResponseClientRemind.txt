@@ -1,5 +1,0 @@
-<p>Beste $CLIENT_FIRSTNAME$ $CLIENT_INSERTION$ $CLIENT_LASTNAME$,<br/>
-Uw eConsult is beantwoord. U kunt het antwoord bekijken in uw persoonlijk gezondheidsportaal.</p><br/>
-<p>Met vriendelijke groet,<br/>
-$COMPANY_NAME$</p>
-

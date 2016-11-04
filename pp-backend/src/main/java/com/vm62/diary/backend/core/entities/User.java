@@ -1,16 +1,16 @@
 package com.vm62.diary.backend.core.entities;
 
+import com.vm62.diary.common.constants.Gender;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "USER")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false, length = 10)
-
     private Long id;
 
     @Column(name = "FIRST_NAME", nullable = false, length = 45)
@@ -19,18 +19,16 @@ public class User {
     @Column(name = "LAST_NAME", nullable = false, length = 45)
     private String lastName;
 
-    @Column(name = "MIDDLE_NAME", nullable = true, length = 45)
-    private String middleName;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "GENDER", nullable = true, length = 1)
+    private Gender gender;
 
-    @Column(name = "GENDER", nullable = true, length = 10)
-    private String gender;
+    @Column(name = "STUDY_GROUP", nullable = false, length = 10)
+    private String studyGroup;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "BIRTHDATE", nullable = true)
+    @Column(name = "BIRTHDAY", nullable = true)
     private Date birthDate;
-
-    @Column(name = "ADDRESS", nullable = true, length = 255)
-    private String address;
 
     @Column(name = "EMAIL", unique = true, nullable = false, length = 255)
     private String email;
@@ -40,15 +38,14 @@ public class User {
         //default constructor
     }
 
-    public User( String firstName, String lastName, String middleName, String gender,
-                Date birthDate, String address, String email) {
+    public User(String firstName, String lastName, Gender gender, String studyGroup,
+                Date birthDate, String email) {
 
         this.firstName = firstName;
         this.lastName = lastName;
-        this.middleName = middleName;
         this.gender = gender;
+        this.studyGroup = studyGroup;
         this.birthDate = birthDate;
-        this.address = address;
         this.email = email;
     }
 
@@ -68,19 +65,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -92,14 +81,6 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -108,6 +89,13 @@ public class User {
         this.email = email;
     }
 
+    public void setStudyGroup(String studyGroup) {
+        this.studyGroup = studyGroup;
+    }
+
+    public String getStudyGroup() {
+        return studyGroup;
+    }
 
     public Long getId (){
         return id;
@@ -123,10 +111,8 @@ public class User {
                 "id=" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", middleName='" + middleName + '\'' +
                 ", gender='" + gender + '\'' +
                 ", birthDate='" + birthDate + '\'' +
-                ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

@@ -1,9 +1,0 @@
-<p>Beste $CLIENT_FIRSTNAME$ $CLIENT_INSERTION$ $CLIENT_LASTNAME$,<br/>
-U heeft de volgende afspraak geannuleerd bij:</p>
-
-<p>$CONSULTANT_NAME$ op $DAY_OF_WEEK$ $DAY$ $MONTH$ om $TIME$.</p>
-
-<p>Mocht u een nieuwe afspraak willen inplannen, kunt u dit doen in uw uw persoonlijke gezondheidsportaal.</p>
-
-<p>Met vriendelijke groet,<br/>
-$COMPANY_NAME$</p>
