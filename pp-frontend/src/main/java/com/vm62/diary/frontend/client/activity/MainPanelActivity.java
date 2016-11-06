@@ -27,10 +27,12 @@ public class MainPanelActivity implements BaseActivity {
     }
 
     private IMainPanelView view;
+    private LoginDialog loginDialog;
 
     @Inject
-    public MainPanelActivity(IMainPanelView view) {
+    public MainPanelActivity(IMainPanelView view, LoginDialog loginDialog) {
         this.view = view;
+        this.loginDialog = loginDialog;
         addEventListeners();
     }
 
@@ -48,6 +50,7 @@ public class MainPanelActivity implements BaseActivity {
     @Override
     public void start(HasWidgets display, NavigationPlace place) {
         display.add((Widget) view);
+        loginDialog.showDialog();
 
     }
 

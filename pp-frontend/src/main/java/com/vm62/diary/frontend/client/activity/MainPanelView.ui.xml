@@ -76,19 +76,18 @@
         }</ui:style>
 
     <g:HTMLPanel ui:field="mainPanel" addStyleNames="{style.mainPanel}">
-        <m:MaterialHeader addStyleNames="{style.header}">
-            <m:MaterialSection addStyleNames="{style.header_content}">
-                <m:MaterialLink ui:field="breadcrumb" text="Home" addStyleNames="{style.breadcrumb}"/>
-                <m:MaterialLink ui:field="titleLabel" text="Header Title" iconType="HOME" iconSize="SMALL"/>
-            </m:MaterialSection>
-        </m:MaterialHeader>
+        <!--<m:MaterialHeader addStyleNames="{style.header}">-->
+            <!--<m:MaterialSection addStyleNames="{style.header_content}">-->
+                <!--<m:MaterialLink ui:field="breadcrumb" text="Home" addStyleNames="{style.breadcrumb}"/>-->
+                <!--<m:MaterialLink ui:field="titleLabel" text="Header Title" iconType="HOME" iconSize="SMALL"/>-->
+            <!--</m:MaterialSection>-->
+        <!--</m:MaterialHeader>-->
 
         <m:MaterialPanel ui:field="contentPanel" addStyleNames="{style.content}">
-            <m:MaterialLabel ui:field="helloLabel" addStyleNames="{style.helloLabel}" text="Your personal diary. Coming soon."/>
         </m:MaterialPanel>
 
-        <m:MaterialFooter addStyleNames="{style.footer}" backgroundColor="#e0e0e0 grey lighten-2">
-            <m:MaterialLabel ui:field="copyrightLabel" text="VM62 design group" padding="0" addStyleNames="{style.footerLabel}"/>
-        </m:MaterialFooter>
+        <!--<m:MaterialFooter addStyleNames="{style.footer}" backgroundColor="#e0e0e0 grey lighten-2">-->
+            <!--<m:MaterialLabel ui:field="copyrightLabel" text="VM62 design group" padding="0" addStyleNames="{style.footerLabel}"/>-->
+        <!--</m:MaterialFooter>-->
     </g:HTMLPanel>
 </ui:UiBinder>

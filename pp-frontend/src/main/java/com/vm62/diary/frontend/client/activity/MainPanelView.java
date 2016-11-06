@@ -22,20 +22,10 @@ public class MainPanelView extends Composite implements MainPanelActivity.IMainP
     }
 
     @UiField
-    protected MaterialLink titleLabel;
-
-    @UiField
     protected HTMLPanel mainPanel;
 
     @UiField
     protected MaterialPanel contentPanel;
-    @UiField
-    protected MaterialLink breadcrumb;
-    @UiField
-    protected MaterialLabel copyrightLabel;
-    @UiField
-    protected MaterialLabel helloLabel;
-
 
     private NavigationManager navigationManager;
 
@@ -59,7 +49,7 @@ public class MainPanelView extends Composite implements MainPanelActivity.IMainP
 
     @Override
     public void addHeaderTitleClickHandler(ClickHandler handler) {
-        titleLabel.addClickHandler(handler);
+        //titleLabel.addClickHandler(handler);
     }
 
     @Override
@@ -69,30 +59,30 @@ public class MainPanelView extends Composite implements MainPanelActivity.IMainP
 
     @Override
     public void setHeaderTitle(String title) {
-        titleLabel.setText(title);
+        //titleLabel.setText(title);
     }
 
     @Override
     public void setIcon(IconType iconType) {
-        titleLabel.setIconType(iconType);
+        //titleLabel.setIconType(iconType);
     }
 
     @Override
     public void setBreadcrumb(String label, ClickHandler clickHandler) {
-        breadcrumb.setText(label);
-        breadcrumb.addClickHandler(clickHandler);
+        //breadcrumb.setText(label);
+        //breadcrumb.addClickHandler(clickHandler);
         //override default breadcrumb style for correct view
-        breadcrumb.setLayoutPosition(Style.Position.RELATIVE);
-        breadcrumb.setHeight("auto");
-        breadcrumb.setWidth("auto");
-        breadcrumb.setOverflow(Style.Overflow.HIDDEN);
+        //breadcrumb.setLayoutPosition(Style.Position.RELATIVE);
+        //breadcrumb.setHeight("auto");
+        //breadcrumb.setWidth("auto");
+        //breadcrumb.setOverflow(Style.Overflow.HIDDEN);
 
 
     }
 
     @Override
     public void setBreadcrumbVisible(boolean visible) {
-        breadcrumb.setVisible(visible);
+       // breadcrumb.setVisible(visible);
     }
 
 

@@ -1,0 +1,48 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:m="urn:import:gwt.material.design.client.ui">
+
+    <ui:with field="i18n" type="com.vm62.diary.frontend.client.common.messages.MessagesProvider"/>
+
+    <ui:style>
+        .width {
+            width: 96%;
+            max-height: 250px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .loginButton {
+            width: 10%;
+            margin-right: 7%;
+            float: right;
+        }
+
+        .row {
+            overflow: hidden;
+        }
+
+        .regButton {
+            width: 10%;
+            float: left;
+            background-color: #ff8f00 !important;
+            color: white !important;
+        }</ui:style>
+
+    <m:MaterialRow overflow="HIDDEN" addStyleNames="{style.row}">
+        <m:MaterialColumn grid="s12 m12 l12" addStyleNames="{style.width}">
+            <m:MaterialRow>
+                <m:MaterialTextBox ui:field="email" placeholder="your@mail.com" type="TEXT" iconType="ACCOUNT_CIRCLE"/>
+            </m:MaterialRow>
+            <m:MaterialRow>
+                <m:MaterialTextBox ui:field="password" placeholder="password" type="PASSWORD" iconType="LOCK_OPEN"/>
+            </m:MaterialRow>
+            <m:MaterialRow textAlign="LEFT" marginBottom="0" backgroundColor="#ff8f00" addStyleNames="{style.regButton}">
+                <m:MaterialButton ui:field="btnRegistration" text="registration"/>
+            </m:MaterialRow>
+            <m:MaterialRow textAlign="RIGHT" marginBottom="0" addStyleNames="{style.loginButton}">
+                <m:MaterialButton ui:field="btnLogin" text="login"/>
+            </m:MaterialRow>
+        </m:MaterialColumn>
+    </m:MaterialRow>
+
+</ui:UiBinder>

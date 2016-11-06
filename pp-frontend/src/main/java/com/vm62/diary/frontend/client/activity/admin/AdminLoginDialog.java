@@ -79,7 +79,6 @@ public class AdminLoginDialog extends CDialogBox {
         clear();
         setCaptionHtml(HeaderTitle.ADMIN_LOGIN.getText());
 		generateCaptcha();
-        txtUsername.setFocus(true);
         center();
     }
 

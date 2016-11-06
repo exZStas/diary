@@ -1,11 +1,10 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:m="urn:import:gwt.material.design.client.ui">
 
-
     <ui:with field="i18n" type="com.vm62.diary.frontend.client.common.messages.MessagesProvider"/>
 
     <ui:style>
-        .width96 {
+        .width {
             width: 96%;
             max-height: 250px;
             padding: 0;
@@ -28,7 +27,7 @@
         }</ui:style>
 
     <m:MaterialRow overflow="HIDDEN" addStyleNames="{style.row}">
-        <m:MaterialColumn grid="s12 m12 l12" addStyleNames="{style.width96}">
+        <m:MaterialColumn grid="s12 m12 l12" addStyleNames="{style.width}">
             <m:MaterialRow>
                 <m:MaterialTextBox ui:field="txtUsername" placeholder="name" type="TEXT" iconType="ACCOUNT_CIRCLE"/>
             </m:MaterialRow>
