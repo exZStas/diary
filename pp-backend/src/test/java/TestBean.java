@@ -1,4 +1,4 @@
-import com.vm62.diary.backend.core.UserBean;
+import com.vm62.diary.backend.core.bean.UserBean;
 import com.vm62.diary.backend.core.dao.UserDAO;
 import com.vm62.diary.backend.core.entities.User;
 import com.vm62.diary.common.constants.Gender;

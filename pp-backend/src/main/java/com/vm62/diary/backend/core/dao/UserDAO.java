@@ -40,5 +40,16 @@ public class UserDAO {
         return QueryHelper.getSingleValueOrNull(query);
     }
 
+    public User getUserByEmail (String email){
+        EntityManager em = emProvider.get();
+
+        TypedQuery<User> query = em.createQuery("SELECT us FROM"
+                + User.class.getName() + " us " + "WHERE us.email = :EMAIL", User.class);
+
+        query.setParameter("EMAIL", email);
+
+        return QueryHelper.getSingleValueOrNull(query);
+    }
+
 
 }

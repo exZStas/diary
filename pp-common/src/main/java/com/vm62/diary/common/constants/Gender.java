@@ -1,6 +1,8 @@
 package com.vm62.diary.common.constants;
 
-public enum Gender {
+import java.io.Serializable;
+
+public enum Gender implements Serializable {
     M ("Man"),
     W ("Woman");
 
