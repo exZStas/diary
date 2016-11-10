@@ -7,3 +7,4 @@ out/
 /.idea/
 tomcat/
 pp-backend/target/
+persistence.xml
