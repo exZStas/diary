@@ -1,4 +1,4 @@
-package com.vm62.diary.frontend.client.activity;
+package com.vm62.diary.frontend.client.activity.login;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -7,6 +7,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.vm62.diary.frontend.client.activity.HeaderTitle;
 import com.vm62.diary.frontend.client.common.components.CDialogBox;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import gwt.material.design.client.base.validator.BlankValidator;
@@ -30,10 +31,12 @@ public class LoginDialog extends CDialogBox{
     MaterialButton btnRegistration;
 
     private NavigationManager navigationManager;
+    private RegistrationDialog registrationDialog;
 
     @Inject
-    public LoginDialog(NavigationManager navigationManager){
+    public LoginDialog(NavigationManager navigationManager, RegistrationDialog registrationDialog){
         this.navigationManager = navigationManager;
+        this.registrationDialog = registrationDialog;
         setWidget(uiBinder.createAndBindUi(this));
         btnRegistration.getElement().getStyle().setBackgroundColor("#ff8f00");
 
@@ -43,10 +46,16 @@ public class LoginDialog extends CDialogBox{
     }
 
     @UiHandler("btnLogin")
-    protected void BtnLoginClick (ClickEvent event){
+    protected void btnLoginClick (ClickEvent event){
         if(!email.validate() && !password.validate()){
             return;
         }
+    }
+
+    @UiHandler("btnRegistration")
+    protected void setBtnRegistrationClick (ClickEvent event){
+        this.hide();
+        registrationDialog.show();
     }
 
     void addEventHandlers(){

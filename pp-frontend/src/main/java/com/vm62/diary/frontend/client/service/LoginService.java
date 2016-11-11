@@ -7,6 +7,6 @@ import com.vm62.diary.frontend.server.service.dto.UserDTO;
 @RemoteServiceRelativePath(ServletMappingConstants.LOGIN_SERVICE_RELATIVE_PATH)
 public interface LoginService extends RemoteService {
 
-    UserDTO getUserByEmail (String email);
+    UserDTO login (String email);
 
 }

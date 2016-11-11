@@ -7,6 +7,7 @@ import com.vm62.diary.backend.core.entities.User;
 import com.vm62.diary.common.constants.Gender;
 import factory.UserFactory;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

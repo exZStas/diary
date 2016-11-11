@@ -1,5 +1,6 @@
 package com.vm62.diary.frontend.client.activity;
 
+import com.vm62.diary.frontend.client.activity.login.LoginDialog;
 import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.google.gwt.event.dom.client.ClickHandler;

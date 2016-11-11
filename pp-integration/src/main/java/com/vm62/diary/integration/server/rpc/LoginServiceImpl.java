@@ -9,7 +9,8 @@ import com.vm62.diary.frontend.server.service.dto.UserDTO;
 @Singleton
 public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {
     @Override
-    public UserDTO getUserByEmail(String email) {
+    public UserDTO login(String email) {
         return null;
     }
+
 }
