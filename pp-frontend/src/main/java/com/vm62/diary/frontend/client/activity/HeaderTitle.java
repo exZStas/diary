@@ -12,6 +12,8 @@ public enum HeaderTitle {
         this.text = value;
     }
 
+
+
     public String getText() {
         return text;
     }
