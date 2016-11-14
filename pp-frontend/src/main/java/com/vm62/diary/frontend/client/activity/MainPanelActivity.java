@@ -2,6 +2,7 @@ package com.vm62.diary.frontend.client.activity;
 
 import com.vm62.diary.frontend.client.activity.login.LoginDialog;
 import com.vm62.diary.frontend.client.common.BaseActivity;
+import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -29,11 +30,13 @@ public class MainPanelActivity implements BaseActivity {
 
     private IMainPanelView view;
     private LoginDialog loginDialog;
+    private NavigationManager navigationManager;
 
     @Inject
-    public MainPanelActivity(IMainPanelView view, LoginDialog loginDialog) {
+    public MainPanelActivity(IMainPanelView view, LoginDialog loginDialog, NavigationManager navigationManager) {
         this.view = view;
         this.loginDialog = loginDialog;
+        this.navigationManager = navigationManager;
         addEventListeners();
     }
 
@@ -52,7 +55,6 @@ public class MainPanelActivity implements BaseActivity {
     public void start(HasWidgets display, NavigationPlace place) {
         display.add((Widget) view);
         loginDialog.showDialog();
-
     }
 
 

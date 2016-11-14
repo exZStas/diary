@@ -6,62 +6,75 @@
     <ui:style>
         .width {
             width: 96%;
-            max-height: 250px;
+            height: auto;
             padding: 0;
             margin: 0;
+            overflow: auto;
         }
 
         .loginButton {
-            width: 10%;
-            margin-right: 7%;
+            width: 15%;
+            margin-right: 10%;
             float: right;
-        }
-
-        .row {
-            overflow: hidden;
         }
 
         .regButton {
             width: 10%;
             float: left;
-            background-color: #ff8f00 !important;
             color: white !important;
-        }</ui:style>
+            margin-left: 10%;
+        }
 
-    <m:MaterialRow overflow="HIDDEN" addStyleNames="{style.row}">
-        <m:MaterialColumn grid="s12 m12 l12" addStyleNames="{style.width}">
-            <m:MaterialRow>
+        .gender {
+            width: 80%;
+        }
+
+        .container {
+            width: 60%;
+            margin-left: 15%;
+        }
+
+        .rows {
+            width: 80%;
+        }
+
+    </ui:style>
+    <m:MaterialPanel overflow="AUTO" height="90%" addStyleNames="{style.container}" shadow="5">
+        <m:MaterialNavBar>
+            <m:MaterialNavBrand float="LEFT" marginLeft="5">Registration</m:MaterialNavBrand>
+        </m:MaterialNavBar>
+            <m:MaterialRow addStyleNames="{style.rows}">
                 <m:MaterialTextBox ui:field="firstName" placeholder="first name" type="TEXT" iconType="FACE"/>
             </m:MaterialRow>
-            <m:MaterialRow>
+            <m:MaterialRow addStyleNames="{style.rows}">
                 <m:MaterialTextBox ui:field="lastName" placeholder="last name" type="TEXT" iconType="ACCOUNT_CIRCLE"/>
             </m:MaterialRow>
-            <m:MaterialRow>
+            <m:MaterialRow addStyleNames="{style.rows}">
                 <m:MaterialDatePicker ui:field="birthDate" placeholder="birthDate" selectionType="YEAR" iconType="DATE_RANGE"/>
             </m:MaterialRow>
-            <m:MaterialRow>
+            <m:MaterialRow addStyleNames="{style.rows}">
                 <m:MaterialTextBox ui:field="email" placeholder="your@mail.com" type="TEXT" iconType="MAIL"/>
             </m:MaterialRow>
-            <m:MaterialRow>
+            <m:MaterialRow addStyleNames="{style.gender}">
                 <m:MaterialIcon iconType="WC" />
-                <m:MaterialListBox ui:field="gender"/>
+                <m:MaterialCheckBox ui:field="men" text="men" checked="true" width="20"/>
+                <m:MaterialCheckBox ui:field="woman" text="woman" width="20"/>
             </m:MaterialRow>
-            <m:MaterialRow>
+            <m:MaterialRow addStyleNames="{style.rows}">
                 <m:MaterialTextBox ui:field="studyGroup" placeholder="study group" type="TEXT" iconType="GROUP"/>
             </m:MaterialRow>
-            <m:MaterialRow>
+            <m:MaterialRow addStyleNames="{style.rows}">
                 <m:MaterialTextBox ui:field="password" placeholder="password" type="PASSWORD" iconType="LOCK_OPEN"/>
             </m:MaterialRow>
-            <m:MaterialRow>
+            <m:MaterialRow addStyleNames="{style.rows}">
                 <m:MaterialTextBox ui:field="repeatPassword" placeholder="repeat password" type="PASSWORD" iconType="ENHANCED_ENCRYPTION"/>
             </m:MaterialRow>
             <m:MaterialRow textAlign="LEFT" marginBottom="0" addStyleNames="{style.regButton}">
-                <m:MaterialButton ui:field="btnDecline" text="login"/>
+                <m:MaterialButton ui:field="btnDecline" text="back"/>
             </m:MaterialRow>
-            <m:MaterialRow textAlign="RIGHT" marginBottom="0" backgroundColor="#ff8f00" addStyleNames="{style.loginButton}">
-                <m:MaterialButton ui:field="btnAccept" text="registration"/>
+            <m:MaterialRow textAlign="RIGHT" marginBottom="0" addStyleNames="{style.loginButton}">
+                <m:MaterialButton ui:field="btnAccept" text="register me"/>
             </m:MaterialRow>
-        </m:MaterialColumn>
-    </m:MaterialRow>
+    </m:MaterialPanel>
 
 </ui:UiBinder>

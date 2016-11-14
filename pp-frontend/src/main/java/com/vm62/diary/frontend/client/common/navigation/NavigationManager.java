@@ -2,11 +2,13 @@ package com.vm62.diary.frontend.client.common.navigation;
 
 import com.vm62.diary.frontend.client.activity.MainPanelActivity;
 
+import com.vm62.diary.frontend.client.activity.login.RegistrationActivity;
 import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
+import com.vm62.diary.frontend.client.injection.ActivityAsyncProxy;
 
 @Singleton
 public class NavigationManager {
@@ -15,6 +17,8 @@ public class NavigationManager {
     Provider<MainPanelActivity> mainPanelActivityProvider;
 //    @Inject
 //    Provider<ActivityAsyncProxy<UserActivity>> UserActivityProxy;
+    @Inject
+    Provider<ActivityAsyncProxy<RegistrationActivity>> registrationActivityProxy;
 
     private BaseActivity currentActivity = null;
 
@@ -63,11 +67,10 @@ public class NavigationManager {
                 currentActivity = mainPanelActivityProvider.get();
                 currentActivityWidget = bodyPanel;
                 break;
-            // content
-//            case URL_ECONSULT_OVERVIEW:
-//                currentActivity = UserActivityProxy.get();
-//                currentActivityWidget = contentPanel;
-//                break;
+            case URL_REGISTRATION_ACTIVITY:
+                currentActivity = registrationActivityProxy.get();
+                currentActivityWidget = contentPanel;
+                break;
         }
         currentActivity.start(currentActivityWidget, place);
     }
