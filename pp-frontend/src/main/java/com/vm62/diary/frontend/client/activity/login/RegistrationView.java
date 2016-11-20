@@ -12,6 +12,9 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
+import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
+import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
+import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import com.vm62.diary.frontend.client.common.utils.DateHelper;
 import gwt.material.design.client.base.validator.BlankValidator;
 import gwt.material.design.client.ui.*;
@@ -50,9 +53,13 @@ public class RegistrationView extends Composite implements RegistrationActivity.
 
     private SimpleEventHandler registerPatient;
 
+    private NavigationManager navigationManager;
+
+
     @Inject
-    public RegistrationView() {
+    public RegistrationView(NavigationManager navigationManager) {
         setWidget(uiBinder.createAndBindUi(this));
+        this.navigationManager = navigationManager;
         birthDate.setDateMin(new Date(90, 0, 1));
         birthDate.setDateMax(new Date());
         firstName.addValidator(new BlankValidator<String>("Please, provide your first name!"));
@@ -94,6 +101,7 @@ public class RegistrationView extends Composite implements RegistrationActivity.
             return;
         }
         registerPatient.onEvent();
+        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
     }
 
     @Override

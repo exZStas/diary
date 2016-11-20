@@ -6,7 +6,10 @@ public enum NavigationUrl {
     URL_MAIN,
 
     //Registration
-    URL_REGISTRATION_ACTIVITY;
+    URL_REGISTRATION_ACTIVITY,
+
+    //Diary main page
+    URL_DIARY_ACTIVITY;
 
     NavigationUrl() {
     }
