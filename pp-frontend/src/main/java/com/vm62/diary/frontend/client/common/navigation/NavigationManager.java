@@ -2,6 +2,7 @@ package com.vm62.diary.frontend.client.common.navigation;
 
 import com.vm62.diary.frontend.client.activity.MainPanelActivity;
 
+import com.vm62.diary.frontend.client.activity.diarylist.DiaryListActivity;
 import com.vm62.diary.frontend.client.activity.login.RegistrationActivity;
 import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -19,6 +20,9 @@ public class NavigationManager {
 //    Provider<ActivityAsyncProxy<UserActivity>> UserActivityProxy;
     @Inject
     Provider<ActivityAsyncProxy<RegistrationActivity>> registrationActivityProxy;
+
+    @Inject
+    Provider<ActivityAsyncProxy<DiaryListActivity>> diaryActivityProxy;
 
     private BaseActivity currentActivity = null;
 
@@ -69,6 +73,10 @@ public class NavigationManager {
                 break;
             case URL_REGISTRATION_ACTIVITY:
                 currentActivity = registrationActivityProxy.get();
+                currentActivityWidget = contentPanel;
+                break;
+            case URL_DIARY_ACTIVITY:
+                currentActivity = diaryActivityProxy.get();
                 currentActivityWidget = contentPanel;
                 break;
         }
