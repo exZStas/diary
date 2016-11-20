@@ -1,6 +1,7 @@
 package com.vm62.diary.backend.core.entities;
 
 import com.vm62.diary.common.constants.Gender;
+import com.vm62.diary.common.password.PasswordEncoded;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,6 +20,9 @@ public class User {
     @Column(name = "LAST_NAME", nullable = false, length = 45)
     private String lastName;
 
+    @Column(name = "PASSWORD", nullable = false, length = 45)
+    private String password;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "GENDER", nullable = true, length = 1)
     private Gender gender;
@@ -33,21 +37,44 @@ public class User {
     @Column(name = "EMAIL", unique = true, nullable = false, length = 255)
     private String email;
 
+    @Column(name = "REGISTRATION_ID", unique = false, nullable = false, length = 45)
+    private String registrationId;
+
+    @Column(name = "REGISTRATION_APPROVED", unique = false, nullable = false, columnDefinition = "BIT", length = 1)
+    private Boolean isRegister;
+
 
     public User() {
         //default constructor
     }
 
-    public User(String firstName, String lastName, Gender gender, String studyGroup,
-                Date birthDate, String email) {
+    public User(String firstName, String lastName, PasswordEncoded password, Gender gender, String studyGroup,
+                Date birthDate, String email, String registrationId, Boolean isRegister) {
 
         this.firstName = firstName;
         this.lastName = lastName;
+        this.password = password.getAsString();
         this.gender = gender;
         this.studyGroup = studyGroup;
         this.birthDate = birthDate;
         this.email = email;
+        this.registrationId = registrationId;
+        this.isRegister = isRegister;
     }
+
+//    public User(String firstName, String lastName, PasswordEncoded password, Gender gender, String studyGroup,
+//                Date birthDate, String email, String registrationId, Boolean isRegister) {
+//
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.password = password.getAsString();
+//        this.gender = gender;
+//        this.studyGroup = studyGroup;
+//        this.birthDate = birthDate;
+//        this.email = email;
+//        this.registrationId = registrationId;
+//        this.isRegister = isRegister;
+//    }
 
     public String getFirstName() {
         return firstName;
@@ -103,6 +130,32 @@ public class User {
 
     public void setId (Long Id){
         this.id = Id;
+    }
+
+    public String getRegistrationId() {
+        return registrationId;
+    }
+
+    public Boolean isRegister() {
+        return isRegister;
+    }
+
+    public void setRegistrationId(String registrationId) {
+        this.registrationId = registrationId;
+    }
+
+    public void setRegister(Boolean register) {
+        isRegister = register;
+    }
+
+    @Transient
+    public PasswordEncoded getPassword() {
+        return new PasswordEncoded(password);
+    }
+
+    @Transient
+    public void setPasswordEncoded(PasswordEncoded password) {
+        this.password = password.getAsString();
     }
 
     @Override

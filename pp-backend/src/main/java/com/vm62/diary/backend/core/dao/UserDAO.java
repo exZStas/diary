@@ -7,6 +7,7 @@ import com.google.inject.persist.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Transactional
 public class UserDAO {
@@ -43,12 +44,45 @@ public class UserDAO {
     public User getUserByEmail (String email){
         EntityManager em = emProvider.get();
 
-        TypedQuery<User> query = em.createQuery("SELECT us FROM"
+        TypedQuery<User> query = em.createQuery("SELECT us FROM "
                 + User.class.getName() + " us " + "WHERE us.email = :EMAIL", User.class);
 
         query.setParameter("EMAIL", email);
 
         return QueryHelper.getSingleValueOrNull(query);
+    }
+
+
+    public User getUserByRegistrationId (String registrationId){
+        EntityManager em = emProvider.get();
+
+        TypedQuery<User> query = em.createQuery("SELECT us FROM "
+                + User.class.getName() + " us " + "WHERE us.registrationId = :REGISTRATION_ID", User.class);
+
+        query.setParameter("REGISTRATION_ID", registrationId);
+
+        return QueryHelper.getSingleValueOrNull(query);
+    }
+
+    public List<User> getUsersByRegistrationStatus (Boolean registrationStatus){
+        EntityManager em = emProvider.get();
+
+        TypedQuery<User> query = em.createQuery("SELECT us FROM "
+                + User.class.getName() + " us " + "WHERE us.isRegister = :REGISTRATION_APPROVED", User.class);
+
+        query.setParameter("REGISTRATION_APPROVED", registrationStatus);
+
+        return query.getResultList();
+    }
+
+    public boolean isUserEmailExists(String email){
+        EntityManager em = emProvider.get();
+
+        TypedQuery<Long> query = em.createQuery("SELECT COUNT(u.id) FROM " + User.class.getName() + " u " +
+                "WHERE u.email=:EMAIL", Long.class);
+
+        query.setParameter("EMAIL", email);
+        return query.getSingleResult() > 0;
     }
 
 
