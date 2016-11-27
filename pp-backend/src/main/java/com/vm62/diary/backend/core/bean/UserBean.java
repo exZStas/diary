@@ -35,5 +35,24 @@ public class UserBean {
         return userDAO.getUserById(userId);
     }
 
+    public User setUserRegistrationStatus(Boolean registrationStatus, User user) throws ServiceException {
+        ifNull(user, ErrorType.CANNOT_BE_NULL, "user");
+        ifNull(registrationStatus, ErrorType.CANNOT_BE_NULL, "registrationStatus");
+
+        return userDAO.setUserRegistrationStatus(registrationStatus, user);
+    }
+
+    public User updateUser(User user) throws ServiceException {
+        ifNull(user, ErrorType.CANNOT_BE_NULL, "user");
+
+        return userDAO.updateUser(user);
+    }
+
+    public User getUserByRegistrationId(String registrationId) throws ServiceException {
+        ifNullOrEmpty(registrationId, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "registrationId");
+
+        return userDAO.getUserByRegistrationId(registrationId);
+    }
+
 
 }

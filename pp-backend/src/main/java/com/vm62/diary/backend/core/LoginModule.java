@@ -43,6 +43,7 @@ public class LoginModule {
                 birthday,
                 email.trim(),
                 UUID.randomUUID().toString(),
+                Boolean.FALSE,
                 Boolean.FALSE);
 
         userBean.createUser(user);

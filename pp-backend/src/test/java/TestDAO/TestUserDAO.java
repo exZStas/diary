@@ -43,9 +43,9 @@ public class TestUserDAO {
         uid = UUID.randomUUID().toString();
         uid2 = UUID.randomUUID().toString();
         uid3 = UUID.randomUUID().toString();
-        user1 = userFactory.createUser("Maor", "Dingenman", "password1",Gender.M, "vm66", new Date(2016, 05, 12), email, uid, Boolean.TRUE);
-        user2 = userFactory.createUser("Beedan", "J.C.P.D", "password1", Gender.M, "vm27", new Date(2016, 05, 12), email2, uid2, Boolean.TRUE);
-        user3 = userFactory.createUser("Geedan", "Walker", "password1", Gender.M, "vm27", new Date(2016, 05, 12), email3, uid3, Boolean.FALSE);
+        user1 = userFactory.createUser("Maor", "Dingenman", "password1",Gender.M, "vm66", new Date(2016, 05, 12), email, uid, Boolean.TRUE, Boolean.TRUE);
+        user2 = userFactory.createUser("Beedan", "J.C.P.D", "password1", Gender.M, "vm27", new Date(2016, 05, 12), email2, uid2, Boolean.TRUE, Boolean.TRUE);
+        user3 = userFactory.createUser("Geedan", "Walker", "password1", Gender.M, "vm27", new Date(2016, 05, 12), email3, uid3, Boolean.FALSE, Boolean.FALSE);
 
     }
 
@@ -89,6 +89,7 @@ public class TestUserDAO {
         List<User> users = userDAO.getUsersByRegistrationStatus(Boolean.FALSE);
         assertReflectionEquals(users, Arrays.asList(user3), ReflectionComparatorMode.LENIENT_ORDER);
     }
+
 
 
 }

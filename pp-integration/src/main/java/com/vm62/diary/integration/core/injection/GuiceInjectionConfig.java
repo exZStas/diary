@@ -1,5 +1,7 @@
 package com.vm62.diary.integration.core.injection;
 
+import com.vm62.diary.backend.core.bean.SessionBean;
+import com.vm62.diary.common.utils.ContextUtil;
 import com.vm62.diary.common.utils.InjectorProvider;
 import com.vm62.diary.integration.cron.CronJobsConfigurator;
 import com.google.inject.Guice;
@@ -32,6 +34,18 @@ public class GuiceInjectionConfig extends GuiceServletContextListener {
         CronJobsConfigurator cronJobsConfigurator = InjectorProvider.inject(CronJobsConfigurator.class);
         cronJobsConfigurator.configure();
         cronJobsConfigurator.start();
+
+        //prepare mail session
+        ContextUtil contextUtil = InjectorProvider.inject(ContextUtil.class);
+
+        SessionBean sessionBean = InjectorProvider.inject(SessionBean.class);
+
+        try{
+            sessionBean.initSession(contextUtil.getSmtpHost(), contextUtil.getFromMailAddress(), contextUtil.getEmailPassword());
+        } catch (Exception e) {
+            log.debug("Failed to init mail session " + e);
+        }
+
 
     }
 

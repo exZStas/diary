@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "USER")
-public class User {
+public class User implements java.io.Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false, length = 10)
@@ -43,13 +43,18 @@ public class User {
     @Column(name = "REGISTRATION_APPROVED", unique = false, nullable = false, columnDefinition = "BIT", length = 1)
     private Boolean isRegister;
 
+    @Column(name = "IS_MAIL_SENT", columnDefinition = "BIT", length = 1)
+    private Boolean isMailSent;
+
+
+
 
     public User() {
         //default constructor
     }
 
     public User(String firstName, String lastName, PasswordEncoded password, Gender gender, String studyGroup,
-                Date birthDate, String email, String registrationId, Boolean isRegister) {
+                Date birthDate, String email, String registrationId, Boolean isRegister, Boolean isMailSent) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -60,21 +65,9 @@ public class User {
         this.email = email;
         this.registrationId = registrationId;
         this.isRegister = isRegister;
+        this.isMailSent = isMailSent;
     }
 
-//    public User(String firstName, String lastName, PasswordEncoded password, Gender gender, String studyGroup,
-//                Date birthDate, String email, String registrationId, Boolean isRegister) {
-//
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.password = password.getAsString();
-//        this.gender = gender;
-//        this.studyGroup = studyGroup;
-//        this.birthDate = birthDate;
-//        this.email = email;
-//        this.registrationId = registrationId;
-//        this.isRegister = isRegister;
-//    }
 
     public String getFirstName() {
         return firstName;
@@ -156,6 +149,14 @@ public class User {
     @Transient
     public void setPasswordEncoded(PasswordEncoded password) {
         this.password = password.getAsString();
+    }
+
+    public Boolean getMailSent() {
+        return isMailSent;
+    }
+
+    public void setMailSent(Boolean mailSent) {
+        isMailSent = mailSent;
     }
 
     @Override

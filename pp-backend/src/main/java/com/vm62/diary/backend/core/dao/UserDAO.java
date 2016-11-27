@@ -75,6 +75,17 @@ public class UserDAO {
         return query.getResultList();
     }
 
+
+    public User setUserRegistrationStatus(Boolean registrationStatus, User user){
+        EntityManager em = emProvider.get();
+
+        User detectedUser = em.find(User.class, user);
+        detectedUser.setRegister(registrationStatus);
+        User updatedUser = em.merge(detectedUser);
+
+        return updatedUser;
+    }
+
     public boolean isUserEmailExists(String email){
         EntityManager em = emProvider.get();
 
@@ -84,6 +95,7 @@ public class UserDAO {
         query.setParameter("EMAIL", email);
         return query.getSingleResult() > 0;
     }
+
 
 
 }

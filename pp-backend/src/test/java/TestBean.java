@@ -28,7 +28,7 @@ public class TestBean {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        user1 = new User("maor", "dingenman", new PasswordEncoded("password"),Gender.M, "vm66", new Date(2016, 05, 12), "fckthis@mail.nl", UUID.randomUUID().toString(), Boolean.FALSE);
+        user1 = new User("maor", "dingenman", new PasswordEncoded("password"),Gender.M, "vm66", new Date(2016, 05, 12), "fckthis@mail.nl", UUID.randomUUID().toString(), Boolean.FALSE, Boolean.FALSE);
         user1.setId(12L);
     }
 

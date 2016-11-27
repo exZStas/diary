@@ -8,29 +8,35 @@ import javax.naming.NamingException;
 
 public class ContextUtil {
 
-    private static final String HOST_EMAIL = "smtpHost";
-    private static final String USER_EMAIL = "smtpUser";
-    private static final String PASSWORD_EMAIL = "smtpPassword";
+    private static final String FROM_MAIL_ADDRESS = "fromMailAddress";
+    private static final String APPLICATION_URL = "applicationURL";
     private static final String USER_SESSION_TIMEOUT = "userSessionTimeout";
+    private static final String SMTP_HOST = "smtpHost";
+    private static final String EMAIL_PASSWORD = "emailPassword";
 
     public Integer getUserSessionTimeout() throws ServiceException {
         Object attribute = getContextAttribute(USER_SESSION_TIMEOUT);
         return attribute != null ? (Integer) attribute : null;
     }
 
-    public String getHost() throws ServiceException {
-        Object attribute = getContextAttribute(HOST_EMAIL);
-        return attribute != null ? (String) attribute : null;
+    public String getSmtpHost() throws ServiceException {
+        Object smtpHost = getContextAttribute(SMTP_HOST);
+        return smtpHost != null ? (String) smtpHost : null;
     }
 
-    public String getUserEmail() throws ServiceException {
-        Object attribute = getContextAttribute(USER_EMAIL);
-        return attribute != null ? (String) attribute : null;
+    public String getEmailPassword () throws ServiceException {
+        Object password = getContextAttribute(EMAIL_PASSWORD);
+        return password != null ? (String) password : null;
     }
 
-    public String getPassword() throws ServiceException {
-        Object attribute = getContextAttribute(PASSWORD_EMAIL);
-        return attribute != null ? (String) attribute : null;
+    public String getFromMailAddress() throws ServiceException {
+        Object fromMailAddress = getContextAttribute(FROM_MAIL_ADDRESS);
+        return fromMailAddress != null ? (String) fromMailAddress : null;
+    }
+
+    public String getApplicationURL() throws ServiceException {
+        Object applicationURL = getContextAttribute(APPLICATION_URL);
+        return applicationURL != null ? (String) applicationURL : null;
     }
 
 
