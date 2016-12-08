@@ -50,6 +50,8 @@ public class LoginDialog extends CDialogBox{
         if(!email.validate() && !password.validate()){
             return;
         }
+        this.hide();
+        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
     }
 
     @UiHandler("btnRegistration")

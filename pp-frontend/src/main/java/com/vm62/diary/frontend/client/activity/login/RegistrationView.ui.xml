@@ -30,9 +30,9 @@
         }
 
         .container {
-            width: 60%;
-            margin-left: 15%;
-        }
+                     width: 60%;
+                     margin-left: 15%;
+                 }
 
         .rows {
             width: 80%;
