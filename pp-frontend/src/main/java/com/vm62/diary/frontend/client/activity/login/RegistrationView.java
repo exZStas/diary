@@ -20,7 +20,7 @@ import gwt.material.design.client.base.validator.BlankValidator;
 import gwt.material.design.client.ui.*;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
+//import java.util.GregorianCalendar;
 
 public class RegistrationView extends Composite implements RegistrationActivity.IRegistrationView{
     private static RegistrationDialogUIBinder uiBinder = GWT.create(RegistrationDialogUIBinder.class);

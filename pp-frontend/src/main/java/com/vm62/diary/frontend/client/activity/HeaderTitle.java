@@ -4,7 +4,8 @@ public enum HeaderTitle {
 
     ADMIN_LOGIN("Admin login"),
     ADMIN_PANEL("Admin panel"),
-    LOGIN_PANEL("Enter to your personal diary");
+    LOGIN_PANEL("Enter to your personal diary"),
+    EVENT_PANEL("Create new Event");
 
     private String text;
 

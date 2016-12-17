@@ -9,7 +9,10 @@ public enum NavigationUrl {
     URL_REGISTRATION_ACTIVITY,
 
     //Diary main page
-    URL_DIARY_ACTIVITY;
+    URL_DIARY_ACTIVITY,
+
+    //Create event window
+    URL_CREATE_EVENT_ACTIVITY;
 
     NavigationUrl() {
     }

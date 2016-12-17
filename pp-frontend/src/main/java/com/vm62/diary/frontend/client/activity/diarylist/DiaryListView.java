@@ -9,20 +9,25 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
+import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
+import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import gwt.material.design.addins.client.timepicker.MaterialTimePicker;
-import gwt.material.design.addins.client.window.MaterialWindow;
 import gwt.material.design.client.ui.*;
 import com.google.gwt.user.client.ui.Label;
 
+
 import java.util.Date;
 
-@Singleton
+//@Singleton
 public class DiaryListView extends Composite implements DiaryListActivity.IDiaryListView {
     private static DiaryListUiBinder uiBinder = GWT.create(DiaryListUiBinder.class);
-    interface DiaryListUiBinder extends UiBinder<Widget, DiaryListView> {
+
+    interface DiaryListUiBinder extends UiBinder<HTMLPanel, DiaryListView> {
 
     }
 
@@ -30,8 +35,8 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     protected MaterialNavBar navBar;
     @UiField
     protected MaterialButton btnAddEvent;
-    @UiField
-    MaterialWindow window;
+ /*   @UiField
+    protected MaterialModal modal;
     @UiField
     protected MaterialTextBox eventName;
     @UiField
@@ -43,36 +48,27 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     @UiField
     protected MaterialRange duration;
     @UiField
-    MaterialLabel lblRange;
+    MaterialLabel lblRange;*/
 
-    private Label currentTime = new Label();
-    Date today = new Date();
+   // private Label currentTime = new Label();
+   // Date today = new Date();
+    private NavigationManager navigationManager;
 
 
     @Inject
-    public DiaryListView() {
+    public DiaryListView(NavigationManager navigationManager) {
         //currentTime.setText(today.toString());
         //navBar.add(currentTime);
+        this.navigationManager = navigationManager;
         setWidget(uiBinder.createAndBindUi(this));
+
 
 
     }
     @UiHandler("btnAddEvent")
-    void onOpenWindow(ClickEvent e) {
-
-        window.setMaximize(false);
-        window.openWindow();
+    void onOpenCreateEventWindow(ClickEvent e) {
+        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_CREATE_EVENT_ACTIVITY));
     }
-    @UiHandler("btnCreate")
-    void onCreateEvent(ClickEvent e) {
-        window.closeWindow();
-    }
-
-    @UiHandler("duration")
-    void onRange(ChangeEvent e) {
-        lblRange.setText("Value: " + String.valueOf(duration.getValue()));
-    }
-
 
 
 }

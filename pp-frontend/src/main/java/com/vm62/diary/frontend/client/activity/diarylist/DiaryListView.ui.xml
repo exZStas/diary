@@ -11,8 +11,20 @@
         header, main, footer{
             padding-left: 280px;
         }
-        .label{
-            margin: 24px;
+        .header2 {
+            background-color: #2196F3;
+            color: white;
+            position: relative !important;
+            overflow: hidden !important;
+            width: 100% !important;
+            height: auto !important;
+            text-align: left;
+            padding-left: 7%;
+
+        }
+        .title {
+            font-size: 7px;
+
         }
         .footer{
             position: fixed;
@@ -20,28 +32,27 @@
             bottom: 0px;
             padding-top: 0px !important;
         }
-        .width {
-            width: 96%;
-            padding: 0;
-            margin: 0;
-        }
 
         .crButton {
             width: 10%;
             margin-right: 7%;
             float: right;
+            text-align: left;
+            background-color: #ff8f00 !important;
         }
 
         .container{
-            width: 100%;
-            float: left;
-            height: 700px;
+            width: 96%;
+            padding: 0;
+            margin: 0;
+            max-height: 82% !important;
+
         }
 
         .rows {
-            width: 80%;
-            margin-left: 10%;
             float: left;
+            padding-left: 7%;
+            width: 90%;
         }
 
     </ui:style>
@@ -81,48 +92,10 @@
 
         <!-- FAB -->
         <m:MaterialFAB>
+            <!--<ma:window.MaterialWindow ui:field="window"  width="50%" title="Add Event" overflow="AUTO">-->
+
             <m:MaterialButton ui:field="btnAddEvent" type="FLOATING" backgroundColor="RED" iconType="ADD" size="LARGE"/>
-            <ma:window.MaterialWindow ui:field="window"  width="50%" title="Add Event" overflow="AUTO">
-                <m:MaterialPanel addStyleNames="{style.container}" overflow="AUTO">
-                    <m:MaterialColumn grid="s12 m12 l12">
-                        <m:MaterialRow addStyleNames="{style.rows}">
-                            <m:MaterialTextBox ui:field="eventName" placeholder="event" type="TEXT" iconType="EVENT_NOTE"/>
-                        </m:MaterialRow>
-                        <m:MaterialRow addStyleNames="{style.rows}">
-                            <m:MaterialTitle title="Type of event"/>
-                            <m:MaterialListBox placeholder="type" old="true">
-                                <m:html.Option text="Education"/>
-                                <m:html.Option text="Sport"/>
-                                <m:html.Option text="Entertainment"/>
-                                <m:html.Option text="Work"/>
-                                <m:html.Option text="Homework"/>
-                                <m:html.Option text="Trip"/>
-                                <m:html.Option text="Household chores"/>
-                                <m:html.Option text="Sleep"/>
-                                <m:html.Option text="Eating"/>
-                                <m:html.Option text="Other"/>
-                            </m:MaterialListBox>
-                        </m:MaterialRow>
-                        <m:MaterialRow addStyleNames="{style.rows}">
-                            <m:MaterialTitle title="Complexity" description="Select something."/>
-                            <m:MaterialCheckBox ui:field="simple" text="simple" checked="true" width="20"/>
-                            <m:MaterialCheckBox ui:field="complex" text="complex" width="20"/>
-                        </m:MaterialRow>
-                        <m:MaterialRow addStyleNames="{style.rows}">
-                            <m:MaterialTitle title="Start time"/>
-                            <ma:timepicker.MaterialTimePicker ui:field="tp" placeholder="Start time" hour24="true"/>
-                        </m:MaterialRow>
-                        <m:MaterialRow addStyleNames="{style.rows}">
-                            <m:MaterialTitle title="Duration"/>
-                            <m:MaterialRange ui:field="duration" min="5" max="600" value="60"/>
-                            <m:MaterialLabel ui:field="lblRange" text="Value: 25" paddingBottom="20"/>
-                        </m:MaterialRow>
-                        <m:MaterialRow textAlign="LEFT"  backgroundColor="#ff8f00" addStyleNames="{style.crButton}">
-                            <m:MaterialButton ui:field="btnCreate" text="create"/>
-                        </m:MaterialRow>
-                    </m:MaterialColumn>
-                </m:MaterialPanel>
-            </ma:window.MaterialWindow>
+            <!--</ma:window.MaterialWindow>-->
         </m:MaterialFAB>
 
         <!-- Footer -->
@@ -131,5 +104,57 @@
                 <m:MaterialLabel text="© 2016 Copyright VM62 design group" />
             </m:MaterialFooterCopyright>
         </m:MaterialFooter>
+
+<!--        <m:MaterialModal ui:field="modal" type="WINDOW" dismissable="false" inDuration="500" width="50%" overflow="AUTO">
+            <m:MaterialTitle title="Create new event" addStyleNames="{style.header2}"/>
+            <m:MaterialModalContent addStyleNames="{style.container}">
+                <m:MaterialRow addStyleNames="{style.rows}">
+                    <m:MaterialTextBox ui:field="eventName" placeholder="event" type="TEXT" iconType="EVENT_NOTE"/>
+                </m:MaterialRow>
+                <m:MaterialRow addStyleNames="{style.rows}">Type of event
+                    <ma:iconmorph.MaterialIconMorph iconSize="MEDIUM">
+                        <m:MaterialIcon iconType="MENU"/>
+                        <m:MaterialIcon iconType="SCHOOL"/>
+                        <m:MaterialIcon iconType="FITNESS_CENTER"/>
+                        <m:MaterialIcon iconType="MOOD"/>
+                        <m:MaterialIcon iconType="WORK"/>
+                        <m:MaterialIcon iconType="BOOK"/>
+                    </ma:iconmorph.MaterialIconMorph>
+                    <m:MaterialListBox placeholder="type">
+                        <m:html.Option text="Education" />
+                        <m:html.Option text="Sport"/>
+                        <m:html.Option text="Entertainment"/>
+                        <m:html.Option text="Work"/>
+                        <m:html.Option text="Homework"/>
+                        <m:html.Option text="Trip"/>
+                        <m:html.Option text="Household chores"/>
+                        <m:html.Option text="Sleep"/>
+                        <m:html.Option text="Eating"/>
+                        <m:html.Option text="Other"/>
+                    </m:MaterialListBox>
+                </m:MaterialRow>
+                <m:MaterialRow addStyleNames="{style.rows}">
+                    <m:MaterialTitle title="Complexity" description="Select something." fontSize="0.5em"/>
+                    <m:MaterialIcon iconType="EVENT_AVAILABLE"/>
+                    <m:MaterialCheckBox ui:field="simple" text="simple" checked="true" width="20"/>
+                    <m:MaterialCheckBox ui:field="complex" text="complex" width="20"/>
+                </m:MaterialRow>
+                <m:MaterialRow addStyleNames="{style.rows}">
+                    <m:MaterialTitle title="Start time" fontSize="0.5em"/>
+                    <ma:timepicker.MaterialTimePicker ui:field="tp" placeholder="Start time" hour24="true"/>
+                </m:MaterialRow>
+                <m:MaterialRow addStyleNames="{style.rows}" >
+                    <m:MaterialTitle title="Duration" fontSize="0.5em"/>
+                    <m:MaterialIcon iconType="TIMELAPSE"/>
+                    <m:MaterialRange ui:field="duration" min="5" max="600" value="60" />
+                    <m:MaterialLabel ui:field="lblRange" text="Value: 25" paddingBottom="20" />
+                </m:MaterialRow>
+            </m:MaterialModalContent>
+            <m:MaterialModalFooter>
+                <m:MaterialRow addStyleNames="{style.crButton}">
+                    <m:MaterialButton ui:field="btnCreate" text="create"/>
+                </m:MaterialRow>
+            </m:MaterialModalFooter>
+        </m:MaterialModal>-->
     </g:HTMLPanel>
 </ui:UiBinder>

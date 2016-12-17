@@ -1,0 +1,77 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:m="urn:import:gwt.material.design.client.ui"
+             xmlns:ma="urn:import:gwt.material.design.addins.client">
+    <ui:with field="i18n" type="com.vm62.diary.frontend.client.common.messages.MessagesProvider"/>
+
+    <ui:style>
+        .crButton {
+            width: 10%;
+            margin-right: 7%;
+            float: right;
+            margin-bottom: 0px;
+            text-align: right;
+        }
+        .backButton {
+            width: 10%;
+            float: left;
+            background-color: #ff8f00 !important;
+            color: white !important;
+            text-align: left;
+            margin-bottom: 0px;
+        }
+
+    </ui:style>
+    <m:MaterialRow>
+        <m:MaterialRow>
+        <m:MaterialTextBox ui:field="eventName" placeholder="event" type="TEXT" iconType="EVENT_NOTE"/>
+        </m:MaterialRow>
+        <m:MaterialRow>
+            <ma:iconmorph.MaterialIconMorph iconSize="SMALL">
+                <m:MaterialIcon iconType="MENU"/>
+                <m:MaterialIcon iconType="SCHOOL"/>
+            </ma:iconmorph.MaterialIconMorph>
+            <m:MaterialListBox ui:field="typeBox" placeholder="type" fontSize="1.5em">
+                <m:html.Option text="Education"/>
+                <m:html.Option text="Sport"/>
+                <m:html.Option text="Entertainment"/>
+                <m:html.Option text="Work"/>
+                <m:html.Option text="Homework"/>
+                <m:html.Option text="Trip"/>
+                <m:html.Option text="Household chores"/>
+                <m:html.Option text="Sleep"/>
+                <m:html.Option text="Eating"/>
+                <m:html.Option text="Other"/>
+            </m:MaterialListBox>
+        </m:MaterialRow>
+        <m:MaterialRow>
+            <m:MaterialIcon iconType="EVENT_AVAILABLE" grid="3"/>
+            <m:MaterialLabel text="Complexity" grid="3" textAlign="LEFT"/>
+            <m:MaterialCheckBox ui:field="simple" text="simple" checked="true" width="20"/>
+            <m:MaterialCheckBox ui:field="complex" text="complex" width="20"/>
+        </m:MaterialRow>
+        <m:MaterialRow>
+            <ma:timepicker.MaterialTimePicker ui:field="tp" placeholder="Start time" hour24="true" iconType="AV_TIMER"/>
+        </m:MaterialRow>
+        <m:MaterialRow>
+            <m:MaterialIcon iconType="TIMELAPSE" grid="s12 m6"/>
+            <m:MaterialLabel text="Duration" grid="s12 m6" textAlign="LEFT"/>
+            <m:MaterialRange ui:field="duration" min="5" max="600" value="60"/>
+            <m:MaterialLabel ui:field="lblRange" text="Duration: 25" paddingBottom="20"/>
+        </m:MaterialRow>
+        <m:MaterialRow>
+            <m:MaterialDatePicker ui:field="endDate" placeholder="Date of event's ending" selectionType="MONTH_DAY" iconType="DATE_RANGE" enabled="false"/>
+        </m:MaterialRow>
+        <m:MaterialRow>
+            <ma:timepicker.MaterialTimePicker ui:field="tpEnd" placeholder="Ending time" hour24="true" iconType="AV_TIMER" enabled="true"/>
+        </m:MaterialRow>
+        <!--<m:MaterialModalFooter>-->
+            <m:MaterialRow addStyleNames="{style.backButton}">
+                <m:MaterialButton ui:field="btnBack" text="back"/>
+            </m:MaterialRow>
+            <m:MaterialRow addStyleNames="{style.crButton}">
+                <m:MaterialButton ui:field="btnCreate" text="create"/>
+            </m:MaterialRow>
+        <!--</m:MaterialModalFooter>-->
+    </m:MaterialRow>
+
+</ui:UiBinder>
