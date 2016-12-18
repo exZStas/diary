@@ -35,6 +35,8 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     protected MaterialNavBar navBar;
     @UiField
     protected MaterialButton btnAddEvent;
+    @UiField
+    protected HTMLPanel diaryPanel;
  /*   @UiField
     protected MaterialModal modal;
     @UiField

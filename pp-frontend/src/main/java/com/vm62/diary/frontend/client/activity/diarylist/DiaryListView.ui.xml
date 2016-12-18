@@ -56,7 +56,7 @@
         }
 
     </ui:style>
-    <g:HTMLPanel>
+    <g:HTMLPanel ui:field="diaryPanel">
         <header>
             <!-- NavBar -->
             <m:MaterialNavBar activates="sideNav" ui:field="navBar" paddingLeft="20" backgroundColor="BLUE">
@@ -92,10 +92,7 @@
 
         <!-- FAB -->
         <m:MaterialFAB>
-            <!--<ma:window.MaterialWindow ui:field="window"  width="50%" title="Add Event" overflow="AUTO">-->
-
             <m:MaterialButton ui:field="btnAddEvent" type="FLOATING" backgroundColor="RED" iconType="ADD" size="LARGE"/>
-            <!--</ma:window.MaterialWindow>-->
         </m:MaterialFAB>
 
         <!-- Footer -->
