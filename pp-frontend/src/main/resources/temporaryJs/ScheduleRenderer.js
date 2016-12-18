@@ -5,6 +5,7 @@
             var date = new Date(scheduleData.date);
             var headerText = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
             this.drawGrid(headerText);
+            this.drawEvents(scheduleData.events);
         };
 
         this.drawGrid = function(headerText) {
@@ -12,6 +13,7 @@
             var header = $('<div>').addClass('schedule__header');
             var content = $('<div>').addClass('schedule__content');
             var dividersBlock = $('<div>');
+            var eventsBlock = $('<div>').addClass('events');
 
             header.text(headerText);
 
@@ -30,16 +32,22 @@
             }
 
             content.append(dividersBlock);
+            content.append(eventsBlock);
             sheet.append(header);
             sheet.append(content);
 
             placeholder.empty();
             placeholder.append(sheet);
 
-            this.eventContainer = content;
+            this.eventContainer = eventsBlock;
         };
 
-        this.drawEvents = function() {
+        this.drawEvents = function(events) {
+            var bufEvent;
+            for (var i = 0; i < events.length; i++) {
+                bufEvent = new UserEvent(events[i]);
+                bufEvent.draw(this.eventContainer);
+            }
 
         }
     };
