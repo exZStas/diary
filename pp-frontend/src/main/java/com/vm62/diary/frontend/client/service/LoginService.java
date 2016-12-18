@@ -11,7 +11,7 @@ import java.util.Date;
 @RemoteServiceRelativePath(ServletMappingConstants.LOGIN_SERVICE_RELATIVE_PATH)
 public interface LoginService extends RemoteService {
 
-    UserDTO login (String email);
+    UserDTO login (String email, String password) throws ServiceException;
 
     UserDTO registration (String firstName, String lastName, String password,String gender, String studyGroup, Date birthDay, String email) throws ServiceException;
 

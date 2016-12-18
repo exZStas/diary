@@ -5,13 +5,17 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.vm62.diary.frontend.client.activity.HeaderTitle;
 import com.vm62.diary.frontend.client.common.components.CDialogBox;
+import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
+import com.vm62.diary.frontend.client.service.LoginServiceAsync;
+import com.vm62.diary.frontend.server.service.dto.UserDTO;
 import gwt.material.design.client.base.validator.BlankValidator;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialRow;
@@ -33,10 +37,16 @@ public class LoginDialog extends CDialogBox{
     MaterialButton btnRegistration;
 
     private NavigationManager navigationManager;
+    private LoginServiceAsync loginServiceAsync;
+    private NotificationManager notificationManager;
+    private LoginDialog me;
 
     @Inject
-    public LoginDialog(NavigationManager navigationManager){
+    public LoginDialog(NavigationManager navigationManager, LoginServiceAsync loginServiceAsync, NotificationManager notificationManager){
         this.navigationManager = navigationManager;
+        this.loginServiceAsync = loginServiceAsync;
+        this.notificationManager = notificationManager;
+        me = this;
         setWidget(uiBinder.createAndBindUi(this));
         btnRegistration.getElement().getStyle().setBackgroundColor("#ff8f00");
 
@@ -50,8 +60,20 @@ public class LoginDialog extends CDialogBox{
         if(!email.validate() && !password.validate()){
             return;
         }
-        this.hide();
-        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
+
+        loginServiceAsync.login(email.getText(), password.getText(), new AsyncCallback<UserDTO>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                notificationManager.showErrorPopupWithoutDetails("Incorrect email or password!");
+            }
+
+            @Override
+            public void onSuccess(UserDTO result) {
+                me.hide();
+                navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
+            }
+        });
+
     }
 
     @UiHandler("btnRegistration")

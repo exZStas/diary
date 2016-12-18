@@ -22,6 +22,7 @@ public enum ErrorType {
     PASSWORD_TOO_SHORT("01-001", "{0} password too short"),
     PASSWORD_MALFORMED("01-002", "{0} password malformed"),
     CANNOT_CREATE_USER_EMAIL_ALREADY_EXIST("01-003", "{0} email already exist"),
+    CANNOT_LOGIN("01-004", "{0} wrong email/password combination"),
 
 
     //exceptions that connected with mail processing

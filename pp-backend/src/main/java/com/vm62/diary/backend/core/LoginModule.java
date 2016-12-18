@@ -24,6 +24,18 @@ public class LoginModule {
     @Inject
     private UserDAO userDAO;
 
+    public User authorisateUser(String email, Password password) throws ServiceException {
+        ValidationUtils.ifNullOrEmpty(email, ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "email");
+        ValidationUtils.ifNullOrEmpty(password.getAsString(), ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "password");
+        User user = userBean.getUserByEmail(email);
+        if(user.getPassword().getAsString().equals(password.encode().getAsString())){
+            return user;
+        } else {
+            ExceptionFactory.throwServiceException(ErrorType.CANNOT_LOGIN);
+        }
+        return null;
+    }
+
 
     public User createUser(String firstName, String lastName, Password password, String sex, String studyGroup, Date birthday, String email) throws ServiceException {
         ValidationUtils.ifNullOrEmpty(firstName, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "first name");

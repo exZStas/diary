@@ -24,8 +24,10 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     private UserSessionHelper userSessionHelper;
 
     @Override
-    public UserDTO login(String email) {
-        return null;
+    public UserDTO login(String email, String password) throws ServiceException{
+        User user = loginModule.authorisateUser(email, new PasswordPlainText(password, email));
+
+        return new UserDTOAssembler().mapEntityToDTO(user);
     }
 
     @Override
