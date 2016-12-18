@@ -11,10 +11,11 @@ import java.util.Date;
 /**
  * Created by Ира on 18.12.2016.
  */
+
 @Singleton
 public class EventServiceImpl extends RemoteServiceServlet implements EventService{
     @Override
-    public EventDTO create(String name, String type, Date start, Date end, int duration, int userID) throws ServiceException {
+    public EventDTO create(String name, String type, Date start, Date end, int duration) throws ServiceException {
         return null;
     }
 }

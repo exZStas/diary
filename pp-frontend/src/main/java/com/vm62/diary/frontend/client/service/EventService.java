@@ -14,5 +14,5 @@ import java.util.Date;
 @RemoteServiceRelativePath(ServletMappingConstants.EVENT_SERVICE_RELATIVE_PATH)
 public interface EventService extends RemoteService{
 
-    EventDTO create(String name, String type, Date start, Date end, int duration, int userID) throws ServiceException;
+    EventDTO create(String name, String type, Date start, Date end, int duration) throws ServiceException;
 }

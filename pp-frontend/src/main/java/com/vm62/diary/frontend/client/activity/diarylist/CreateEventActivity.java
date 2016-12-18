@@ -43,28 +43,28 @@ public class CreateEventActivity implements BaseActivity {
     CreateEventActivity(ICreateEventView view, EventServiceAsync eventServiceAsync, NotificationManager notificationManager) {
 
         this.view = view;
-//        this.eventServiceAsync = eventServiceAsync;
+        this.eventServiceAsync = eventServiceAsync;
         this.notificationManager = notificationManager;
         addEventHandlers();
     }
 
     private void addEventHandlers() {
-//        view.registerPatientHandler(new SimpleEventHandler() {
-//            @Override
-//            public void onEvent() {
-//                eventServiceAsync.create(view.getName(), view.getType(),view.getStartTime(),view.getEndTime(),view.getDuration(),1, new AsyncCallback<EventDTO>() {
-//                            @Override
-//                            public void onFailure(Throwable caught) {
-//                                notificationManager.showErrorPopupWithoutDetails("Event was canceled!");
-//                            }
-//
-//                            @Override
-//                            public void onSuccess(EventDTO result) {
-//                                notificationManager.showErrorPopupWithoutDetails("Event create!");
-//                            }
-//                        });
-//            }
-//        });
+        view.registerPatientHandler(new SimpleEventHandler() {
+            @Override
+            public void onEvent() {
+                eventServiceAsync.create(view.getName(), view.getType(),view.getStartTime(),view.getEndTime(),view.getDuration(), new AsyncCallback<EventDTO>() {
+                            @Override
+                            public void onFailure(Throwable caught) {
+                                notificationManager.showErrorPopupWithoutDetails("Event was canceled!");
+                            }
+
+                            @Override
+                            public void onSuccess(EventDTO result) {
+                                notificationManager.showErrorPopupWithoutDetails("Event create!");
+                            }
+                        });
+            }
+        });
     }
     @Override
     public void start(HasWidgets display, NavigationPlace place) {

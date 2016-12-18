@@ -52,7 +52,7 @@ public class TestUserDAO {
     @Test
     public void test_GetUserById(){
         User user = userDAO.getUserById(user1.getId());
-        assertEquals(user.getId(), user.getId());
+        assertEquals(user.getId(), user1.getId());
         assertEquals(user.isRegister(), Boolean.TRUE);
         assertEquals(user.getRegistrationId(), uid);
     }

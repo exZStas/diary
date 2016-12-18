@@ -15,5 +15,5 @@ import java.util.Date;
  */
 public interface EventServiceAsync {
 
-    void create(String name,String type, Date start, Date end, int duration, int userID, AsyncCallback<EventDTO> async);
+    void create(String name,String type, Date start, Date end, int duration, AsyncCallback<EventDTO> async);
 }
