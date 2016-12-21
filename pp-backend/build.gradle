@@ -17,6 +17,7 @@ dependencies {
     compile group: 'org.unitils', name: 'unitils-core', version: '3.4'
     compile group: 'com.google.apis', name: 'google-api-services-gmail', version: 'v1-rev53-1.22.0'
     compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.8.3'
 
 
 
