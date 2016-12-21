@@ -9,6 +9,7 @@ import com.vm62.diary.common.constants.Category;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.util.Date;
 import java.util.List;
 
 /**

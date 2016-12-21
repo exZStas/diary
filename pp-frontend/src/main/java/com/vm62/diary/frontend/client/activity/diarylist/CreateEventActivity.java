@@ -7,6 +7,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.ImplementedBy;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.vm62.diary.common.constants.Category;
+import com.vm62.diary.common.constants.Sticker;
 import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
@@ -25,10 +27,12 @@ public class CreateEventActivity implements BaseActivity {
     @ImplementedBy(CreateEventView.class)
     public interface ICreateEventView extends IsWidget {
         String getName();
-        String getType();
+        String getDescription();
+        String getSticker();
+        Category getCategory();
         Boolean getComplexity();
         Date getStartTime();
-        int getDuration();
+        Long getDuration();
         Date getEndTime();
         Date getEndDate();
 
@@ -52,7 +56,7 @@ public class CreateEventActivity implements BaseActivity {
         view.registerPatientHandler(new SimpleEventHandler() {
             @Override
             public void onEvent() {
-                eventServiceAsync.create(view.getName(), view.getType(),view.getStartTime(),view.getEndTime(),view.getDuration(), new AsyncCallback<EventDTO>() {
+                eventServiceAsync.create(view.getName(), view.getDescription() ,view.getCategory(), view.getStartTime(),view.getEndTime(),view.getComplexity(),view.getDuration(), view.getSticker(), new AsyncCallback<EventDTO>() {
                             @Override
                             public void onFailure(Throwable caught) {
                                 notificationManager.showErrorPopupWithoutDetails("Event was canceled!");

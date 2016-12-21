@@ -7,6 +7,8 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.inject.Inject;
+import com.vm62.diary.common.constants.Category;
+import com.vm62.diary.common.constants.Sticker;
 import com.vm62.diary.frontend.client.activity.HeaderTitle;
 import com.vm62.diary.frontend.client.common.components.CDialogBox;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
@@ -18,10 +20,11 @@ import gwt.material.design.client.base.validator.BlankValidator;
 import gwt.material.design.client.ui.*;
 import gwt.material.design.client.ui.html.Option;
 
+
 import java.util.Date;
 
 import static com.vm62.diary.common.constants.Category.education;
-
+import com.google.gwt.user.client.ui.Image;
 /**
  * Created by Ира on 15.12.2016.
  */
@@ -39,10 +42,10 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     protected MaterialCheckBox complex;
     @UiField
     protected MaterialTimePicker tp;
-    @UiField
-    protected MaterialRange duration;
-    @UiField
-    protected MaterialLabel lblRange;
+//    @UiField
+//    protected MaterialRange duration;
+//    @UiField
+//    protected MaterialLabel lblRange;
     @UiField
     MaterialButton btnBack;
     @UiField
@@ -51,9 +54,20 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     MaterialTimePicker tpEnd;
     @UiField
     MaterialListBox typeBox;
+    @UiField
+    MaterialIntegerBox minBox;
+    @UiField
+    MaterialIntegerBox hourBox;
+    @UiField
+    MaterialChip impChip;
+    @UiField
+    MaterialTextArea descriptArea;
+
 
     private NavigationManager navigationManager;
     private SimpleEventHandler registerPatient;
+    private Category category;
+    private Sticker sticker;
 
     @Inject
     public CreateEventView(NavigationManager navigationManager) {
@@ -63,6 +77,9 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         btnBack.getElement().getStyle().setBackgroundColor("#ff8f00");
         endDate.setDateMin(new Date(90,1,0));
         endDate.setDateMax(new Date());
+        minBox.setValue(5);
+        hourBox.setValue(0);
+        impChip.setUrl("/res/imp.png");
 
         // Возможно, правильнее так добавлять категории
         typeBox.add(new Option(education.getCategory()));
@@ -86,10 +103,10 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
     }
 
-    @UiHandler("duration")
-    void onRange(ChangeEvent e) {
-        lblRange.setText("Duration: " + String.valueOf(duration.getValue()));
-    }
+//    @UiHandler("duration")
+//    void onRange(ChangeEvent e) {
+//        lblRange.setText("Duration: " + String.valueOf(duration.getValue()));
+//    }
 
     @UiHandler("simple")
     protected void simpleClick(ClickEvent event){
@@ -130,8 +147,14 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     public String getName(){ return eventName.getText();}
 
     @Override
-    public String getType(){return typeBox.getSelectedItemText();}
+    public Category getCategory() {
 
+        return Category.valueOf(typeBox.getSelectedItemText());
+    }
+    @Override
+    public String getDescription(){
+        return descriptArea.getText();
+    }
     @Override
     public Boolean getComplexity(){return simple.getValue() ? simple.getValue() : complex.getValue();}
 
@@ -139,12 +162,22 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     public Date getStartTime(){return tp.getValue();}
 
     @Override
-    public int getDuration(){return duration.getValue();}
+    public Long getDuration(){
+        int i;
+        i= (minBox.getValue()*60 + hourBox.getValue()*60*60);
+        Long l = new Long(i);
+        return l;
+    }
     @Override
     public Date getEndTime(){return tpEnd.getValue();}
 
     @Override
     public Date getEndDate(){return endDate.getValue();}
+
+    @Override
+    public String getSticker(){
+        return impChip.getText();
+    }
 
     @Override
     public void registerPatientHandler(SimpleEventHandler handler){

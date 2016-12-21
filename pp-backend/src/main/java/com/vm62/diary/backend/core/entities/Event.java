@@ -1,6 +1,7 @@
 package com.vm62.diary.backend.core.entities;
 
 import com.vm62.diary.common.constants.Category;
+import com.vm62.diary.common.constants.Sticker;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -43,13 +44,16 @@ public class Event implements Serializable{
     @Column(name = "DURATION", nullable = false, length = 11)
     private Long duration;
 
-    @Column(name="DONE_STATUS",nullable = false, columnDefinition = "BIT", length = 1)
+    @Column(name="DONE_STATUS",nullable = true, columnDefinition = "BIT", length = 1)
     private Boolean done_status;
+
+    @Column(name="STICKER",nullable = false, length = 45)
+    private String sticker;
 
     public Event(){}
 
     public Event(Long user_id, String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
-                 Long duration, Boolean done_status){
+                 Long duration, String sticker){
         this.user_id=user_id;
         this.name=name;
         this.description=description;
@@ -58,7 +62,7 @@ public class Event implements Serializable{
         this.end_time=end_time;
         this.start_time=start_time;
         this.duration=duration;
-        this.done_status = done_status;
+        this.sticker = sticker;
     }
 
     public Long getId(){return id;}
@@ -136,6 +140,12 @@ public class Event implements Serializable{
         this.done_status = done_status;
     }
 
+    public void setSticker(String sticker){this.sticker=sticker;}
+
+    public String getSticker() {
+        return sticker;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
@@ -149,6 +159,7 @@ public class Event implements Serializable{
                 ", start_time='" + end_time+ '\'' +
                 ", duration='" + duration+ '\'' +
                 ", done_status='" + done_status+ '\'' +
+                ", sticker='" + sticker+ '\'' +
                 '}';
     }
 }

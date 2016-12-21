@@ -9,6 +9,7 @@ import com.vm62.diary.common.ErrorType;
 import com.vm62.diary.common.ServiceException;
 import com.vm62.diary.common.constants.Category;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.vm62.diary.common.utils.ValidationUtils.ifNull;
@@ -21,14 +22,24 @@ public class EventBean {
     @Inject
     public EventDAO eventDAO;
 
-    public Event createEvent(Event event) throws ServiceException{
-        ifNull(event, ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "event");
+    public Event createEvent(String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
+                             Long duration, String sticker) throws ServiceException{
+        ifNull(name, ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "name");
+        ifNull(category, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "category");
+        ifNull(start_time, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "start_time");
+        ifNull(end_time, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "end_time");
+        ifNull(duration, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "duration");
+
+        Event event = new Event(1L, name, description, category, start_time, end_time, complexity,
+                duration, sticker);
+
         return eventDAO.createEvent(event);
 
     }
     public Event getEventById(Long id){
         return eventDAO.getEventById(id);
     }
+
     public Event setEventDoneStatus(Boolean doneStatus, Event event) throws ServiceException {
         ifNull(event, ErrorType.CANNOT_BE_NULL, "event");
         ifNull(doneStatus, ErrorType.CANNOT_BE_NULL, "done_status");

@@ -8,6 +8,7 @@ import com.vm62.diary.backend.core.entities.Event;
 import com.vm62.diary.backend.core.entities.User;
 import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.common.constants.Gender;
+import com.vm62.diary.common.constants.Sticker;
 import factory.EventFactory;
 import factory.UserFactory;
 import org.junit.Before;
@@ -61,9 +62,9 @@ public class TestEventDAO {
         user1 = userFactory.createUser("Maor", "Dingenman", "password1",Gender.M, "vm66", new Date(2016, 05, 12), email, uid1, Boolean.TRUE, Boolean.TRUE);
         user2 = userFactory.createUser("Beedan", "J.C.P.D", "password1", Gender.M, "vm27", new Date(2016, 05, 12), email2, uid2, Boolean.TRUE, Boolean.TRUE);
         user3 = userFactory.createUser("Geedan", "Walker", "password1", Gender.M, "vm27", new Date(2016, 05, 12), email3, uid3, Boolean.FALSE, Boolean.FALSE);
-        event1 = eventFactory.createEvent(user1.getId(),"study","bla-bla", Category.education, start_time1, end_time1, false, end_time1.getTime()-start_time1.getTime(),false);
-        event2 = eventFactory.createEvent(user1.getId(),"study","", Category.education, start_time2, end_time2, true, end_time2.getTime()-start_time2.getTime(),false);
-        event3 = eventFactory.createEvent(user1.getId(),"fitness","pilates", Category.sport, start_time3, end_time3, false, end_time3.getTime()-start_time3.getTime(),true);
+        event1 = eventFactory.createEvent(user1.getId(),"study","bla-bla", Category.education, start_time1, end_time1, false, end_time1.getTime()-start_time1.getTime(), "difficult");
+        event2 = eventFactory.createEvent(user1.getId(),"study","", Category.education, start_time2, end_time2, true, end_time2.getTime()-start_time2.getTime(), "important");
+        event3 = eventFactory.createEvent(user1.getId(),"fitness","pilates", Category.sport, start_time3, end_time3, false, end_time3.getTime()-start_time3.getTime(), "difficult");
     }
 
     @Test
@@ -101,11 +102,6 @@ public class TestEventDAO {
         Long l = end_time1.getTime()-start_time1.getTime();
         List<Event> events = eventDAO.getEventByDuration(l);
         assertReflectionEquals(events, Arrays.asList(event1), ReflectionComparatorMode.LENIENT_ORDER);
-    }
-    @Test
-    public void test_GetEventByDoneStatus(){
-        List<Event> events = eventDAO.getEventByDoneStatus(false);
-        assertReflectionEquals(events, Arrays.asList(event1,event2), ReflectionComparatorMode.LENIENT_ORDER);
     }
 
 }

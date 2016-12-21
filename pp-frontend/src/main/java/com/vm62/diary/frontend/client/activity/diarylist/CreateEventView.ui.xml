@@ -26,6 +26,9 @@
         <m:MaterialTextBox ui:field="eventName" placeholder="event" type="TEXT" iconType="EVENT_NOTE"/>
         </m:MaterialRow>
         <m:MaterialRow>
+            <m:MaterialTextArea ui:field="descriptArea" placeholder="Text Area" length="120" iconType="TEXT_FIELDS"/>
+        </m:MaterialRow>
+        <m:MaterialRow>
             <ma:iconmorph.MaterialIconMorph iconSize="SMALL">
                 <m:MaterialIcon iconType="MENU"/>
                 <m:MaterialIcon iconType="SCHOOL"/>
@@ -44,6 +47,9 @@
             </m:MaterialListBox>
         </m:MaterialRow>
         <m:MaterialRow>
+            <m:MaterialChip ui:field="impChip" text="Impotant" backgroundColor="RED" textColor="WHITE" iconType="CLOSE"/>
+        </m:MaterialRow>
+        <m:MaterialRow>
             <m:MaterialIcon iconType="EVENT_AVAILABLE" grid="3"/>
             <m:MaterialLabel text="Complexity" grid="3" textAlign="LEFT"/>
             <m:MaterialCheckBox ui:field="simple" text="simple" checked="true" width="20"/>
@@ -52,12 +58,19 @@
         <m:MaterialRow>
             <ma:timepicker.MaterialTimePicker ui:field="tp" placeholder="Start time" hour24="true" iconType="AV_TIMER"/>
         </m:MaterialRow>
-        <m:MaterialRow>
-            <m:MaterialIcon iconType="TIMELAPSE" grid="s12 m6"/>
-            <m:MaterialLabel text="Duration" grid="s12 m6" textAlign="LEFT"/>
-            <m:MaterialRange ui:field="duration" min="5" max="600" value="60"/>
-            <m:MaterialLabel ui:field="lblRange" text="Duration: 25" paddingBottom="20"/>
+        <m:MaterialRow paddingBottom="0">
+            <m:MaterialIcon iconType="TIMELAPSE" grid="2"/>
+            <m:MaterialLabel text="Duration" grid="2" textAlign="LEFT"/>
         </m:MaterialRow>
+        <m:MaterialRow >
+            <m:MaterialColumn grid="10">
+                <m:MaterialIntegerBox ui:field="minBox" placeholder="minutes" iconType="HOURGLASS_EMPTY"/>
+            </m:MaterialColumn>
+            <m:MaterialColumn grid="10">
+                <m:MaterialIntegerBox ui:field="hourBox" placeholder="houres" iconType="SCHEDULE"/>
+            </m:MaterialColumn>
+        </m:MaterialRow>
+
         <m:MaterialRow>
             <m:MaterialDatePicker ui:field="endDate" placeholder="Date of event's ending" selectionType="MONTH_DAY" iconType="DATE_RANGE" enabled="false"/>
         </m:MaterialRow>

@@ -101,7 +101,6 @@ public class RegistrationView extends Composite implements RegistrationActivity.
             return;
         }
         registerPatient.onEvent();
-        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
     }
 
     @Override
