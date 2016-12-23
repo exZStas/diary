@@ -11,7 +11,6 @@ import com.vm62.diary.common.password.PasswordPlainText;
 import com.vm62.diary.frontend.client.service.LoginService;
 import com.vm62.diary.frontend.server.service.dto.UserDTO;
 import com.vm62.diary.integration.server.assembler.UserDTOAssembler;
-import com.vm62.diary.integration.session.UserSessionHelper;
 
 import java.util.Date;
 
@@ -20,12 +19,9 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     @Inject
     private LoginModule loginModule;
 
-    @Inject
-    private UserSessionHelper userSessionHelper;
-
     @Override
     public UserDTO login(String email, String password) throws ServiceException{
-        User user = loginModule.authorisateUser(email, new PasswordPlainText(password, email));
+        User user = loginModule.authorizeUser(email, new PasswordPlainText(password, email));
 
         return new UserDTOAssembler().mapEntityToDTO(user);
     }

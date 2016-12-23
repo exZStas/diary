@@ -9,6 +9,7 @@ import com.vm62.diary.common.ExceptionFactory;
 import com.vm62.diary.common.ServiceException;
 import com.vm62.diary.common.constants.Gender;
 import com.vm62.diary.common.password.Password;
+import com.vm62.diary.common.session.UserSessionHelper;
 import com.vm62.diary.common.utils.ValidationUtils;
 
 import java.util.Date;
@@ -24,11 +25,15 @@ public class LoginModule {
     @Inject
     private UserDAO userDAO;
 
-    public User authorisateUser(String email, Password password) throws ServiceException {
+    @Inject
+    private UserSessionHelper userSessionHelper;
+
+    public User authorizeUser(String email, Password password) throws ServiceException {
         ValidationUtils.ifNullOrEmpty(email, ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "email");
         ValidationUtils.ifNullOrEmpty(password.getAsString(), ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "password");
         User user = userBean.getUserByEmail(email);
         if(user.getPassword().getAsString().equals(password.encode().getAsString())){
+            userSessionHelper.createUserSession(user.getId());
             return user;
         } else {
             ExceptionFactory.throwServiceException(ErrorType.CANNOT_LOGIN);
@@ -58,8 +63,7 @@ public class LoginModule {
                 Boolean.FALSE,
                 Boolean.FALSE);
 
-        userBean.createUser(user);
-        return user;
+        return userBean.createUser(user);
     }
 
     public boolean isUserEmailExist(String email) throws ServiceException {

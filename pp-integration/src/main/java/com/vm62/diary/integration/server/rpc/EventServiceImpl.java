@@ -23,9 +23,9 @@ public class EventServiceImpl extends RemoteServiceServlet implements EventServi
     private EventBean eventBean;
 
     @Override
-    public EventDTO create(String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
+    public EventDTO create(String name, String description, Category category, Date startTime, Date endTime, Boolean complexity,
                            Long duration, String sticker) throws ServiceException {
-        eventBean.createEvent(name, description, category, start_time, end_time, complexity, duration, sticker);
+        eventBean.createEvent(name, description, category, startTime, endTime, complexity, duration, sticker);
         return null;
     }
 }

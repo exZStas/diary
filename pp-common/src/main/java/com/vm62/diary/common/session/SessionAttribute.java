@@ -1,4 +1,4 @@
-package com.vm62.diary.integration.session;
+package com.vm62.diary.common.session;
 
 public abstract class SessionAttribute {
 
