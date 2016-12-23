@@ -8,6 +8,7 @@ import com.vm62.diary.backend.core.entities.Event;
 import com.vm62.diary.backend.core.entities.User;
 import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.common.constants.Gender;
+import com.vm62.diary.common.constants.Status;
 import com.vm62.diary.common.constants.Sticker;
 import factory.EventFactory;
 import factory.UserFactory;
@@ -102,6 +103,15 @@ public class TestEventDAO {
         Long l = end_time1.getTime()-start_time1.getTime();
         List<Event> events = eventDAO.getEventByDuration(l);
         assertReflectionEquals(events, Arrays.asList(event1), ReflectionComparatorMode.LENIENT_ORDER);
+    }
+    @Test
+    public void test_GetEventByDoneStatus(){
+        Event event = event1;
+        event.setDoneStatus(Status.done);
+        eventDAO.updateEvent(event);
+        assertEquals(event.getDoneStatus(), Status.done);
+        List<Event> events = eventDAO.getEventByDoneStatus(Status.active);
+        assertReflectionEquals(events, Arrays.asList(event2, event3), ReflectionComparatorMode.LENIENT_ORDER);
     }
 
 }

@@ -120,7 +120,7 @@ public class RegistrationView extends Composite implements RegistrationActivity.
 
     @Override
     public Boolean getGender() {
-        return men.getValue() ? men.getValue() : woman.getValue();
+        return men.getValue() ? men.getValue() : false;
     }
 
     @Override

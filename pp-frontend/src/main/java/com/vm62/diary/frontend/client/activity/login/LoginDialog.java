@@ -64,7 +64,7 @@ public class LoginDialog extends CDialogBox{
         loginServiceAsync.login(email.getText(), password.getText(), new AsyncCallback<UserDTO>() {
             @Override
             public void onFailure(Throwable caught) {
-                notificationManager.showErrorPopupWithoutDetails("Incorrect email or password!");
+                notificationManager.showErrorPopupWithoutDetails("Incorrect email or password!",true);
             }
 
             @Override

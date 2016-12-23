@@ -63,12 +63,12 @@ public class RegistrationActivity implements BaseActivity {
                         view.getStudyGroup(), view.getBirthDay(), view.getEmail(), new AsyncCallback<UserDTO>() {
                             @Override
                             public void onFailure(Throwable caught) {
-                                notificationManager.showErrorPopupWithoutDetails("Registration was failed!");
+                                notificationManager.showErrorPopupWithoutDetails("Registration was failed!", true);
                             }
 
                             @Override
                             public void onSuccess(UserDTO result) {
-                                notificationManager.showErrorPopupWithoutDetails("Registration successful!");
+                                notificationManager.showErrorPopupWithoutDetails("Registration successful!", false);
                             }
                         });
             }

@@ -85,7 +85,7 @@
                 <m:MaterialLink text="Chart" textColor="BLUE" iconType="PIE_CHART"/>
                 <m:MaterialLink text="Notifications" textColor="BLUE" iconType="NOTIFICATIONS" separator="true"/>
                 <m:MaterialLink text="Update schedule" textColor="BLUE" iconType="REFRESH"/>
-                <m:MaterialLink text="Change profile" textColor="BLUE" iconType="CARD_MEMBERSHIP"/>
+                <m:MaterialLink ui:field="changeBtn" text="Change profile" textColor="BLUE" iconType="CARD_MEMBERSHIP"/>
             </m:MaterialSideNav>
 
         </header>

@@ -1,6 +1,8 @@
 package com.vm62.diary.frontend.client.activity.diarylist;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.editor.client.Editor;
+import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -17,14 +19,20 @@ import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import gwt.material.design.addins.client.timepicker.MaterialTimePicker;
 import gwt.material.design.client.base.validator.BlankValidator;
+import gwt.material.design.client.base.validator.Validator;
 import gwt.material.design.client.ui.*;
 import gwt.material.design.client.ui.html.Option;
 
 
+import java.lang.*;
 import java.util.Date;
+import java.util.List;
 
 import static com.vm62.diary.common.constants.Category.education;
 import com.google.gwt.user.client.ui.Image;
+
+import javax.validation.constraints.Null;
+
 /**
  * Created by Ира on 15.12.2016.
  */
@@ -53,11 +61,11 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     @UiField
     MaterialTimePicker tpEnd;
     @UiField
-    MaterialListBox typeBox;
+    protected MaterialListBox typeBox;
     @UiField
-    MaterialIntegerBox minBox;
+    protected MaterialIntegerBox minBox;
     @UiField
-    MaterialIntegerBox hourBox;
+    protected MaterialIntegerBox hourBox;
     @UiField
     MaterialChip impChip;
     @UiField
@@ -66,8 +74,8 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     private NavigationManager navigationManager;
     private SimpleEventHandler registerPatient;
-    private Category category;
-    private Sticker sticker;
+    private Date startTime;
+    private Date endTime;
 
     @Inject
     public CreateEventView(NavigationManager navigationManager) {
@@ -80,14 +88,18 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         minBox.setValue(5);
         hourBox.setValue(0);
         impChip.setUrl("/res/imp.png");
+        simple.setValue(true);
+        complex.setValue(false);
 
         // Возможно, правильнее так добавлять категории
         typeBox.add(new Option(education.getCategory()));
-
+        endDate.addValidator(new BlankValidator<Date>("Please, provide event's start date!"));
 
         center();
         addEventHandlers();
         eventName.addValidator(new BlankValidator<String>("Please, provide event's name!"));
+
+
 
     }
 
@@ -95,18 +107,29 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     @UiHandler("btnCreate")
     void onCreateEvent(ClickEvent e) {
-        if(!eventName.validate()){
+        if(!eventName.validate() || tp.getTime().isEmpty()){
+            tp.setBackgroundColor("red");
             return;
         }
+        else if (getComplexity()&&(!eventName.validate() || tp.getTime().isEmpty() || tpEnd.getTime().isEmpty())){
+            return;
+        }
+
         this.hide();
         registerPatient.onEvent();
         navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
+
     }
 
 //    @UiHandler("duration")
 //    void onRange(ChangeEvent e) {
 //        lblRange.setText("Duration: " + String.valueOf(duration.getValue()));
 //    }
+    @UiHandler("btnBack")
+    protected void onBackEvent(ClickEvent e){
+        this.hide();
+        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
+    }
 
     @UiHandler("simple")
     protected void simpleClick(ClickEvent event){
@@ -149,30 +172,49 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     @Override
     public Category getCategory() {
 
-        return Category.valueOf(typeBox.getSelectedItemText());
+        return Category.valueOf(typeBox.getSelectedItemText().toLowerCase());
     }
     @Override
     public String getDescription(){
         return descriptArea.getText();
     }
     @Override
-    public Boolean getComplexity(){return simple.getValue() ? simple.getValue() : complex.getValue();}
+    public Boolean getComplexity(){return complex.getValue();}
 
     @Override
-    public Date getStartTime(){return tp.getValue();}
+    public Date getStartTime(){
+        startTime = new Date();
+        startTime.setHours(tp.getValue().getHours());
+        startTime.setMinutes(tp.getValue().getMinutes());
+        return startTime;}
 
     @Override
     public Long getDuration(){
-        int i;
-        i= (minBox.getValue()*60 + hourBox.getValue()*60*60);
-        Long l = new Long(i);
-        return l;
+        minBox.getValue();
+        /*Integer i;
+        double b = minBox.getValueAsNumber();
+        Integer min = minBox.getValue();
+        Long hour = hourBox.getValue();
+        Long i1 = (hour * 60 * 60);
+        return  i1.longValue();*/
+        return 1L;
     }
     @Override
-    public Date getEndTime(){return tpEnd.getValue();}
+    public Date getEndTime(){
 
-    @Override
-    public Date getEndDate(){return endDate.getValue();}
+        endTime = new Date();
+        if (getComplexity()) {
+            endTime.setYear(endDate.getValue().getYear());
+            endTime.setMonth(endDate.getValue().getMonth());
+            endTime.setDate(endDate.getValue().getDay());
+            endTime.setHours(tpEnd.getValue().getHours());
+            endTime.setMinutes(tpEnd.getValue().getMinutes());
+        }
+        else {
+            endTime = startTime;
+            endTime.setTime(endTime.getTime()+getDuration());
+        }
+        return endTime;}
 
     @Override
     public String getSticker(){

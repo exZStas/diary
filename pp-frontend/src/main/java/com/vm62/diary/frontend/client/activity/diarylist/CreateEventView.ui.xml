@@ -63,8 +63,9 @@
             <m:MaterialLabel text="Duration" grid="2" textAlign="LEFT"/>
         </m:MaterialRow>
         <m:MaterialRow >
+            <!--<m:MaterialRange ui:field="minRange" min="5" max="1440" value="25" />-->
             <m:MaterialColumn grid="10">
-                <m:MaterialIntegerBox ui:field="minBox" placeholder="minutes" iconType="HOURGLASS_EMPTY"/>
+                <m:MaterialIntegerBox ui:field="minBox" value="5"/>
             </m:MaterialColumn>
             <m:MaterialColumn grid="10">
                 <m:MaterialIntegerBox ui:field="hourBox" placeholder="houres" iconType="SCHEDULE"/>
@@ -75,7 +76,7 @@
             <m:MaterialDatePicker ui:field="endDate" placeholder="Date of event's ending" selectionType="MONTH_DAY" iconType="DATE_RANGE" enabled="false"/>
         </m:MaterialRow>
         <m:MaterialRow>
-            <ma:timepicker.MaterialTimePicker ui:field="tpEnd" placeholder="Ending time" hour24="true" iconType="AV_TIMER" enabled="true"/>
+            <ma:timepicker.MaterialTimePicker ui:field="tpEnd" placeholder="Ending time" hour24="true" iconType="AV_TIMER" enabled="false"/>
         </m:MaterialRow>
         <!--<m:MaterialModalFooter>-->
             <m:MaterialRow addStyleNames="{style.backButton}">

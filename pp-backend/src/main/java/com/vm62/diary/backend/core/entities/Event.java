@@ -1,6 +1,7 @@
 package com.vm62.diary.backend.core.entities;
 
 import com.vm62.diary.common.constants.Category;
+import com.vm62.diary.common.constants.Status;
 import com.vm62.diary.common.constants.Sticker;
 
 import javax.persistence.*;
@@ -44,10 +45,10 @@ public class Event implements Serializable{
     @Column(name = "DURATION", nullable = false, length = 11)
     private Long duration;
 
-    @Column(name="DONE_STATUS",nullable = true, columnDefinition = "BIT", length = 1)
-    private Boolean done_status;
+    @Column(name="DONE_STATUS",nullable = false, length = 9, columnDefinition = "active")
+    private Status done_status;
 
-    @Column(name="STICKER",nullable = false, length = 45)
+    @Column(name="STICKER", nullable = false, length = 45)
     private String sticker;
 
     public Event(){}
@@ -63,6 +64,8 @@ public class Event implements Serializable{
         this.start_time=start_time;
         this.duration=duration;
         this.sticker = sticker;
+        this.done_status = Status.active;
+
     }
 
     public Long getId(){return id;}
@@ -132,11 +135,11 @@ public class Event implements Serializable{
         this.duration = duration;
     }
 
-    public Boolean getDoneStatus() {
+    public Status getDoneStatus() {
         return done_status;
     }
 
-    public void setDoneStatus(Boolean done_status) {
+    public void setDoneStatus(Status done_status) {
         this.done_status = done_status;
     }
 

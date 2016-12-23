@@ -8,6 +8,7 @@ import com.vm62.diary.backend.core.entities.User;
 import com.vm62.diary.common.ErrorType;
 import com.vm62.diary.common.ServiceException;
 import com.vm62.diary.common.constants.Category;
+import com.vm62.diary.common.constants.Status;
 
 import java.util.Date;
 import java.util.List;
@@ -40,7 +41,7 @@ public class EventBean {
         return eventDAO.getEventById(id);
     }
 
-    public Event setEventDoneStatus(Boolean doneStatus, Event event) throws ServiceException {
+    public Event setEventDoneStatus(Status doneStatus, Event event) throws ServiceException {
         ifNull(event, ErrorType.CANNOT_BE_NULL, "event");
         ifNull(doneStatus, ErrorType.CANNOT_BE_NULL, "done_status");
         event.setDoneStatus(doneStatus);

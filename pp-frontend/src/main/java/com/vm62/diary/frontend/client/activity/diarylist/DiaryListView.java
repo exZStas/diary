@@ -37,6 +37,8 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     protected MaterialButton btnAddEvent;
     @UiField
     protected HTMLPanel diaryPanel;
+    @UiField
+    MaterialLink changeBtn;
  /*   @UiField
     protected MaterialModal modal;
     @UiField
@@ -70,6 +72,11 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     @UiHandler("btnAddEvent")
     void onOpenCreateEventWindow(ClickEvent e) {
         navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_CREATE_EVENT_ACTIVITY));
+    }
+
+    @UiHandler("changeBtn")
+    void onOpenChangeForm(ClickEvent e){
+        //navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_REGISTRATION_ACTIVITY));
     }
 
 

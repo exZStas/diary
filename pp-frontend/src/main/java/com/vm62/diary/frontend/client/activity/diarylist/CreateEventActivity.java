@@ -34,7 +34,6 @@ public class CreateEventActivity implements BaseActivity {
         Date getStartTime();
         Long getDuration();
         Date getEndTime();
-        Date getEndDate();
 
         void registerPatientHandler(SimpleEventHandler handler);
     }
@@ -59,12 +58,12 @@ public class CreateEventActivity implements BaseActivity {
                 eventServiceAsync.create(view.getName(), view.getDescription() ,view.getCategory(), view.getStartTime(),view.getEndTime(),view.getComplexity(),view.getDuration(), view.getSticker(), new AsyncCallback<EventDTO>() {
                             @Override
                             public void onFailure(Throwable caught) {
-                                notificationManager.showErrorPopupWithoutDetails("Event was canceled!");
+                                notificationManager.showErrorPopupWithoutDetails("Event was canceled!", true);
                             }
 
                             @Override
                             public void onSuccess(EventDTO result) {
-                                notificationManager.showErrorPopupWithoutDetails("Event create!");
+                                notificationManager.showErrorPopupWithoutDetails("Event create!", false);
                             }
                         });
             }

@@ -1,3 +1,5 @@
+package TestBean;
+
 import com.vm62.diary.backend.core.bean.UserBean;
 import com.vm62.diary.backend.core.dao.UserDAO;
 import com.vm62.diary.backend.core.entities.User;
