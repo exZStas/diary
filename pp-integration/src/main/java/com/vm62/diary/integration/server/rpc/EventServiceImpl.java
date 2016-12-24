@@ -7,6 +7,7 @@ import com.vm62.diary.backend.core.bean.EventBean;
 import com.vm62.diary.common.ServiceException;
 import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.common.constants.Sticker;
+import com.vm62.diary.common.session.UserSessionHelper;
 import com.vm62.diary.frontend.client.service.EventService;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 

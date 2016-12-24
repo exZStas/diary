@@ -8,12 +8,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+import static com.vm62.diary.common.constants.Status.active;
+
 /**
  * Created by Ира on 16.12.2016.
  */
 @Entity
-@Table(name="EVENT")
-public class Event implements Serializable{
+@Table(name = "EVENT")
+public class Event implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +23,7 @@ public class Event implements Serializable{
     private Long id;
 
     @Column(name = "USER_ID", nullable = false, length = 11)
-    private  Long user_id;
+    private Long user_id;
 
     @Column(name = "NAME", nullable = false, length = 45)
     private String name;
@@ -33,49 +35,55 @@ public class Event implements Serializable{
     @Column(name = "CATEGORY", nullable = false, length = 45)
     private Category category;
 
-    @Column(name="START_TIME",nullable = false)
+    @Column(name = "START_TIME", nullable = false)
     private Date start_time;
 
-    @Column(name="END_TIME", nullable = false)
+    @Column(name = "END_TIME", nullable = false)
     private Date end_time;
 
-    @Column(name="COMPLEXITY",nullable = false, columnDefinition = "BIT", length = 1)
+    @Column(name = "COMPLEXITY", nullable = false, columnDefinition = "BIT", length = 1)
     private Boolean complexity;
 
     @Column(name = "DURATION", nullable = false, length = 11)
     private Long duration;
 
-    @Column(name="DONE_STATUS",nullable = false, length = 9, columnDefinition = "active")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "DONE_STATUS", nullable = false, length = 9, columnDefinition = "active")
     private Status done_status;
 
-    @Column(name="STICKER", nullable = false, length = 45)
+    @Column(name = "STICKER", nullable = false, length = 45)
     private String sticker;
 
-    public Event(){}
+    public Event() {
+    }
 
     public Event(Long user_id, String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
-                 Long duration, String sticker){
-        this.user_id=user_id;
-        this.name=name;
-        this.description=description;
-        this.category=category;
-        this.complexity=complexity;
-        this.end_time=end_time;
-        this.start_time=start_time;
-        this.duration=duration;
+                 Long duration, String sticker) {
+        this.user_id = user_id;
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.complexity = complexity;
+        this.end_time = end_time;
+        this.start_time = start_time;
+        this.duration = duration;
         this.sticker = sticker;
-        this.done_status = Status.active;
+        this.done_status = active;
 
     }
 
-    public Long getId(){return id;}
+    public Long getId() {
+        return id;
+    }
 
     public void setId(Long id) {
         this.id = id;
     }
+
     public Long getUserById() {
         return user_id;
     }
+
     public void setUserById(Long user_id) {
         this.user_id = user_id;
     }
@@ -95,6 +103,7 @@ public class Event implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
+
     public Category getCategory() {
         return category;
     }
@@ -143,7 +152,9 @@ public class Event implements Serializable{
         this.done_status = done_status;
     }
 
-    public void setSticker(String sticker){this.sticker=sticker;}
+    public void setSticker(String sticker) {
+        this.sticker = sticker;
+    }
 
     public String getSticker() {
         return sticker;
@@ -156,13 +167,13 @@ public class Event implements Serializable{
                 ", user_id='" + user_id + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", category='" + category+ '\'' +
+                ", category='" + category + '\'' +
                 ", complexity='" + complexity + '\'' +
-                ", start_time='" + start_time+ '\'' +
-                ", start_time='" + end_time+ '\'' +
-                ", duration='" + duration+ '\'' +
-                ", done_status='" + done_status+ '\'' +
-                ", sticker='" + sticker+ '\'' +
+                ", start_time='" + start_time + '\'' +
+                ", start_time='" + end_time + '\'' +
+                ", duration='" + duration + '\'' +
+                ", done_status='" + done_status + '\'' +
+                ", sticker='" + sticker + '\'' +
                 '}';
     }
 }
