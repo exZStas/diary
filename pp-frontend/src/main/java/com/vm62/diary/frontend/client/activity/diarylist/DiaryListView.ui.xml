@@ -8,9 +8,10 @@
     <ui:with field="i18n" type="com.vm62.diary.frontend.client.common.messages.MessagesProvider"/>
 
     <ui:style>
-        header, main, footer{
+        header, main, footer {
             padding-left: 280px;
         }
+
         .header2 {
             background-color: #2196F3;
             color: white;
@@ -22,11 +23,13 @@
             padding-left: 7%;
 
         }
+
         .title {
             font-size: 7px;
 
         }
-        .footer{
+
+        .footer {
             position: fixed;
             width: 100%;
             bottom: 0px;
@@ -41,7 +44,7 @@
             background-color: #ff8f00 !important;
         }
 
-        .container{
+        .container {
             width: 96%;
             padding: 0;
             margin: 0;
@@ -55,6 +58,11 @@
             width: 90%;
         }
 
+        .schedule-list {
+            margin-left: 280px;
+            padding-top: 20px;
+            position: relative;
+        }
     </ui:style>
     <g:HTMLPanel ui:field="diaryPanel">
         <header>
@@ -89,6 +97,83 @@
             </m:MaterialSideNav>
         </header>
 
+        <!--Here comes experimenting-->
+        <g:HTMLPanel ui:field="scheduleList" addStyleNames="{style.schedule-list}">
+            <div class="dividers-block">
+                <div class="time-divider">
+                    <span>00:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>01:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>02:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>03:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>04:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>05:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>06:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>07:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>08:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>09:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>10:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>11:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>12:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>13:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>14:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>15:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>16:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>17:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>18:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>19:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>20:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>21:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>22:00</span>
+                </div>
+                <div class="time-divider">
+                    <span>23:00</span>
+                </div>
+            </div>
+        </g:HTMLPanel>
         <!-- FAB -->
         <m:MaterialFAB>
             <m:MaterialButton ui:field="btnAddEvent" type="FLOATING" backgroundColor="RED" iconType="ADD" size="LARGE"/>
