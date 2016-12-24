@@ -65,10 +65,12 @@
         <m:MaterialRow >
             <!--<m:MaterialRange ui:field="minRange" min="5" max="1440" value="25" />-->
             <m:MaterialColumn grid="10">
-                <m:MaterialIntegerBox ui:field="minBox" value="5"/>
+                <m:MaterialTextBox ui:field="hourTextBox" placeholder="hours" type="NUMBER" iconType="HOURGLASS_EMPTY"/>
+                <!--<m:MaterialIntegerBox ui:field="minBox" value="5"/>-->
             </m:MaterialColumn>
             <m:MaterialColumn grid="10">
-                <m:MaterialIntegerBox ui:field="hourBox" placeholder="houres" iconType="SCHEDULE"/>
+                <m:MaterialTextBox ui:field="minutesTextBox" placeholder="minutes" type="NUMBER" iconType="SCHEDULE"/>
+                <!--<m:MaterialIntegerBox ui:field="hourBox" placeholder="houres" iconType="SCHEDULE"/>-->
             </m:MaterialColumn>
         </m:MaterialRow>
 

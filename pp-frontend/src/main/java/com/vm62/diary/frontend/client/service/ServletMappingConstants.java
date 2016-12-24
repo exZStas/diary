@@ -13,9 +13,9 @@ public abstract class ServletMappingConstants {
 	public final static String GWT_MODULE = "frontend";
 
 	// user service
-	public final static String USER_SERVICE_NAME = "UserService";
-	public final static String USER_SERVICE_RELATIVE_PATH = "userService";
-	public final static String USER_SERVICE_URL = "/" + GWT_MODULE + "/" + USER_SERVICE_RELATIVE_PATH;
+	public final static String USER_PROFILE_SERVICE_NAME = "UserService";
+	public final static String USER_PROFILE_SERVICE_RELATIVE_PATH = "userService";
+	public final static String USER_PROFILE_SERVICE_URL = "/" + GWT_MODULE + "/" + USER_PROFILE_SERVICE_RELATIVE_PATH;
 
 	//login service
 	public final static String LOGIN_SERVICE_NAME = "LoginService";

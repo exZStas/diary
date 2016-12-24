@@ -9,6 +9,7 @@ import com.vm62.diary.common.ExceptionFactory;
 import com.vm62.diary.common.ServiceException;
 import com.vm62.diary.common.constants.Gender;
 import com.vm62.diary.common.password.Password;
+import com.vm62.diary.common.password.PasswordEncoded;
 import com.vm62.diary.common.session.UserSessionHelper;
 import com.vm62.diary.common.utils.ValidationUtils;
 
@@ -32,7 +33,7 @@ public class LoginModule {
         ValidationUtils.ifNullOrEmpty(email, ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "email");
         ValidationUtils.ifNullOrEmpty(password.getAsString(), ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "password");
         User user = userBean.getUserByEmail(email);
-        if(user.getPassword().getAsString().equals(password.encode().getAsString())){
+        if (user.getPassword().getAsString().equals(password.encode().getAsString())) {
             userSessionHelper.createUserSession(user.getId());
             return user;
         } else {
@@ -64,6 +65,25 @@ public class LoginModule {
                 Boolean.FALSE);
 
         return userBean.createUser(user);
+    }
+
+    public User changeUserProfile(Long userId, String firstName, String lastName, Password password, Gender sex,
+                                  String studyGroup, Date birthday, String email) throws ServiceException {
+        ValidationUtils.ifNullOrEmpty(firstName, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "first name");
+        ValidationUtils.ifNullOrEmpty(lastName, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "last name");
+        ValidationUtils.ifNullOrEmpty(studyGroup, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "study group");
+        ValidationUtils.ifNullOrEmpty(email, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "email");
+
+        User user = userBean.getUserById(userId);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setPasswordEncoded(password.encode());
+        user.setGender(sex);
+        user.setBirthDate(birthday);
+        user.setStudyGroup(studyGroup);
+        user.setEmail(email);
+
+        return userBean.updateUser(user);
     }
 
     public boolean isUserEmailExist(String email) throws ServiceException {

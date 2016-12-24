@@ -76,8 +76,10 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
 
     @UiHandler("changeBtn")
     void onOpenChangeForm(ClickEvent e){
-        //navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_REGISTRATION_ACTIVITY));
+        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_CHANGE_PROFILE_ACTIVITY));
     }
+
+
 
 
 }

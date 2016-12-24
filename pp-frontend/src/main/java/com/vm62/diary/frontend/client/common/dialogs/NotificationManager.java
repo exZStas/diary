@@ -34,8 +34,8 @@ public class NotificationManager extends Composite{
      */
     public void showErrorPopupWithoutDetails(String message, Boolean error) {
         MaterialToast toast = new MaterialToast();
-        if (error) toast.toast(message, "blue");
-        else toast.toast(message, "red");
+        if (error) toast.toast(message, "red");
+        else toast.toast(message, "orange");
     }
 
 

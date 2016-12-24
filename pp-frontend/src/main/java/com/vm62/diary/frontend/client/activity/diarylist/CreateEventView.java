@@ -20,6 +20,7 @@ import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import gwt.material.design.addins.client.timepicker.MaterialTimePicker;
 import gwt.material.design.client.base.validator.BlankValidator;
 import gwt.material.design.client.base.validator.Validator;
+import gwt.material.design.client.constants.InputType;
 import gwt.material.design.client.ui.*;
 import gwt.material.design.client.ui.html.Option;
 
@@ -55,21 +56,21 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 //    @UiField
 //    protected MaterialLabel lblRange;
     @UiField
-    MaterialButton btnBack;
+    protected MaterialButton btnBack;
     @UiField
-    MaterialDatePicker endDate;
+    protected MaterialDatePicker endDate;
     @UiField
-    MaterialTimePicker tpEnd;
+    protected MaterialTimePicker tpEnd;
     @UiField
     protected MaterialListBox typeBox;
     @UiField
-    protected MaterialIntegerBox minBox;
-    @UiField
-    protected MaterialIntegerBox hourBox;
-    @UiField
-    MaterialChip impChip;
+    protected MaterialChip impChip;
     @UiField
     MaterialTextArea descriptArea;
+    @UiField
+    MaterialTextBox hourTextBox;
+    @UiField
+    MaterialTextBox minutesTextBox;
 
 
     private NavigationManager navigationManager;
@@ -85,8 +86,9 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         btnBack.getElement().getStyle().setBackgroundColor("#ff8f00");
         endDate.setDateMin(new Date(90,1,0));
         endDate.setDateMax(new Date());
-        minBox.setValue(5);
-        hourBox.setValue(0);
+        minutesTextBox.setType(InputType.NUMBER);
+        minutesTextBox.setValue("5");
+        hourTextBox.setValue("0");
         impChip.setUrl("/res/imp.png");
         simple.setValue(true);
         complex.setValue(false);
@@ -108,7 +110,7 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     @UiHandler("btnCreate")
     void onCreateEvent(ClickEvent e) {
         if(!eventName.validate() || tp.getTime().isEmpty()){
-            tp.setBackgroundColor("red");
+            tp.setIconColor("red");
             return;
         }
         else if (getComplexity()&&(!eventName.validate() || tp.getTime().isEmpty() || tpEnd.getTime().isEmpty())){
@@ -190,14 +192,9 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     @Override
     public Long getDuration(){
-        minBox.getValue();
-        /*Integer i;
-        double b = minBox.getValueAsNumber();
-        Integer min = minBox.getValue();
-        Long hour = hourBox.getValue();
-        Long i1 = (hour * 60 * 60);
-        return  i1.longValue();*/
-        return 1L;
+        Long l;
+        l = (Long.parseLong(minutesTextBox.getText()) + 60 * Long.parseLong(hourTextBox.getText()))*60000;
+        return  l;
     }
     @Override
     public Date getEndTime(){

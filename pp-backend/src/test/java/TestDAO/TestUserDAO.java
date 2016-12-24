@@ -68,8 +68,8 @@ public class TestUserDAO {
         User user = user1;
         String newEmail = "ivan@rus.com";
         user.setEmail(newEmail);
-        userDAO.updateUser(user);
-        assertEquals(user.getEmail(), newEmail);
+        User updatedUser = userDAO.updateUser(user);
+        assertEquals(updatedUser.getEmail(), newEmail);
     }
 
     @Test

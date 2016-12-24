@@ -9,6 +9,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.common.constants.Sticker;
+import com.vm62.diary.common.session.UserSessionHelper;
 import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
@@ -22,7 +23,6 @@ import java.util.Date;
  * Created by Ира on 15.12.2016.
  */
 
-@Singleton
 public class CreateEventActivity implements BaseActivity {
     @ImplementedBy(CreateEventView.class)
     public interface ICreateEventView extends IsWidget {

@@ -23,15 +23,16 @@ public class EventBean {
     @Inject
     public EventDAO eventDAO;
 
-    public Event createEvent(String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
+    public Event createEvent(Long userId, String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
                              Long duration, String sticker) throws ServiceException{
+        ifNull(userId, ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "user_id");
         ifNull(name, ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "name");
         ifNull(category, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "category");
         ifNull(start_time, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "start_time");
         ifNull(end_time, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "end_time");
         ifNull(duration, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "duration");
 
-        Event event = new Event(1L, name, description, category, start_time, end_time, complexity,
+        Event event = new Event(userId, name, description, category, start_time, end_time, complexity,
                 duration, sticker);
 
         return eventDAO.createEvent(event);

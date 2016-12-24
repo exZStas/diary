@@ -2,6 +2,7 @@ package com.vm62.diary.frontend.client.common.navigation;
 
 import com.vm62.diary.frontend.client.activity.MainPanelActivity;
 
+import com.vm62.diary.frontend.client.activity.diarylist.ChangeProfileActivity;
 import com.vm62.diary.frontend.client.activity.diarylist.CreateEventActivity;
 import com.vm62.diary.frontend.client.activity.diarylist.DiaryListActivity;
 import com.vm62.diary.frontend.client.activity.login.RegistrationActivity;
@@ -17,8 +18,8 @@ public class NavigationManager {
 
     @Inject
     Provider<MainPanelActivity> mainPanelActivityProvider;
-//    @Inject
-//    Provider<ActivityAsyncProxy<UserActivity>> UserActivityProxy;
+    @Inject
+    Provider<ActivityAsyncProxy<ChangeProfileActivity>> changeProfileActivityProxy;
     @Inject
     Provider<ActivityAsyncProxy<RegistrationActivity>> registrationActivityProxy;
 
@@ -86,6 +87,11 @@ public class NavigationManager {
             case URL_CREATE_EVENT_ACTIVITY:
                 currentActivity = eventActivityProxy.get();
                 currentActivityWidget = contentPanel;
+                break;
+            case URL_CHANGE_PROFILE_ACTIVITY:
+                currentActivity=changeProfileActivityProxy.get();
+                currentActivityWidget = contentPanel;
+                break;
         }
         currentActivity.start(currentActivityWidget, place);
     }

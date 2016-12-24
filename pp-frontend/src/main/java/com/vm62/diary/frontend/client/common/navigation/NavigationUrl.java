@@ -12,7 +12,10 @@ public enum NavigationUrl {
     URL_DIARY_ACTIVITY,
 
     //Create event window
-    URL_CREATE_EVENT_ACTIVITY;
+    URL_CREATE_EVENT_ACTIVITY,
+
+    //Change profile
+    URL_CHANGE_PROFILE_ACTIVITY;
 
     NavigationUrl() {
     }

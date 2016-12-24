@@ -32,4 +32,20 @@ public class EventDTO  implements Serializable {
     }
     public EventDTO(){}
 
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setDescriptoin(String descriptoin) {
+        this.descriptoin = descriptoin;
+    }
+
+    public String getDescriptoin() {
+        return descriptoin;
+    }
+
 }

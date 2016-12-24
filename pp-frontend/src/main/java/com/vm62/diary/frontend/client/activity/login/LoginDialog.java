@@ -74,6 +74,7 @@ public class LoginDialog extends CDialogBox{
             }
         });
 
+
     }
 
     @UiHandler("btnRegistration")
