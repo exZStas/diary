@@ -8,10 +8,11 @@ import com.google.inject.ImplementedBy;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.vm62.diary.common.constants.Category;
-import com.vm62.diary.common.constants.Sticker;
-import com.vm62.diary.common.session.UserSessionHelper;
 import com.vm62.diary.frontend.client.common.BaseActivity;
+import com.vm62.diary.frontend.client.common.components.SignImageListWidget;
+import com.vm62.diary.frontend.client.common.components.Signs;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
+import com.vm62.diary.frontend.client.common.events.SelectEventHandler;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.service.EventServiceAsync;
@@ -23,17 +24,18 @@ import java.util.Date;
  * Created by Ира on 15.12.2016.
  */
 
+@Singleton
 public class CreateEventActivity implements BaseActivity {
     @ImplementedBy(CreateEventView.class)
     public interface ICreateEventView extends IsWidget {
         String getName();
         String getDescription();
-        String getSticker();
         Category getCategory();
         Boolean getComplexity();
         Date getStartTime();
         Long getDuration();
         Date getEndTime();
+        void setSignImageList(SignImageListWidget signImageListWidget);
 
         void registerPatientHandler(SimpleEventHandler handler);
     }
@@ -41,21 +43,34 @@ public class CreateEventActivity implements BaseActivity {
     private ICreateEventView view;
     private EventServiceAsync eventServiceAsync;
     private NotificationManager notificationManager;
+    private SignImageListWidget signImageListWidget;
+    private String eventStickerPath;
 
     @Inject
-    CreateEventActivity(ICreateEventView view, EventServiceAsync eventServiceAsync, NotificationManager notificationManager) {
+    CreateEventActivity(ICreateEventView view, EventServiceAsync eventServiceAsync, NotificationManager notificationManager,
+                        SignImageListWidget signImageListWidget) {
 
         this.view = view;
+        this.signImageListWidget = signImageListWidget;
         this.eventServiceAsync = eventServiceAsync;
         this.notificationManager = notificationManager;
+        view.setSignImageList(signImageListWidget);
         addEventHandlers();
     }
 
     private void addEventHandlers() {
+
+        signImageListWidget.addSelectHandler(new SelectEventHandler<Signs>() {
+            @Override
+            public void onEvent(Signs selectedObject) {
+                eventStickerPath = selectedObject.getImage();
+            }
+        });
+
         view.registerPatientHandler(new SimpleEventHandler() {
             @Override
             public void onEvent() {
-                eventServiceAsync.create(view.getName(), view.getDescription() ,view.getCategory(), view.getStartTime(),view.getEndTime(),view.getComplexity(),view.getDuration(), view.getSticker(), new AsyncCallback<EventDTO>() {
+                eventServiceAsync.create(view.getName(), view.getDescription() ,view.getCategory(), view.getStartTime(),view.getEndTime(),view.getComplexity(),view.getDuration(), eventStickerPath, new AsyncCallback<EventDTO>() {
                             @Override
                             public void onFailure(Throwable caught) {
                                 notificationManager.showErrorPopupWithoutDetails("Event was canceled!", true);

@@ -13,6 +13,7 @@ import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.common.constants.Sticker;
 import com.vm62.diary.frontend.client.activity.HeaderTitle;
 import com.vm62.diary.frontend.client.common.components.CDialogBox;
+import com.vm62.diary.frontend.client.common.components.SignImageListWidget;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
@@ -66,6 +67,8 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     @UiField
     protected MaterialChip impChip;
     @UiField
+    MaterialRow signContainer;
+    @UiField
     MaterialTextArea descriptArea;
     @UiField
     MaterialTextBox hourTextBox;
@@ -105,7 +108,9 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     }
 
-    void addEventHandlers(){}
+    void addEventHandlers(){
+
+    }
 
     @UiHandler("btnCreate")
     void onCreateEvent(ClickEvent e) {
@@ -213,13 +218,14 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         }
         return endTime;}
 
-    @Override
-    public String getSticker(){
-        return impChip.getText();
-    }
 
     @Override
     public void registerPatientHandler(SimpleEventHandler handler){
         registerPatient = handler;
+    }
+
+    @Override
+    public void setSignImageList(SignImageListWidget signImageListWidget){
+        signContainer.add(signImageListWidget);
     }
 }

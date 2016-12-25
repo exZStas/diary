@@ -15,6 +15,8 @@ dependencies {
     compile group: 'com.github.gwtmaterialdesign', name: 'gwt-material-addins', version: '1.6.0'
     compile group: 'com.googlecode.gwt-charts', name: 'gwt-charts', version: '0.9.9'
 
+    compile group: 'com.google.gwt', name: 'gwt-servlet', version: '2.7.0'
+
     runtime 'com.google.gwt:gwt-servlet:2.7.0'
 
     provided group: 'com.google.gwt', name: 'gwt-user', version: '2.7.0'
