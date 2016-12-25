@@ -13,10 +13,10 @@ before_install:
 before_script:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS diary;'
   - mysql -e 'CREATE DATABASE IF NOT EXISTS diary_daotest;'
-  - mysql -u root diary < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db.migration/EVENT_TABLE_18-12-16.sql
-  - mysql -u root diary < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db.migration/USER_TABLE_20-11-16.sql
-  - mysql -u root diary_daotest < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db.migration/EVENT_TABLE_18-12-16.sql
-  - mysql -u root diary_daotest < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db.migration/USER_TABLE_20-11-16.sql
+  - mysql -u root diary < /exZStas/diary/pp-backend/src/main/resources/db.migration/EVENT_TABLE_18-12-16.sql
+  - mysql -u root diary < /exZStas/diary/pp-backend/src/main/resources/db.migration/USER_TABLE_20-11-16.sql
+  - mysql -u root diary_daotest < /exZStas/diary/pp-backend/src/main/resources/db.migration/EVENT_TABLE_18-12-16.sql
+  - mysql -u root diary_daotest < /exZStas/diary/pp-backend/src/main/resources/db.migration/USER_TABLE_20-11-16.sql
 
 services:
   - mysql
