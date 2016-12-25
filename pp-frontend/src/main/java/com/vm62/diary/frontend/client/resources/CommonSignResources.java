@@ -29,20 +29,14 @@ public interface CommonSignResources extends ClientBundle {
     @Source("img/star.png")
     ImageResource star();
 
-    @Source("img/sport.png")
-    ImageResource sport();
-
     @Source("img/work.png")
     ImageResource work();
 
-    @Source("img/entertaiment.png")
-    ImageResource entertaiment();
+    @Source("img/education.png")
+    ImageResource education();
 
-    @Source("img/trip.png")
-    ImageResource trip();
-
-    @Source("img/household chores.png")
-    ImageResource householdchores();
+    @Source("img/sleep.png")
+    ImageResource sleep();
 
     interface CommonSignResourcesCss extends CssResource{
         String alert();
