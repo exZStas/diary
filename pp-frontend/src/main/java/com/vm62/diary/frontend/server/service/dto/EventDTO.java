@@ -10,6 +10,7 @@ import java.util.Date;
  * Created by Ира on 16.12.2016.
  */
 public class EventDTO  implements Serializable {
+    private Long id;
     private String name;
     private String description;
     private Date startTime;
@@ -19,8 +20,9 @@ public class EventDTO  implements Serializable {
     private  Long duration;
     private String sticker;
 
-    public EventDTO(String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
+    public EventDTO(Long id, String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
                     Long duration, String sticker){
+        this.id = id;
         this.name=name;
         this.category = category;
         this.description = description;
@@ -31,6 +33,10 @@ public class EventDTO  implements Serializable {
         this.complexity = complexity;
     }
     public EventDTO(){}
+
+    public Long getId() {
+        return id;
+    }
 
     public void setName(String name){
         this.name = name;

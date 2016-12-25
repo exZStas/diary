@@ -65,6 +65,12 @@
             margin-top: 20px;
             overflow-x: hidden;
         }
+
+        @media screen and (max-width: 992px) {
+            .schedule-list {
+                margin-left: 0;
+            }
+        }
     </ui:style>
     <g:HTMLPanel ui:field="diaryPanel">
         <header>

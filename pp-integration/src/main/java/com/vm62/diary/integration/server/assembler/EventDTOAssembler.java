@@ -18,7 +18,8 @@ public class EventDTOAssembler extends AbstractDTOAssembler<Event, EventDTO> {
         if(entity == null){
             return null;
         }
-        return new EventDTO(entity.getName(),
+        return new EventDTO(entity.getId(),
+                entity.getName(),
                 entity.getDescription(),
                 entity.getCategory(),
                 entity.getStartTime(),
