@@ -2,6 +2,7 @@ package com.vm62.diary.backend.core;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.vm62.diary.backend.core.entities.Event;
@@ -14,13 +15,23 @@ import org.jsoup.select.Elements;
  * Created by Maria.
  */
 public class Parser {
-    private String groupName;
-
     public Parser() {
 
     }
 
     public ArrayList<Event> parseSchedule(Document doc) {
+        Calendar todayCalendar = Calendar.getInstance();
+        Date today = todayCalendar.getTime();
+
+        int weekType = getWeekType(doc);
+        int currentDay = today.getDay();
+        if (currentDay == 0) {
+            currentDay = 7;
+        }
+
+        todayCalendar.add(Calendar.DATE, - currentDay + 1);
+        Date previousMonday = todayCalendar.getTime();
+
         ArrayList<Event> scheduleEvents = new ArrayList<Event>();
 
         Elements scheduleTables = doc.select(".c-table.schedule");
@@ -45,15 +56,46 @@ public class Parser {
                         continue;
                     }
                     String subjectDescription = scheduleColumns.get(k).select(".room a").text() + " " + scheduleColumns.get(k).select(".lesson-type").text() + " " + scheduleColumns.get(k).select(".group-teacher").text().trim();
-                    //TODO correct duration and date
                     long userId = 1;
-                    long duration = 10000;
-                    Event classEvent = new Event(userId, subject.attr("title"), subjectDescription, Category.education, new Date(), new Date(), false, duration, "");
-                    scheduleEvents.add(classEvent);
+                    boolean addFlag = false;
+                    Calendar mondayCalendar = Calendar.getInstance();
+                    mondayCalendar.setTime(previousMonday);
+
+                    if (weekType == i) {
+                        if (k >= currentDay) {
+                            mondayCalendar.add(Calendar.DATE, k - 1);
+                            addFlag = true;
+                        }
+                    } else {
+                        mondayCalendar.add(Calendar.DATE, k + 7 - 1);
+                        addFlag = true;
+                    }
+
+                    if (addFlag) {
+                        Date classDate = mondayCalendar.getTime();
+                        String[] hoursAndMinutes = classesTimes.get(j - 1).split(":");
+                        classDate.setHours(Integer.valueOf(hoursAndMinutes[0]));
+                        classDate.setMinutes(Integer.valueOf(hoursAndMinutes[1]));
+                        Date classEndDate = new Date(classDate.getTime());
+                        classEndDate.setMinutes(classEndDate.getMinutes() + 95);
+                        long duration = classEndDate.getTime() - classDate.getTime();
+                        Event classEvent = new Event(userId, subject.attr("title"), subjectDescription, Category.education, classDate, classEndDate, false, duration, "");
+                        scheduleEvents.add(classEvent);
+                    }
                 }
             }
         }
 
         return scheduleEvents;
     }
+
+    public int getWeekType(Document doc) {
+        String scheduleState = doc.select(".schedule-current-state").text().trim();
+        if (scheduleState.indexOf("нечетная") != -1) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
 }
