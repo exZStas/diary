@@ -14,10 +14,13 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.vm62.diary.common.constants.Gender;
+import com.vm62.diary.frontend.client.common.components.Signs;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
+import gwt.material.design.addins.client.sideprofile.MaterialSideProfile;
 import gwt.material.design.addins.client.timepicker.MaterialTimePicker;
 import gwt.material.design.client.ui.*;
 import com.google.gwt.user.client.ui.Label;
@@ -48,6 +51,10 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     MaterialLink logOutBtn;
     @UiField
     MaterialLabel userNameLabel;
+    @UiField
+    MaterialImage userImage;
+    @UiField
+    MaterialSideProfile userProfile;
  /*   @UiField
     protected MaterialModal modal;
     @UiField
@@ -74,18 +81,12 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         //navBar.add(currentTime);
         this.navigationManager = navigationManager;
         setWidget(uiBinder.createAndBindUi(this));
+        userProfile.setUrl(Signs.USER_BG.getImage());
 //        scheduleList.sinkEvents(Event.ONCLICK);
 
         scheduleList.getElement().getStyle().setProperty("height", "calc(100% - 150px)");
 
-        EventView EV1 = new EventView("Учеба", "Ходить на пары", "#a4caf5", new Date(116, 11, 15, 7, 0), new Date(116, 11, 15, 10, 0));
-        scheduleList.add(EV1);
-        EventView EV2 = new EventView("Работа", "Не ходить на пары", "#87d6c1", new Date(116, 11, 15, 12, 0), new Date(116, 11, 15, 15, 0));
-        scheduleList.add(EV2);
-        EventView EV3 = new EventView("Test", "Делать чего-нибудь еще, добавим несколько строк", "#87d6c1", new Date(116, 11, 15, 5, 0), new Date(116, 11, 15, 6, 0));
-        scheduleList.add(EV3);
 
-        scheduleList.remove(EV2);
 
     }
     @UiHandler("btnAddEvent")
@@ -112,6 +113,13 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     @Override
     public void setUserName(String name){
         userNameLabel.setText(name);
+    }
+    @Override
+    public void setUserPicture(Gender gender){
+        if (gender.equals(Gender.M))
+            userImage.setUrl(Signs.MAN.getImage());
+        else
+            userImage.setUrl(Signs.WOMAN.getImage());
     }
 
 

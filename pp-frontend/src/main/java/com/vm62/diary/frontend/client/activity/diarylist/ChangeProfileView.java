@@ -214,9 +214,8 @@ public class ChangeProfileView extends Composite implements ChangeProfileActivit
         return email.getText();
     }
 
-
-    @UiHandler("btnAccept")
-    public void validateForm(ClickEvent e){
+    @Override
+    public void validateForm(){
         if(!firstName.validate() || !lastName.validate() || !studyGroup.validate() || !email.validate()){
             return;
         }
@@ -230,6 +229,10 @@ public class ChangeProfileView extends Composite implements ChangeProfileActivit
                         return;
                     }
                     else userPassword = newPassword.getText();
+                }
+                else {
+                    notificationManager.showErrorPopupWithoutDetails("Password is wrong!");
+                    return;
                 }
             }
             catch (Exception ex){

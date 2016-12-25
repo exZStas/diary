@@ -14,9 +14,17 @@ public interface CommonSignResources extends ClientBundle {
     @Source("img/question.png")
     ImageResource question();
 
+    @Source("img/men.png")
+    ImageResource man();
+
+    @Source("img/woman.png")
+    ImageResource woman();
 
     @Source("CssSignResources.css")
     CommonSignResourcesCss style();
+
+    @Source("img/user_bg.jpg")
+    ImageResource userBG();
 
     interface CommonSignResourcesCss extends CssResource{
         String alert();
@@ -28,5 +36,11 @@ public interface CommonSignResources extends ClientBundle {
         String chosenSignImageStyle();
 
         String question();
+
+        String man();
+
+        String woman();
+
+        String userBG();
     }
 }

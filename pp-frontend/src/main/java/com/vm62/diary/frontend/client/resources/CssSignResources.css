@@ -24,3 +24,6 @@
 
 @sprite .alert {gwt-image: "alert";}
 @sprite .question {gwt-image: "question";}
+@sprite .man {gwt-image: "man";}
+@sprite .woman {gwt-image: "woman";}
+@sprite .userBG {gwt-image: "userBG";}
