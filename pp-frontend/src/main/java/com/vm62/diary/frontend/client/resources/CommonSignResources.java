@@ -29,6 +29,9 @@ public interface CommonSignResources extends ClientBundle {
     @Source("img/star.png")
     ImageResource star();
 
+    @Source("img/sport.png")
+    ImageResource sport();
+
     @Source("img/work.png")
     ImageResource work();
 
