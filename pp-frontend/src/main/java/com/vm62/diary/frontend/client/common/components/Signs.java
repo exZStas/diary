@@ -4,10 +4,16 @@ import static com.vm62.diary.frontend.client.resources.CommonSignResources.RESOU
 
 public enum Signs {
     ALERT_SIGN(RESOURCES.alert().getSafeUri().asString(), "alertSign"),
+    BIRD_SIGN(RESOURCES.bird().getSafeUri().asString(), "birdSign"),
+    EDUCATION_SIGN(RESOURCES.education().getSafeUri().asString(), "educationSign"),
+    HOMEWORK_SIGN(RESOURCES.homework().getSafeUri().asString(), "homeworkSign"),
+    SLEEP_SIGN(RESOURCES.sleep().getSafeUri().asString(), "sleepSign"),
+    WORK_SIGN(RESOURCES.work().getSafeUri().asString(), "workSign"),
     MAN(RESOURCES.man().getSafeUri().asString(), "man"),
     WOMAN(RESOURCES.woman().getSafeUri().asString(), "woman"),
     QUESTION_SIGN(RESOURCES.question().getSafeUri().asString(), "questionSign"),
     USER_BG(RESOURCES.userBG().getSafeUri().asString(), "userBG");
+
 
     private String image;
     private String descriptionOfImage;
