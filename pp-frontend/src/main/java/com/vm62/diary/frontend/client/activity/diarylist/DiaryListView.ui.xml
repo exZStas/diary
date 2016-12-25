@@ -96,6 +96,7 @@
                 <m:MaterialLink text="Notifications" textColor="BLUE" iconType="NOTIFICATIONS" separator="true"/>
                 <m:MaterialLink text="Update schedule" textColor="BLUE" iconType="REFRESH"/>
                 <m:MaterialLink ui:field="changeBtn" text="Change profile" textColor="BLUE" iconType="CARD_MEMBERSHIP"/>
+                <m:MaterialLink ui:field="logOutBtn" text="Log out" textColor="BLUE" iconType="EXIT_TO_APP"/>
             </m:MaterialSideNav>
         </header>
 

@@ -94,12 +94,12 @@ public class CreateEventActivity implements BaseActivity {
                 eventServiceAsync.create(view.getName(), view.getDescription() ,view.getCategory(), view.getStartTime(),view.getEndTime(),view.getComplexity(),view.getDuration(), eventStickerDescription, new AsyncCallback<EventDTO>() {
                             @Override
                             public void onFailure(Throwable caught) {
-                                notificationManager.showErrorPopupWithoutDetails("Event was canceled!", true);
+                                notificationManager.showErrorPopupWithoutDetails("Event was canceled!");
                             }
 
                             @Override
                             public void onSuccess(EventDTO result) {
-                                notificationManager.showErrorPopupWithoutDetails("Event create!", false);
+                                notificationManager.showInfoPopup("Event create!");
                             }
                         });
             }

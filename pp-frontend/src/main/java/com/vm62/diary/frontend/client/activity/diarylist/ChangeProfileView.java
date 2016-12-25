@@ -11,13 +11,16 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.vm62.diary.common.constants.Gender;
-import com.vm62.diary.common.password.Password;
+import com.vm62.diary.frontend.client.common.components.MD5Digest;
+import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
+import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
+import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import gwt.material.design.client.base.validator.BlankValidator;
 import gwt.material.design.client.ui.*;
 
-import java.beans.Transient;
+import java.security.MessageDigest;
 import java.util.Date;
 
 /**
@@ -56,17 +59,18 @@ public class ChangeProfileView extends Composite implements ChangeProfileActivit
     MaterialButton btnBack;
     @UiField
     MaterialButton btnAccept;
-    @UiField
-    MaterialPanel passwordPanel;
 
     private NavigationManager navigationManager;
-    private SimpleEventHandler registerPatient;
+    private NotificationManager notificationManager;
     private String userPassword;
+    private MD5Digest md5Digest = new MD5Digest();
 
     @Inject
-    public ChangeProfileView(NavigationManager navigationManager) {
+    public ChangeProfileView(NavigationManager navigationManager, NotificationManager notificationManager) {
         setWidget(ourUiBinder.createAndBindUi(this));
         this.navigationManager = navigationManager;
+        this.notificationManager = notificationManager;
+        setPassEnabled(false);
         birthDate.setDateMin(new Date(90, 0, 1));
         birthDate.setDateMax(new Date());
         firstName.addValidator(new BlankValidator<String>("Please, provide your first name!"));
@@ -110,12 +114,12 @@ public class ChangeProfileView extends Composite implements ChangeProfileActivit
         if (!yes.getValue()){
             yes.setValue(false);
             no.setValue(true);
-            passwordPanel.setEnabled(false);
+            setPassEnabled(false);
         }
         else{
             yes.setValue(true);
             no.setValue(false);
-            passwordPanel.setEnabled(true);
+            setPassEnabled(true);
         }
     }
     @UiHandler("no")
@@ -123,12 +127,12 @@ public class ChangeProfileView extends Composite implements ChangeProfileActivit
         if (!no.getValue()){
             no.setValue(false);
             yes.setValue(true);
-            passwordPanel.setEnabled(true);
+            setPassEnabled(true);
         }
         else{
             no.setValue(true);
             yes.setValue(false);
-            passwordPanel.setEnabled(false);
+            setPassEnabled(false);
         }
     }
 
@@ -200,24 +204,51 @@ public class ChangeProfileView extends Composite implements ChangeProfileActivit
         userPassword = password;
 
     }
+    @Override
+    public Boolean getYes(){
+        return yes.getValue();
+    }
 
     @Override
     public String getEmail(){
         return email.getText();
     }
 
-    @Override
-    public void registerPatientHandler(SimpleEventHandler handler){
-        registerPatient = handler;
-    }
-    void Validation(){
+
+    @UiHandler("btnAccept")
+    public void validateForm(ClickEvent e){
         if(!firstName.validate() || !lastName.validate() || !studyGroup.validate() || !email.validate()){
             return;
         }
-        if (yes.getValue() && password.getText().equals(userPassword))
-        if(!newPassword.getText().equals(repeatNewPassword.getText())){
-            return;
+        if (yes.getValue().booleanValue()){
+            if(!password.validate()||!newPassword.validate()||!repeatNewPassword.validate())
+                return;
+            try {
+                if (md5Digest.getMD5(password.getText()).equals(userPassword)) {
+                    if (!newPassword.getText().equals(repeatNewPassword.getText())){
+                        notificationManager.showErrorPopupWithoutDetails("New password is not equals pereated password");
+                        return;
+                    }
+                    else userPassword = newPassword.getText();
+                }
+            }
+            catch (Exception ex){
+                notificationManager.showErrorPopupWithoutDetails("Profile was'n changed!");
+                return;
+            }
         }
-        else userPassword = newPassword.getText();
+    }
+    @UiHandler("btnBack")
+    public void backOnClick(ClickEvent e){
+        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
+    }
+
+    void setPassEnabled(Boolean enabled){
+        password.clear();
+        newPassword.clear();
+        repeatNewPassword.clear();
+        password.setEnabled(enabled);
+        newPassword.setEnabled(enabled);
+        repeatNewPassword.setEnabled(enabled);
     }
 }

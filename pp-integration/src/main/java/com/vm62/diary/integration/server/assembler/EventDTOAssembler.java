@@ -26,7 +26,6 @@ public class EventDTOAssembler extends AbstractDTOAssembler<Event, EventDTO> {
                 entity.getComplexity(),
                 entity.getDuration(),
                 entity.getSticker()
-
         );
     }
 }

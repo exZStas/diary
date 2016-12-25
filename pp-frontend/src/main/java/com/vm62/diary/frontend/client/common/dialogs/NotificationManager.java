@@ -32,10 +32,9 @@ public class NotificationManager extends Composite{
      *
      * @param message
      */
-    public void showErrorPopupWithoutDetails(String message, Boolean error) {
+    public void showErrorPopupWithoutDetails(String message) {
         MaterialToast toast = new MaterialToast();
-        if (error) toast.toast(message, "red");
-        else toast.toast(message, "orange");
+        toast.toast(message, "red");
     }
 
 

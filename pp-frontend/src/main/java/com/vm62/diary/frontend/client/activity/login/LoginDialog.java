@@ -64,13 +64,16 @@ public class LoginDialog extends CDialogBox{
         loginServiceAsync.login(email.getText(), password.getText(), new AsyncCallback<UserDTO>() {
             @Override
             public void onFailure(Throwable caught) {
-                notificationManager.showErrorPopupWithoutDetails("Incorrect email or password!",true);
+                notificationManager.showErrorPopupWithoutDetails("Incorrect email or password!");
             }
 
             @Override
             public void onSuccess(UserDTO result) {
-                me.hide();
-                navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
+                if(result != null){
+                    me.hide();
+                    navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
+                }
+                notificationManager.showInfoPopup("unknow error");
             }
         });
 

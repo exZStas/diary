@@ -57,4 +57,5 @@ public class EventBean {
         ifNull(category, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "category");
         return eventDAO.getEventByCategory(category);
     }
+
 }

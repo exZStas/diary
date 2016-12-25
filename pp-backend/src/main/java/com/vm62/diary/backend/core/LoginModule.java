@@ -74,10 +74,31 @@ public class LoginModule {
         ValidationUtils.ifNullOrEmpty(studyGroup, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "study group");
         ValidationUtils.ifNullOrEmpty(email, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "email");
 
+
+        User user = userBean.getUserById(userId);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setPasswordEncoded(password.encode());
+            user.setGender(sex);
+            user.setBirthDate(birthday);
+            user.setStudyGroup(studyGroup);
+            user.setEmail(email);
+
+        return userBean.updateUser(user);
+    }
+
+    public User changeUserProfile(Long userId, String firstName, String lastName, String password, Gender sex,
+                                  String studyGroup, Date birthday, String email) throws ServiceException {
+        ValidationUtils.ifNullOrEmpty(firstName, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "first name");
+        ValidationUtils.ifNullOrEmpty(lastName, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "last name");
+        ValidationUtils.ifNullOrEmpty(studyGroup, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "study group");
+        ValidationUtils.ifNullOrEmpty(email, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "email");
+
+
         User user = userBean.getUserById(userId);
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setPasswordEncoded(password.encode());
+        user.setPassword(password);
         user.setGender(sex);
         user.setBirthDate(birthday);
         user.setStudyGroup(studyGroup);

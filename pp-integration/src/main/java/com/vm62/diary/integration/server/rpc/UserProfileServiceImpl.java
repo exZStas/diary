@@ -28,8 +28,14 @@ public class UserProfileServiceImpl extends RemoteServiceServlet implements User
     private LoginModule loginModule;
 
     @Override
-    public UserDTO changeProfile(String firstName, String lastName, String password, Gender gender, String studyGroup, Date birthDay, String email) throws ServiceException{
-        User user = loginModule.changeUserProfile(userSessionHelper.getUserId(), firstName, lastName , new PasswordPlainText(password, email), gender, studyGroup, birthDay, email);
+    public UserDTO changeProfile(String firstName, String lastName, String password, Gender gender, String studyGroup, Date birthDay, String email, Boolean withPassword) throws ServiceException{
+        if (withPassword) {
+            loginModule.changeUserProfile(userSessionHelper.getUserId(), firstName, lastName, new PasswordPlainText(password, email), gender, studyGroup, birthDay, email);
+        }
+        else {
+            loginModule.changeUserProfile(userSessionHelper.getUserId(), firstName, lastName, password, gender, studyGroup, birthDay, email);
+
+        }
         return null;
     }
 

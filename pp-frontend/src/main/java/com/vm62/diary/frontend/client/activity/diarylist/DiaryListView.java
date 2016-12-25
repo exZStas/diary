@@ -42,6 +42,8 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     MaterialLink changeBtn;
     @UiField
     HTMLPanel scheduleList;
+    @UiField
+    MaterialLink logOutBtn;
  /*   @UiField
     protected MaterialModal modal;
     @UiField
@@ -89,6 +91,11 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     @UiHandler("changeBtn")
     void onOpenChangeForm(ClickEvent e){
         navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_CHANGE_PROFILE_ACTIVITY));
+    }
+
+    @UiHandler("logOutBtn")
+    void onClickLogOutBtn(ClickEvent e){
+        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_MAIN));
     }
 
 

@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.validation.client.impl.Validation;
 import com.google.inject.ImplementedBy;
 import com.google.inject.Inject;
 import com.vm62.diary.common.constants.Gender;
@@ -39,6 +40,7 @@ public class ChangeProfileActivity implements BaseActivity {
 
         String getEmail();
         String getPassword();
+        Boolean getYes();
 
         void setFirstName(String firstName);
         void setLastName(String lastName);
@@ -50,7 +52,6 @@ public class ChangeProfileActivity implements BaseActivity {
 
         void addAcceptButtonClickHandler (ClickHandler handler);
 
-        void registerPatientHandler(SimpleEventHandler handler);
     }
 
     private IChangeProfileView view;
@@ -69,21 +70,19 @@ public class ChangeProfileActivity implements BaseActivity {
 
 
     public void addEventHandlers() {
-
         view.addAcceptButtonClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-
                 userProfileServiceAsync.changeProfile(view.getFirstName(),view.getLastName(),view.getPassword(),view.getGender(),
-                        view.getStudyGroup(),view.getBirthDay(),view.getEmail(), new AsyncCallback<UserDTO>() {
+                        view.getStudyGroup(),view.getBirthDay(),view.getEmail(),view.getYes(), new AsyncCallback<UserDTO>() {
                             @Override
                             public void onFailure(Throwable caught) {
-                                notificationManager.showErrorPopupWithoutDetails("Profile was'n changed!", true);
+                                notificationManager.showErrorPopupWithoutDetails("Profile was'n changed!");
                             }
 
                             @Override
                             public void onSuccess(UserDTO result) {
-                                notificationManager.showErrorPopupWithoutDetails("Profile changed!", false);
+                                notificationManager.showInfoPopup("Profile changed!");
                             }
                         });
             }
@@ -93,7 +92,7 @@ public class ChangeProfileActivity implements BaseActivity {
                 userProfileServiceAsync.getUser(new AsyncCallback<UserDTO>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        notificationManager.showErrorPopupWithoutDetails("Profile is not avalible!", true);
+                        notificationManager.showErrorPopupWithoutDetails("Profile is not avalible!");
                     }
 
                     @Override
@@ -103,6 +102,7 @@ public class ChangeProfileActivity implements BaseActivity {
                         view.setBirthDay(result.getBirthday());
                         view.setGender(Gender.valueOf(result.getGender()));
                         view.setStudyGroup(result.getStudyGroup());
+                        view.setEmail(result.getEmail());
                         view.checkPassword(result.getPassword());
                     }
                 });

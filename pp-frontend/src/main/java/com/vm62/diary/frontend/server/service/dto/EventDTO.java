@@ -11,7 +11,7 @@ import java.util.Date;
  */
 public class EventDTO  implements Serializable {
     private String name;
-    private String descriptoin;
+    private String description;
     private Date startTime;
     private Date endTime;
     private Category category;
@@ -23,7 +23,7 @@ public class EventDTO  implements Serializable {
                     Long duration, String sticker){
         this.name=name;
         this.category = category;
-        this.descriptoin = description;
+        this.description = description;
         this.startTime = start_time;
         this.endTime = end_time;
         this.duration=duration;
@@ -40,12 +40,59 @@ public class EventDTO  implements Serializable {
         return name;
     }
 
-    public void setDescriptoin(String descriptoin) {
-        this.descriptoin = descriptoin;
+    public void setDescription(String descriptoin) {
+        this.description = descriptoin;
     }
 
-    public String getDescriptoin() {
-        return descriptoin;
+    public String getDescription() {
+        return description;
     }
 
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Boolean getComplexity() {
+        return complexity;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public Long getDuration() {
+        return duration;
+    }
+
+    public String getSticker() {
+        return sticker;
+    }
+
+    public void setComplexity(Boolean complexity) {
+        this.complexity = complexity;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
+    }
+
+    public void setSticker(String sticker) {
+        this.sticker = sticker;
+    }
 }

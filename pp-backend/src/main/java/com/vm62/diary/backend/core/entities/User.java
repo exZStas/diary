@@ -67,6 +67,20 @@ public class User implements java.io.Serializable{
         this.isRegister = isRegister;
         this.isMailSent = isMailSent;
     }
+    public User(String firstName, String lastName, String password, Gender gender, String studyGroup,
+                Date birthDate, String email, String registrationId, Boolean isRegister, Boolean isMailSent) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.gender = gender;
+        this.studyGroup = studyGroup;
+        this.birthDate = birthDate;
+        this.email = email;
+        this.registrationId = registrationId;
+        this.isRegister = isRegister;
+        this.isMailSent = isMailSent;
+    }
 
 
     public String getFirstName() {
@@ -149,6 +163,10 @@ public class User implements java.io.Serializable{
     @Transient
     public void setPasswordEncoded(PasswordEncoded password) {
         this.password = password.getAsString();
+    }
+
+    public void setPassword(String password){
+        this.password = password;
     }
 
     public Boolean getMailSent() {

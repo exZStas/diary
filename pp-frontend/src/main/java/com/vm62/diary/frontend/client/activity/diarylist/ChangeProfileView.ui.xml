@@ -62,27 +62,25 @@
         <m:MaterialRow addStyleNames="{style.rows}">
             <m:MaterialTextBox ui:field="studyGroup" placeholder="study group" type="TEXT" iconType="GROUP"/>
         </m:MaterialRow>
-        <m:MaterialRow>
+        <m:MaterialRow addStyleNames="{style.rows}">
             <m:MaterialLabel text="Do you wont change password?"/>
             <m:MaterialCheckBox ui:field="yes" text="yes" width="20"/>
             <m:MaterialCheckBox ui:field="no" text="no" width="20" checked="true"/>
         </m:MaterialRow>
-        <m:MaterialPanel ui:field="passwordPanel"  enabled="false">
-            <m:MaterialRow addStyleNames="{style.rows}">
-                <m:MaterialTextBox ui:field="password" placeholder="password" type="PASSWORD" iconType="LOCK_OPEN"/>
-            </m:MaterialRow>
-            <m:MaterialRow addStyleNames="{style.rows}">
-                <m:MaterialTextBox ui:field="newPassword" placeholder="new password" type="PASSWORD" iconType="ENHANCED_ENCRYPTION"/>
-            </m:MaterialRow>
-            <m:MaterialRow addStyleNames="{style.rows}">
-                <m:MaterialTextBox ui:field="repeatNewPassword" placeholder="repeat new password" type="PASSWORD" iconType="ENHANCED_ENCRYPTION"/>
-            </m:MaterialRow>
-            <m:MaterialRow textAlign="LEFT" marginBottom="0" addStyleNames="{style.regButton}">
-                <m:MaterialButton ui:field="btnBack" text="back"/>
-            </m:MaterialRow>
-            <m:MaterialRow textAlign="RIGHT" marginBottom="0" addStyleNames="{style.loginButton}">
-                <m:MaterialButton ui:field="btnAccept" text="change"/>
-            </m:MaterialRow>
-        </m:MaterialPanel>
+        <m:MaterialRow addStyleNames="{style.rows}">
+            <m:MaterialTextBox ui:field="password" placeholder="password" type="PASSWORD" iconType="LOCK_OPEN"/>
+        </m:MaterialRow>
+        <m:MaterialRow addStyleNames="{style.rows}">
+            <m:MaterialTextBox ui:field="newPassword" placeholder="new password" type="PASSWORD" iconType="ENHANCED_ENCRYPTION"/>
+        </m:MaterialRow>
+        <m:MaterialRow addStyleNames="{style.rows}">
+            <m:MaterialTextBox ui:field="repeatNewPassword" placeholder="repeat new password" type="PASSWORD" iconType="ENHANCED_ENCRYPTION"/>
+        </m:MaterialRow>
+        <m:MaterialRow textAlign="LEFT" marginBottom="0" addStyleNames="{style.regButton}">
+            <m:MaterialButton ui:field="btnBack" text="back"/>
+        </m:MaterialRow>
+        <m:MaterialRow textAlign="RIGHT" marginBottom="0" addStyleNames="{style.loginButton}">
+            <m:MaterialButton ui:field="btnAccept" text="change"/>
+        </m:MaterialRow>
     </m:MaterialPanel>
 </ui:UiBinder>
