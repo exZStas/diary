@@ -26,6 +26,9 @@ public interface CommonSignResources extends ClientBundle {
     @Source("img/user_bg.jpg")
     ImageResource userBG();
 
+    @Source("img/star.png")
+    ImageResource star();
+
     interface CommonSignResourcesCss extends CssResource{
         String alert();
 
