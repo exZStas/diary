@@ -89,27 +89,59 @@
 }
 
 .event__edit {
-    position: absolute;
-    top: 0;
     left: 0;
     background-color: #2196f3;
-    padding: 0 0.6em;
-    color: white;
 }
 
 button.btn-flat.event__edit:focus {
-    background-color: #55aef6;
+    background-color: #42a5f5;
 }
 
 .event__delete {
-    position: absolute;
-    top: 0;
     right: 0;
     background-color: #f44336;
-    padding: 0 0.6em;
-    color: white;
 }
 
 button.btn-flat.event__delete:focus {
-    background-color: #F65D52;
+    background-color: #ef5350;
+}
+
+.event__done {
+    left: 39px;
+    background-color: #4caf50;
+}
+
+button.btn-flat.event__done:focus {
+    background-color: #66bb6a;
+}
+
+.event__undone {
+    left: 78px;
+    background-color: #ff9800;
+}
+
+button.btn-flat.event__undone:focus {
+    background-color: #ffa726;
+}
+
+.schedule-list {
+    margin-left: 280px;
+    padding-top: 10px;
+    position: relative;
+    margin-top: 20px;
+    overflow-x: hidden;
+}
+
+@media screen and (max-width: 992px) {
+    .schedule-list {
+        margin-left: 0;
+    }
+}
+
+.event__edit, .event__delete, .event__done, .event__undone {
+    position: absolute;
+    top: 0;
+    padding: 0 10px;
+    color: white;
+    border-radius: 0;
 }

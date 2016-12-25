@@ -34,6 +34,10 @@ public class Parser {
 
         ArrayList<Event> scheduleEvents = new ArrayList<Event>();
 
+        if (doc.select(".hint").size() > 0) {
+            return scheduleEvents;
+        }
+
         Elements scheduleTables = doc.select(".c-table.schedule");
         Elements classesTimesElements = scheduleTables.select(".time");
         ArrayList<String> classesTimes = new ArrayList<String>();

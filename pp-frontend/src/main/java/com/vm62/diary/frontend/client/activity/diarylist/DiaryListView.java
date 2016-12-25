@@ -14,6 +14,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.vm62.diary.common.constants.Category;
+import com.vm62.diary.common.constants.Status;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
@@ -67,6 +69,8 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
    // Date today = new Date();
     private NavigationManager navigationManager;
 
+    private List<EventView> eventViewList;
+
 
     @Inject
     public DiaryListView(NavigationManager navigationManager) {
@@ -77,15 +81,20 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
 //        scheduleList.sinkEvents(Event.ONCLICK);
 
         scheduleList.getElement().getStyle().setProperty("height", "calc(100% - 150px)");
+        scheduleList.addStyleName("schedule-list");
 
-        EventView EV1 = new EventView("Учеба", "Ходить на пары", "#a4caf5", new Date(116, 11, 15, 7, 0), new Date(116, 11, 15, 10, 0));
+        EventDTO testEvent = new EventDTO(Long.valueOf(123), "AWESOME NAME", "Not so awesome description", Category.education, new Date(116, 11, 15, 7, 0), new Date(116, 11, 15, 10, 0), false, Long.valueOf(10800000), "", Status.active);
+        EventDTO testEvent2 = new EventDTO(Long.valueOf(234), "Tes Test", "AAA BBB CCC DDD EEE FFF GGG HHH", Category.homework, new Date(116, 11, 15, 12, 0), new Date(116, 11, 15, 15, 0), false, Long.valueOf(10800000), "", Status.active);
+        EventDTO testEvent3 = new EventDTO(Long.valueOf(456), "Little thing", "But very very important", Category.homework, new Date(116, 11, 15, 5, 0), new Date(116, 11, 15, 6, 0), false, Long.valueOf(3600000), "", Status.undefined);
+        EventDTO testEvent4 = new EventDTO(Long.valueOf(567), "New one", "Hey hey hey hey", Category.other, new Date(116, 11, 15, 2, 0), new Date(116, 11, 15, 4, 0), false, Long.valueOf(7200000), "", Status.undefined);
+        EventView EV1 = new EventView(testEvent);
         scheduleList.add(EV1);
-        EventView EV2 = new EventView("Работа", "Не ходить на пары", "#87d6c1", new Date(116, 11, 15, 12, 0), new Date(116, 11, 15, 15, 0));
+        EventView EV2 = new EventView(testEvent2);
         scheduleList.add(EV2);
-        EventView EV3 = new EventView("Test", "Делать чего-нибудь еще, добавим несколько строк", "#87d6c1", new Date(116, 11, 15, 5, 0), new Date(116, 11, 15, 6, 0));
+        EventView EV3 = new EventView(testEvent3);
         scheduleList.add(EV3);
-
-        scheduleList.remove(EV2);
+        EventView EV4 = new EventView(testEvent4);
+        scheduleList.add(EV4);
 
     }
     @UiHandler("btnAddEvent")
@@ -106,7 +115,23 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
 
     @Override
     public void setSchedule(List<EventDTO> events){
+        for (int i = 0; i < eventViewList.size(); i++) {
+            scheduleList.remove(eventViewList.get(i));
+        }
+        scheduleList.clear();
+
+        for (int i = 0; i < events.size(); i++) {
+            EventView event = new EventView(events.get(i));
+            scheduleList.add(event);
+            eventViewList.add(event);
+        }
         return;
+    }
+
+    public void setNewEvent(EventDTO event) {
+        EventView eventView = new EventView(event);
+        scheduleList.add(eventView);
+        eventViewList.add(eventView);
     }
 
     @Override

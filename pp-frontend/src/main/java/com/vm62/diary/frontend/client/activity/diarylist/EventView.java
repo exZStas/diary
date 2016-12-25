@@ -4,6 +4,7 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
+import com.vm62.diary.common.constants.Status;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import gwt.material.design.client.constants.ButtonType;
 import gwt.material.design.client.constants.IconType;
@@ -34,6 +35,8 @@ public class EventView extends Composite implements ClickHandler {
 
     private MaterialButton editButton = new MaterialButton(ButtonType.FLAT, "", new MaterialIcon(IconType.EDIT));
     private MaterialButton deleteButton = new MaterialButton(ButtonType.FLAT, "", new MaterialIcon(IconType.DELETE));
+    private MaterialButton doneButton = new MaterialButton(ButtonType.FLAT, "", new MaterialIcon(IconType.CHECK));
+    private MaterialButton undoneButton = new MaterialButton(ButtonType.FLAT, "", new MaterialIcon(IconType.CANCEL));
 
     private int HEIGHT_OF_ROW = 37;
 
@@ -80,6 +83,31 @@ public class EventView extends Composite implements ClickHandler {
             }
         });
         panel.add(deleteButton);
+
+        doneButton.setStyleName("event__done btn-flat");
+        doneButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
+        panel.add(doneButton);
+
+        undoneButton.setStyleName("event__undone btn-flat");
+        undoneButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
+        panel.add(undoneButton);
+
+        if (event.getStatus() != Status.undefined) {
+            doneButton.addStyleName("disabled");
+            undoneButton.addStyleName("disabled");
+        }
 
         name.setStyleName("event__name");
         description.setStyleName("event__description");
@@ -141,6 +169,11 @@ public class EventView extends Composite implements ClickHandler {
             headerHidden = true;
             needHeaderHiding = true;
         }
+    }
+
+    public void activateDoneControls() {
+        doneButton.removeStyleName("disabled");
+        undoneButton.removeStyleName("disabled");
     }
 
     private String formatDateRange(Date startDate, Date endDate) {

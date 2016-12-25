@@ -1,6 +1,7 @@
 package com.vm62.diary.frontend.server.service.dto;
 
 import com.vm62.diary.common.constants.Category;
+import com.vm62.diary.common.constants.Status;
 import com.vm62.diary.common.constants.Sticker;
 
 import java.io.Serializable;
@@ -19,9 +20,10 @@ public class EventDTO  implements Serializable {
     private Boolean complexity;
     private  Long duration;
     private String sticker;
+    private Status status;
 
     public EventDTO(Long id, String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
-                    Long duration, String sticker){
+                    Long duration, String sticker, Status status){
         this.id = id;
         this.name=name;
         this.category = category;
@@ -31,6 +33,7 @@ public class EventDTO  implements Serializable {
         this.duration=duration;
         this.sticker = sticker;
         this.complexity = complexity;
+        this.status = status;
     }
     public EventDTO(){}
 
@@ -100,5 +103,9 @@ public class EventDTO  implements Serializable {
 
     public void setSticker(String sticker) {
         this.sticker = sticker;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 }
