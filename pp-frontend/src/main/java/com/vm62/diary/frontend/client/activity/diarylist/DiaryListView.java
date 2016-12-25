@@ -1,9 +1,7 @@
 package com.vm62.diary.frontend.client.activity.diarylist;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -70,12 +68,17 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         //navBar.add(currentTime);
         this.navigationManager = navigationManager;
         setWidget(uiBinder.createAndBindUi(this));
-        scheduleList.sinkEvents(Event.ONCLICK);
+//        scheduleList.sinkEvents(Event.ONCLICK);
+        scheduleList.getElement().getStyle().setProperty("height", "calc(100% - 150px)");
 
-        EventView EV1 = new EventView("Учеба", "Ходить на пары", "10:00 - 11:00", "50px", "#a4caf5", new Date(116, 11, 15, 7, 0), new Date(116, 11, 15, 10, 0));
+        EventView EV1 = new EventView("Учеба", "Ходить на пары", "#a4caf5", new Date(116, 11, 15, 7, 0), new Date(116, 11, 15, 10, 0));
         scheduleList.add(EV1);
-        EventView EV2 = new EventView("Работа", "Не ходить на пары", "12:00 - 15:00", "300px", "#87d6c1", new Date(116, 11, 15, 12, 0), new Date(116, 11, 15, 15, 0));
+        EventView EV2 = new EventView("Работа", "Не ходить на пары", "#87d6c1", new Date(116, 11, 15, 12, 0), new Date(116, 11, 15, 15, 0));
         scheduleList.add(EV2);
+        EventView EV3 = new EventView("Test", "Делать чего-нибудь еще, добавим несколько строк", "#87d6c1", new Date(116, 11, 15, 5, 0), new Date(116, 11, 15, 6, 0));
+        scheduleList.add(EV3);
+
+        scheduleList.remove(EV2);
 
     }
     @UiHandler("btnAddEvent")
