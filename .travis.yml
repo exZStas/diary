@@ -20,3 +20,12 @@ before_script:
 
 services:
   - mysql
+
+dist: trusty
+sudo: required
+addons:
+  apt:
+    packages:
+    - mysql-server-5.5
+    - mysql-client-core-5.5
+    - mysql-client-5.5
