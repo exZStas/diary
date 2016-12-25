@@ -78,8 +78,8 @@
 
             <!-- SideNav -->
             <m:MaterialSideNav type="FIXED" id="sideNav" closeOnClick="false" width="280">
-                <ma:sideprofile.MaterialSideProfile>
-                    <m:MaterialImage />
+                <ma:sideprofile.MaterialSideProfile ui:field="userProfile">
+                    <m:MaterialImage ui:field="userImage"/>
                     <m:MaterialLabel ui:field="userNameLabel"/>
                     <m:MaterialLink activates="dropProfile" iconType="ARROW_DROP_DOWN" iconPosition="RIGHT" textColor="WHITE"/>
                 </ma:sideprofile.MaterialSideProfile>

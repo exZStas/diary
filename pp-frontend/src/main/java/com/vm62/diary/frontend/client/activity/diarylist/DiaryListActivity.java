@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.ImplementedBy;
 import com.google.inject.Inject;
+import com.vm62.diary.common.constants.Gender;
 import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
@@ -26,6 +27,7 @@ public class DiaryListActivity implements BaseActivity{
     public interface IDiaryListView extends IsWidget {
 
         void setUserName(String name);
+        void setUserPicture(Gender gender);
         void setSchedule(List<EventDTO> events);
 
     }
@@ -57,6 +59,7 @@ public class DiaryListActivity implements BaseActivity{
             @Override
             public void onSuccess(UserDTO result) {
                 view.setUserName(result.getFirstName()+" "+result.getLastName());
+                view.setUserPicture(Gender.valueOf(result.getGender()));
             }
         });
         eventServiceAsync.getEventsByDayForUser(today, new AsyncCallback<List<EventDTO>>(){
