@@ -50,6 +50,15 @@ public interface CommonSignResources extends ClientBundle {
     @Source("img/eating.png")
     ImageResource eating();
 
+    @Source("img/education.png")
+    ImageResource education();
+
+    @Source("img/sleep.png")
+    ImageResource sleep();
+
+    @Source("img/bird.png")
+    ImageResource bird();
+
     interface CommonSignResourcesCss extends CssResource{
         String alert();
 
