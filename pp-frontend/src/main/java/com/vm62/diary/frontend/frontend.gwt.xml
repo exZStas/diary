@@ -16,6 +16,7 @@
     <!--<inherits name="gwt.material.design.GwtMaterialBasicWithJQueryDebug"/>-->
     <inherits name="gwt.material.design.themes.GwtMaterialThemeBlue"/>
     <inherits name="com.googlecode.gwt.charts.Charts" />
+    <inherits name="com.google.gwt.resources.Resources" />
 
     <!-- Specify the app entry point class.                   -->
     <inherits name="common"/>

@@ -3,7 +3,8 @@ package com.vm62.diary.frontend.client.common.components;
 import static com.vm62.diary.frontend.client.resources.CommonSignResources.RESOURCES;
 
 public enum Signs {
-    ALERT_SIGN(RESOURCES.alert().getSafeUri().asString(), "alertSign");
+    ALERT_SIGN(RESOURCES.alert().getSafeUri().asString(), "alertSign"),
+    QUESTION_SIGN(RESOURCES.question().getSafeUri().asString(), "questionSign");
 
     private String image;
     private String descriptionOfImage;

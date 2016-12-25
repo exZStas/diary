@@ -47,7 +47,6 @@
             </m:MaterialListBox>
         </m:MaterialRow>
         <m:MaterialRow ui:field="signContainer">
-            <m:MaterialChip ui:field="impChip" text="Impotant" backgroundColor="RED" textColor="WHITE" iconType="CLOSE"/>
         </m:MaterialRow>
         <m:MaterialRow>
             <m:MaterialIcon iconType="EVENT_AVAILABLE" grid="3"/>

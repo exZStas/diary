@@ -13,6 +13,8 @@ import com.google.inject.ImplementedBy;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import static com.vm62.diary.frontend.client.resources.CommonSignResources.RESOURCES;
+
 
 /**
  * Main panel is a main view container for logged-in client.
@@ -38,6 +40,7 @@ public class MainPanelActivity implements BaseActivity {
         this.loginDialog = loginDialog;
         this.navigationManager = navigationManager;
         addEventListeners();
+        injectCustomResources();
     }
 
     private void addEventListeners() {
@@ -62,6 +65,10 @@ public class MainPanelActivity implements BaseActivity {
     @Override
     public void stop() {
         //this method run when current activity goes stop
+    }
+
+    private void injectCustomResources(){
+        RESOURCES.style().ensureInjected();
     }
 
 

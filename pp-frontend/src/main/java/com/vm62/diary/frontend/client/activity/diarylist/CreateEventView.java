@@ -65,8 +65,6 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     @UiField
     protected MaterialListBox typeBox;
     @UiField
-    protected MaterialChip impChip;
-    @UiField
     MaterialRow signContainer;
     @UiField
     MaterialTextArea descriptArea;
@@ -92,7 +90,6 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         minutesTextBox.setType(InputType.NUMBER);
         minutesTextBox.setValue("5");
         hourTextBox.setValue("0");
-        impChip.setUrl("/res/imp.png");
         simple.setValue(true);
         complex.setValue(false);
 

@@ -11,6 +11,10 @@ public interface CommonSignResources extends ClientBundle {
     @Source("img/alert.png")
     ImageResource alert();
 
+    @Source("img/question.png")
+    ImageResource question();
+
+
     @Source("CssSignResources.css")
     CommonSignResourcesCss style();
 
@@ -18,5 +22,11 @@ public interface CommonSignResources extends ClientBundle {
         String alert();
 
         String alertSigns();
+
+        String usualSignImageStyle();
+
+        String chosenSignImageStyle();
+
+        String question();
     }
 }
