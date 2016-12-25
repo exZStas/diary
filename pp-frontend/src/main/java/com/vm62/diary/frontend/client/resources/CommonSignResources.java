@@ -35,6 +35,9 @@ public interface CommonSignResources extends ClientBundle {
     @Source("img/work.png")
     ImageResource work();
 
+    @Source("img/entertaiment.png")
+    ImageResource entertaiment();
+
     interface CommonSignResourcesCss extends CssResource{
         String alert();
 
