@@ -15,6 +15,8 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Random;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
+import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import gwt.material.design.client.base.validator.BlankValidator;
 import gwt.material.design.client.ui.*;
 
@@ -34,23 +36,19 @@ public class AdminLoginDialog extends CDialogBox {
     MaterialButton btnLogin;
 
     @UiField
-    MaterialRange capchaRange;
-
-    @UiField
-    MaterialLabel capchaRangeLabel;
+    MaterialButton btnBack;
 
     private NavigationManager navigationManager;
     private NotificationManager notificationManager;
-    private Random random;
-    private int expectedCapchaValue;
 
     @Inject
     public AdminLoginDialog(NavigationManager navigationManager,
                             NotificationManager notificationManager) {
         this.navigationManager = navigationManager;
         this.notificationManager = notificationManager;
-
         setWidget(uiBinder.createAndBindUi(this));
+        btnBack.getElement().getStyle().setBackgroundColor("#ff8f00");
+
 
 		txtUsername.addValidator(new BlankValidator<String>("Please provide user name"));
 		txtPassword.addValidator(new BlankValidator<String>("Please provide password"));
@@ -59,7 +57,16 @@ public class AdminLoginDialog extends CDialogBox {
 
     @UiHandler("btnLogin")
     protected void btnLoginClick(ClickEvent event) {
+        if(!txtUsername.validate() && !txtPassword.validate()){
+            return;
+        }
 
+    }
+
+    @UiHandler("btnBack")
+    protected void btnBackClick(ClickEvent event){
+        this.hide();
+        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_MAIN));
     }
 
     public void clear() {
@@ -78,7 +85,6 @@ public class AdminLoginDialog extends CDialogBox {
     public void showDialog() {
         clear();
         setCaptionHtml(HeaderTitle.ADMIN_LOGIN.getText());
-		generateCaptcha();
         center();
     }
 
@@ -97,17 +103,5 @@ public class AdminLoginDialog extends CDialogBox {
 				event.stopPropagation();
 			}
 		}, KeyDownEvent.getType());
-	}
-
-	private void generateCaptcha(){
-		capchaRange.setValue(capchaRange.getMin() + 1 + (int) (Math.random() * (capchaRange.getMax() - capchaRange.getMin() - 1)));
-		expectedCapchaValue = capchaRange.getMin() + 1 + (int) (Math.random() * (capchaRange.getMax() - capchaRange.getMin() - 1));
-
-		if(expectedCapchaValue == capchaRange.getValue()) {
-			expectedCapchaValue = capchaRange.getMax() - expectedCapchaValue;
-		}
-
-		int delta = expectedCapchaValue - capchaRange.getValue();
-		capchaRangeLabel.setText("Move slider " + String.valueOf(Math.abs(delta)) + " steps to the " + (delta > 0 ? "left" : "right"));
 	}
 }

@@ -24,7 +24,16 @@
 
         .row {
             overflow: hidden;
-        }</ui:style>
+        }
+
+        .backButton {
+            width: 10%;
+            float: left;
+            background-color: #ff8f00 !important;
+            color: white !important;
+        }
+
+    </ui:style>
 
     <m:MaterialRow overflow="HIDDEN" addStyleNames="{style.row}">
         <m:MaterialColumn grid="s12 m12 l12" addStyleNames="{style.width}">
@@ -34,12 +43,11 @@
             <m:MaterialRow>
                 <m:MaterialTextBox ui:field="txtPassword" placeholder="password" type="PASSWORD" iconType="LOCK_OPEN"/>
             </m:MaterialRow>
+            <m:MaterialRow textAlign="LEFT" marginBottom="0" backgroundColor="#ff8f00" addStyleNames="{style.backButton}">
+                <m:MaterialButton ui:field="btnBack" text="BACK"/>
+            </m:MaterialRow>
             <m:MaterialRow textAlign="RIGHT" marginBottom="0" addStyleNames="{style.buttons}">
                 <m:MaterialButton ui:field="btnLogin" text="login"/>
-            </m:MaterialRow>
-            <m:MaterialRow addStyleNames="{style.captcha}">
-                <m:MaterialLabel ui:field="capchaRangeLabel" float="LEFT"/>
-                <m:MaterialRange ui:field="capchaRange" min="0" max="10" value="0" />
             </m:MaterialRow>
         </m:MaterialColumn>
     </m:MaterialRow>

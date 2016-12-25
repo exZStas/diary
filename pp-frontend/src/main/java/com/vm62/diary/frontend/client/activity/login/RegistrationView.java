@@ -53,13 +53,10 @@ public class RegistrationView extends Composite implements RegistrationActivity.
 
     private SimpleEventHandler registerPatient;
 
-    private NavigationManager navigationManager;
-
 
     @Inject
-    public RegistrationView(NavigationManager navigationManager) {
+    public RegistrationView() {
         setWidget(uiBinder.createAndBindUi(this));
-        this.navigationManager = navigationManager;
         birthDate.setDateMin(new Date(90, 0, 1));
         birthDate.setDateMax(new Date());
         firstName.addValidator(new BlankValidator<String>("Please, provide your first name!"));
@@ -103,6 +100,11 @@ public class RegistrationView extends Composite implements RegistrationActivity.
         registerPatient.onEvent();
     }
 
+    @UiHandler("btnDecline")
+    protected void btnDeclineClick(ClickEvent event){
+
+    }
+
     @Override
     public String getFirstName(){
         return firstName.getText();
@@ -136,6 +138,11 @@ public class RegistrationView extends Composite implements RegistrationActivity.
     @Override
     public String getEmail(){
         return email.getText();
+    }
+
+    @Override
+    public void addBtnDeclineClick(ClickHandler clickHandler){
+        btnDecline.addClickHandler(clickHandler);
     }
 
     @Override

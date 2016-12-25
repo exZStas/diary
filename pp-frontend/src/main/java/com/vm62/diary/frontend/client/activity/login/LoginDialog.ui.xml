@@ -26,7 +26,9 @@
             float: left;
             background-color: #ff8f00 !important;
             color: white !important;
-        }</ui:style>
+        }
+
+    </ui:style>
 
     <m:MaterialRow overflow="HIDDEN" addStyleNames="{style.row}">
         <m:MaterialColumn grid="s12 m12 l12" addStyleNames="{style.width}">
