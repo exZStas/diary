@@ -14,7 +14,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
@@ -47,6 +46,8 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     HTMLPanel scheduleList;
     @UiField
     MaterialLink logOutBtn;
+    @UiField
+    MaterialLabel userNameLabel;
  /*   @UiField
     protected MaterialModal modal;
     @UiField
@@ -73,27 +74,20 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         //navBar.add(currentTime);
         this.navigationManager = navigationManager;
         setWidget(uiBinder.createAndBindUi(this));
+//        scheduleList.sinkEvents(Event.ONCLICK);
+
         scheduleList.getElement().getStyle().setProperty("height", "calc(100% - 150px)");
 
-        EventDTO testEvent = new EventDTO(Long.valueOf(123), "AWESOME NAME", "Not so awesome description", Category.education, new Date(116, 11, 15, 7, 0), new Date(116, 11, 15, 10, 0), false, Long.valueOf(10800000), "");
-        EventDTO testEvent2 = new EventDTO(Long.valueOf(234), "Tes Test", "AAA BBB CCC DDD EEE FFF GGG HHH", Category.homework, new Date(116, 11, 15, 12, 0), new Date(116, 11, 15, 15, 0), false, Long.valueOf(10800000), "");
-        EventDTO testEvent3 = new EventDTO(Long.valueOf(456), "Little thing", "But very very important", Category.homework, new Date(116, 11, 15, 5, 0), new Date(116, 11, 15, 6, 0), false, Long.valueOf(3600000), "");
-        EventView EV1 = new EventView(testEvent);
+        EventView EV1 = new EventView("Учеба", "Ходить на пары", "#a4caf5", new Date(116, 11, 15, 7, 0), new Date(116, 11, 15, 10, 0));
         scheduleList.add(EV1);
-        EventView EV2 = new EventView(testEvent2);
+        EventView EV2 = new EventView("Работа", "Не ходить на пары", "#87d6c1", new Date(116, 11, 15, 12, 0), new Date(116, 11, 15, 15, 0));
         scheduleList.add(EV2);
-        EventView EV3 = new EventView(testEvent3);
+        EventView EV3 = new EventView("Test", "Делать чего-нибудь еще, добавим несколько строк", "#87d6c1", new Date(116, 11, 15, 5, 0), new Date(116, 11, 15, 6, 0));
         scheduleList.add(EV3);
 
-    }
+        scheduleList.remove(EV2);
 
-    public void setScheduleList(List<EventDTO> events) {
-        for (int i = 0; i < events.size(); i++) {
-            EventView event = new EventView(events.get(i));
-            scheduleList.add(event);
-        }
     }
-
     @UiHandler("btnAddEvent")
     void onOpenCreateEventWindow(ClickEvent e) {
         navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_CREATE_EVENT_ACTIVITY));
@@ -110,6 +104,15 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     }
 
 
+    @Override
+    public void setSchedule(List<EventDTO> events){
+        return;
+    }
+
+    @Override
+    public void setUserName(String name){
+        userNameLabel.setText(name);
+    }
 
 
 }

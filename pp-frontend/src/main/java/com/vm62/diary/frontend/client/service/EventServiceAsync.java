@@ -10,6 +10,7 @@ import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import com.vm62.diary.frontend.server.service.dto.UserDTO;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Ира on 16.12.2016.
@@ -23,4 +24,6 @@ public interface EventServiceAsync {
                 Long duration, String sticker, AsyncCallback<EventDTO> async);
 
     void getEvent(Long id, AsyncCallback<EventDTO> async);
+
+    void getEventsByDayForUser(Date day, AsyncCallback<List<EventDTO>> async);
 }

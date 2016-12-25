@@ -13,8 +13,7 @@ import com.vm62.diary.frontend.client.service.EventService;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import com.vm62.diary.integration.server.assembler.EventDTOAssembler;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Ира on 18.12.2016.
@@ -49,8 +48,13 @@ public class EventServiceImpl extends RemoteServiceServlet implements EventServi
         return new EventDTOAssembler().mapEntityToDTO(event);
     }
 
-    /*@Override
-    public List<EventDTO> getEvents(Date date) throws ServiceException{
-        List<Event> events = eventBean;
-    }*/
+    @Override
+    public List<EventDTO> getEventsByDayForUser(Date day) throws ServiceException{
+        List<EventDTO> eventsByDay = new ArrayList<>();
+        List<Event> events = eventBean.getEventsByDayForUser(day,userSessionHelper.getUserId());
+        for (Event event:events) {
+            eventsByDay.add(new EventDTOAssembler().mapEntityToDTO(event));
+        }
+        return eventsByDay;
+    }
 }

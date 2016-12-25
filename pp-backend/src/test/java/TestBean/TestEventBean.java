@@ -14,14 +14,18 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.unitils.reflectionassert.ReflectionComparatorMode;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
 /**
  * Created by Ира on 23.12.2016.
@@ -32,14 +36,20 @@ public class TestEventBean {
     @Mock
     private EventDAO eventDAO;
 
-    private Event event1;
+    private Event event1, event2, event3;
     private Date start_time1 = new Date(116,12,18,17,00);
     private Date end_time1 = new Date(116,12,18,19,30);
+    private Date start_time2 = new Date(116,12,19,17,00);
+    private Date end_time2 = new Date(116,12,20,19,30);
+    private Date start_time3 = new Date(116,12,18,12,00);
+    private Date end_time3 = new Date(116,12,18,13,30);
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        event1 = new Event(1L,"my","my event", Category.education, start_time1, end_time1, false, end_time1.getTime()-start_time1.getTime(), "difficult");
+        event1 = new Event(1L,"my1","my event", Category.education, start_time1, end_time1, false, end_time1.getTime()-start_time1.getTime(), "difficult");
+        event2 = new Event(1L,"my2","my event", Category.sport, start_time2, end_time2, false, end_time2.getTime()-start_time2.getTime(), "difficult");
+        event3 = new Event(1L,"my3","my event", Category.entertainment, start_time3, end_time3, false, end_time3.getTime()-start_time3.getTime(), "difficult");
         event1.setId(12L);
     }
 

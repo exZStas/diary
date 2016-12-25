@@ -58,4 +58,9 @@ public class EventBean {
         return eventDAO.getEventByCategory(category);
     }
 
+     public List<Event> getEventsByDayForUser(Date day, Long userId) throws ServiceException{
+         ifNull(day, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "day");
+         return eventDAO.getEventsByDayForUser(day,userId);
+     }
+
 }

@@ -50,8 +50,8 @@ public class TestEventDAO {
     private String email3 = "fox@mail.nl";
     private Date start_time1 = new Date(116,12,18,17,00);
     private Date end_time1 = new Date(116,12,18,19,30);
-    private Date start_time2 = new Date(116,12,18,17,00);
-    private Date end_time2 = new Date(116,12,19,19,30);
+    private Date start_time2 = new Date(116,12,18,12,00);
+    private Date end_time2 = new Date(116,12,18,13,30);
     private Date start_time3 = new Date(116,12,20,17,00,30);
     private Date end_time3 = new Date(116,12,20,20,30,00);
 
@@ -65,7 +65,7 @@ public class TestEventDAO {
         user3 = userFactory.createUser("Geedan", "Walker", "password1", Gender.M, "vm27", new Date(2016, 05, 12), email3, uid3, Boolean.FALSE, Boolean.FALSE);
         event1 = eventFactory.createEvent(user1.getId(),"study","bla-bla", Category.education, start_time1, end_time1, false, end_time1.getTime()-start_time1.getTime(), "difficult");
         event2 = eventFactory.createEvent(user1.getId(),"study","", Category.education, start_time2, end_time2, true, end_time2.getTime()-start_time2.getTime(), "important");
-        event3 = eventFactory.createEvent(user1.getId(),"fitness","pilates", Category.sport, start_time3, end_time3, false, end_time3.getTime()-start_time3.getTime(), "difficult");
+        event3 = eventFactory.createEvent(user2.getId(),"fitness","pilates", Category.sport, start_time3, end_time3, false, end_time3.getTime()-start_time3.getTime(), "difficult");
     }
 
     @Test
@@ -82,10 +82,9 @@ public class TestEventDAO {
         assertEquals(event.getName(), "trpo");
     }
     @Test
-    public void test_GetUserById(){
-        Event event = eventDAO.getUserById(user1.getId());
-        assertEquals(event.getUserById(), event1.getUserById());
-        assertEquals(event.getUserById(), user1.getId());
+    public void test_GetEventByUserId(){
+        List<Event> events = eventDAO.getEventByUserId(user1.getId());
+        assertReflectionEquals(events, Arrays.asList(event1, event2), ReflectionComparatorMode.LENIENT_ORDER);
     }
     @Test
     public void test_GetEventByCategory(){
@@ -112,6 +111,13 @@ public class TestEventDAO {
         assertEquals(event.getDoneStatus(), Status.done);
         List<Event> events = eventDAO.getEventByDoneStatus(Status.active);
         assertReflectionEquals(events, Arrays.asList(event2, event3), ReflectionComparatorMode.LENIENT_ORDER);
+    }
+    @Test
+    public void test_GetEventsByDayForUser(){
+        Date day = new Date(116,12,18);
+
+        List<Event> events = eventDAO.getEventsByDayForUser(day,user1.getId());
+        assertReflectionEquals(events, Arrays.asList(event1, event2), ReflectionComparatorMode.LENIENT_ORDER);
     }
 
 }

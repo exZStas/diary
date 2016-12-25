@@ -52,14 +52,14 @@ public class EventDAO {
         return QueryHelper.getSingleValueOrNull(query);
     }
 
-    public Event getUserById(Long user_id){
+    public List<Event> getEventByUserId(Long user_id){
         EntityManager em = emProvider.get();
 
         TypedQuery<Event> query = em.createQuery("SELECT us FROM "
                 + Event.class.getName() + " us " + "WHERE us.user_id = :USER_ID", Event.class);
 
         query.setParameter("USER_ID", user_id);
-        return QueryHelper.getSingleValueOrNull(query);
+        return query.getResultList();
     }
     public List<Event> getEventByCategory(Category category){
         EntityManager em = emProvider.get();
@@ -92,6 +92,15 @@ public class EventDAO {
                 + Event.class.getName() + " us " + "WHERE us.done_status = :DONE_STATUS", Event.class);
 
         query.setParameter("DONE_STATUS", done_status);
+        return query.getResultList();
+    }
+    public List<Event> getEventsByDayForUser(Date day, Long user_id){
+        EntityManager em = emProvider.get();
+        Date nextDay = new Date(day.getTime()+ 24*60*60*1000);
+        TypedQuery<Event> query = em.createQuery("SELECT ev FROM "
+                + Event.class.getName() + " ev " + "WHERE ev.user_id = :USER_ID AND ev.start_time BETWEEN :start_date and :end_date", Event.class);
+
+        query.setParameter("start_date",day).setParameter("end_date",nextDay).setParameter("USER_ID", user_id);
         return query.getResultList();
     }
 }

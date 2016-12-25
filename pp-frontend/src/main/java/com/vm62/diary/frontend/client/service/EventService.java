@@ -8,6 +8,7 @@ import com.vm62.diary.common.constants.Sticker;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Ира on 16.12.2016.
@@ -17,7 +18,11 @@ public interface EventService extends RemoteService{
 
     EventDTO create(String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
                     Long duration, String sticker) throws ServiceException;
+
     EventDTO update(String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
                            Long duration, String sticker) throws ServiceException;
+
     EventDTO getEvent(Long id) throws ServiceException;
+
+    List<EventDTO> getEventsByDayForUser(Date day) throws ServiceException;
 }
