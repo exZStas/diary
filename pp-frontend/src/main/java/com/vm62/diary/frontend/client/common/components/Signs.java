@@ -13,7 +13,11 @@ public enum Signs {
     MAN(RESOURCES.man().getSafeUri().asString(), "man"),
     WOMAN(RESOURCES.woman().getSafeUri().asString(), "woman"),
     QUESTION_SIGN(RESOURCES.question().getSafeUri().asString(), "questionSign"),
-    USER_BG(RESOURCES.userBG().getSafeUri().asString(), "userBG");
+    USER_BG(RESOURCES.userBG().getSafeUri().asString(), "userBG"),
+    HOUSEHOLDCHORES_SIGN(RESOURCES.householdchores().getSafeUri().asString(), "householdchoresSign"),
+    SPORT_SIGN(RESOURCES.sport().getSafeUri().asString(), "sportSign"),
+    TRIP_SIGN(RESOURCES.trip().getSafeUri().asString(), "tripSign"),
+    ENTERTAIMENT_SIGN(RESOURCES.entertaiment().getSafeUri().asString(), "entertaimentSign");
 
 
     private String image;
