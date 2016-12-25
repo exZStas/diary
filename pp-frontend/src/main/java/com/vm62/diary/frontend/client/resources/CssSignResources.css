@@ -1,0 +1,12 @@
+/* Sprites */
+
+.alertSigns{
+    width:10px;
+    height: 15px;
+    margin: 5px;
+}
+
+@sprite .alert {gwt-image: "alert";
+    width: 20px !important;
+    height: 30px !important;
+}
