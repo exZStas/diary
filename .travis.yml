@@ -22,4 +22,4 @@ services:
   - mysql
 
 install:
-  - "sudo apt-get install mysql-common mysql-server-5.5.25 mysql-server-core-5.5.25 mysql-client-5.5.25 mysql-client-core-5.5.25"
+  - "sudo apt-get install mysql-common mysql-server-5.5 mysql-server-core-5.5 mysql-client-5.5 mysql-client-core-5.5"
