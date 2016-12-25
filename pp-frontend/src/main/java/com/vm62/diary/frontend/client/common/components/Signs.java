@@ -9,6 +9,7 @@ public enum Signs {
     HOMEWORK_SIGN(RESOURCES.homework().getSafeUri().asString(), "homeworkSign"),
     SLEEP_SIGN(RESOURCES.sleep().getSafeUri().asString(), "sleepSign"),
     WORK_SIGN(RESOURCES.work().getSafeUri().asString(), "workSign"),
+    EATING_SIGN(RESOURCES.eating().getSafeUri().asString(), "eatingSign"),
     MAN(RESOURCES.man().getSafeUri().asString(), "man"),
     WOMAN(RESOURCES.woman().getSafeUri().asString(), "woman"),
     QUESTION_SIGN(RESOURCES.question().getSafeUri().asString(), "questionSign"),
