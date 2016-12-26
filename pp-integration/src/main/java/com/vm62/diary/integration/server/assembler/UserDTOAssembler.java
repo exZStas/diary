@@ -10,7 +10,9 @@ public class UserDTOAssembler extends AbstractDTOAssembler<User, UserDTO> {
         if(entity == null){
             return null;
         }
-        return new UserDTO(entity.getFirstName(),
+        return new UserDTO(
+                entity.getId(),
+                entity.getFirstName(),
                 entity.getLastName(),
                 entity.getGender().name(),
                 entity.getStudyGroup(),

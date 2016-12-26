@@ -33,7 +33,8 @@ public class LoginModule {
         ValidationUtils.ifNullOrEmpty(email, ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "email");
         ValidationUtils.ifNullOrEmpty(password.getAsString(), ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "password");
         User user = userBean.getUserByEmail(email);
-        if (user.getPassword().getAsString().equals(password.encode().getAsString())) {
+        boolean passwordsAreEquals = user.getPassword().getAsString().equals(password.encode().getAsString());
+        if (passwordsAreEquals && user.isRegister()) {
             userSessionHelper.createUserSession(user.getId());
             return user;
         } else {

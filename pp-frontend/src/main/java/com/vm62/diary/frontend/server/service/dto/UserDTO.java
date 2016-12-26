@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class UserDTO implements Serializable{
 
+    private Long userId;
     private String firstName;
     private String lastName;
     private String gender;
@@ -25,7 +26,8 @@ public class UserDTO implements Serializable{
         this.email = email;
     }
 
-    public UserDTO (String firstName, String lastName, String gender, String studyGroup, Date birthday, String email, String password, Boolean isRegister ){
+    public UserDTO (Long userId, String firstName, String lastName, String gender, String studyGroup, Date birthday, String email, String password, Boolean isRegister ){
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -93,4 +95,7 @@ public class UserDTO implements Serializable{
         return this.isRegister;
     }
 
+    public Long getUserId(){
+        return userId;
+    }
 }

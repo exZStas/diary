@@ -1,7 +1,8 @@
 package com.vm62.diary.frontend.client.activity.admin;
 
 
-import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -10,9 +11,12 @@ import com.google.inject.ImplementedBy;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.vm62.diary.frontend.client.common.BaseActivity;
+import com.vm62.diary.frontend.client.common.dialogs.ConfirmDialog;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
+import com.vm62.diary.frontend.client.common.events.SelectEventHandler;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
+import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import com.vm62.diary.frontend.client.service.AdminServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.UserDTO;
 
@@ -24,24 +28,132 @@ public class AdminHomeActivity implements BaseActivity {
     @ImplementedBy(AdminHomeView.class)
     interface IAdminHomeView extends IsWidget{
         void setUserTable(List<UserDTO> users);
+        void setUserBanHandler(SelectEventHandler<UserDTO> handler);
+        void setCreateCategoryButtonHandler(ClickHandler clickHandler);
+        String getCategoryName();
+        String getCategoryColor();
+        void addComeBackClickHandler(ClickHandler handler);
     }
 
     private IAdminHomeView view;
     private NavigationManager navigationManager;
     private AdminServiceAsync adminServiceAsync;
     private NotificationManager notificationManager;
+    private ConfirmDialog confirmDialog;
+    private Long currentUserId;
 
     @Inject
     public AdminHomeActivity(IAdminHomeView view, NavigationManager navigationManager, AdminServiceAsync adminServiceAsync,
-                             NotificationManager notificationManager){
+                             NotificationManager notificationManager, ConfirmDialog confirmDialog){
         this.view = view;
         this.navigationManager = navigationManager;
         this.adminServiceAsync = adminServiceAsync;
         this.notificationManager = notificationManager;
+        this.confirmDialog = confirmDialog;
         addEventHandlers();
     }
 
     public void addEventHandlers(){
+        view.setCreateCategoryButtonHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                adminServiceAsync.createCategory(view.getCategoryName(), view.getCategoryColor(), new AsyncCallback<Void>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        notificationManager.showErrorPopupWithoutDetails("Can't create category");
+                    }
+
+                    @Override
+                    public void onSuccess(Void result) {
+                        notificationManager.showErrorPopupWithoutDetails("Category successfully created!");
+                    }
+                });
+            }
+        });
+
+        view.addComeBackClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_MAIN));
+            }
+        });
+
+        view.setUserBanHandler(new SelectEventHandler<UserDTO>() {
+            @Override
+            public void onEvent(UserDTO user) {
+                currentUserId = user.getUserId();
+                if(user.isRegister()){
+                    confirmDialog.showDialog(
+                            "Ban user",
+                            "Do you want ban user " + user.getFirstName() + " " + user.getLastName() + "?",
+                            null,
+                            null,
+                            new ClickHandler() {
+                                @Override
+                                public void onClick(ClickEvent event) {
+                                    adminServiceAsync.banUser(currentUserId, new AsyncCallback<Void>() {
+                                        @Override
+                                        public void onFailure(Throwable caught) {
+                                            notificationManager.showErrorPopupWithoutDetails("can't ban user");
+                                        }
+
+                                        @Override
+                                        public void onSuccess(Void result) {
+                                            confirmDialog.hide();
+                                            populateTable();
+                                        }
+                                    });
+                                }
+                            },
+                            new ClickHandler() {
+                                @Override
+                                public void onClick(ClickEvent event) {
+                                    confirmDialog.hide();
+                                }
+                            },
+                            "Ban",
+                            "Back"
+                    );
+                } else {
+                    confirmDialog.showDialog(
+                            "Unban user",
+                            "Do you want to unban/force register user " + user.getFirstName() + " " + user.getLastName() + "?",
+                            null,
+                            null,
+                            new ClickHandler() {
+                                @Override
+                                public void onClick(ClickEvent event) {
+                                    adminServiceAsync.unbanUser(currentUserId, new AsyncCallback<Void>() {
+                                        @Override
+                                        public void onFailure(Throwable caught) {
+                                            notificationManager.showErrorPopupWithoutDetails("can't unban user");
+                                        }
+
+                                        @Override
+                                        public void onSuccess(Void result) {
+                                            confirmDialog.hide();
+                                            populateTable();
+                                        }
+                                    });
+                                }
+                            },
+                            new ClickHandler() {
+                                @Override
+                                public void onClick(ClickEvent event) {
+                                    confirmDialog.hide();
+                                }
+                            },
+                            "Unban",
+                            "Back"
+                    );
+                }
+            }
+        });
+        populateTable();
+
+    }
+
+    public void populateTable(){
         adminServiceAsync.getUsers(new AsyncCallback<List<UserDTO>>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -58,9 +170,7 @@ public class AdminHomeActivity implements BaseActivity {
 
     @Override
     public void start(HasWidgets display, NavigationPlace place) {
-
         display.add((Widget) view);
-
     }
 
     @Override

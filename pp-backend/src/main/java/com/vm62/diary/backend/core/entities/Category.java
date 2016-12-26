@@ -17,6 +17,11 @@ public class Category {
     @Column(name = "COLOR", nullable = false, length = 45)
     private String categoryColor;
 
+    public Category(String categoryName, String categoryColor){
+        this.categoryName = categoryName;
+        this.categoryColor = categoryColor;
+    }
+
     public Long getId() {
         return id;
     }
