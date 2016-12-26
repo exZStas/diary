@@ -52,10 +52,6 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     protected MaterialCheckBox complex;
     @UiField
     protected MaterialTimePicker tp;
-//    @UiField
-//    protected MaterialRange duration;
-//    @UiField
-//    protected MaterialLabel lblRange;
     @UiField
     protected MaterialButton btnBack;
     @UiField
@@ -76,8 +72,8 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     private NavigationManager navigationManager;
     private SimpleEventHandler registerPatient;
-    private Date startTime;
-    private Date endTime;
+    private Date startTime = new Date();
+    private Date endTime = new Date();
 
     @Inject
     public CreateEventView(NavigationManager navigationManager) {
@@ -187,9 +183,9 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     @Override
     public Date getStartTime(){
-        startTime = new Date();
         startTime.setHours(tp.getValue().getHours());
         startTime.setMinutes(tp.getValue().getMinutes());
+        startTime.setSeconds(0);
         return startTime;}
 
     @Override
@@ -201,17 +197,16 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     @Override
     public Date getEndTime(){
 
-        endTime = new Date();
         if (getComplexity()) {
             endTime.setYear(endDate.getValue().getYear());
             endTime.setMonth(endDate.getValue().getMonth());
             endTime.setDate(endDate.getValue().getDay());
             endTime.setHours(tpEnd.getValue().getHours());
             endTime.setMinutes(tpEnd.getValue().getMinutes());
+
         }
         else {
-            endTime = startTime;
-            endTime.setTime(endTime.getTime()+getDuration());
+            endTime.setTime(startTime.getTime()+getDuration());
         }
         return endTime;}
 
@@ -220,6 +215,28 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     public void registerPatientHandler(SimpleEventHandler handler){
         registerPatient = handler;
     }
+
+    @Override
+    public void setName(String name) {
+        eventName.setText(name);
+    }
+
+    @Override
+    public void setDescription(String description) {
+        descriptArea.setText(description);
+    }
+
+    @Override
+    public void setCategory(Category category) {
+        typeBox.setValue(category.getCategory());
+    }
+
+    @Override
+    public void setComplexity(Boolean complexity) {
+        simple.setValue(complexity);
+        complex.setValue(!complexity);
+    }
+
 
     @Override
     public void setSignImageList(SignImageListWidget signImageListWidget){

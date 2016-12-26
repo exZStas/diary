@@ -18,11 +18,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
 
+import java.security.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
@@ -48,12 +50,12 @@ public class TestEventDAO {
     private String email = "maor@mail.nl";
     private String email2 = "aadan@mail.nl";
     private String email3 = "fox@mail.nl";
-    private Date start_time1 = new Date(116,12,18,17,00);
-    private Date end_time1 = new Date(116,12,18,19,30);
-    private Date start_time2 = new Date(116,12,18,12,00);
-    private Date end_time2 = new Date(116,12,18,13,30);
-    private Date start_time3 = new Date(116,12,20,17,00,30);
-    private Date end_time3 = new Date(116,12,20,20,30,00);
+    private Date start_time1 = new Date(116,11,26,17,00);
+    private Date end_time1 = new Date(116,11,26,19,30);
+    private Date start_time2 = new Date(116,11,26,12,00);
+    private Date end_time2 = new Date(116,11,26,13,30);
+    private Date start_time3 = new Date(116,11,20,17,00,30);
+    private Date end_time3 = new Date(116,11,20,20,30,00);
 
     @Before
     public void setUp() {
@@ -73,6 +75,7 @@ public class TestEventDAO {
         Event event = eventDAO.getEventById(event1.getId());
         assertEquals(event.getId(), event1.getId());
         //assertEquals(event.getId(), user1.getId());
+        //assertTrue(event.getStartTime() instanceof Timestamp);
     }
     @Test
     public void test_UpdateEvent(){
@@ -114,10 +117,27 @@ public class TestEventDAO {
     }
     @Test
     public void test_GetEventsByDayForUser(){
-        Date day = new Date(116,12,18);
+        //Date day = new Date(116,12,18);
+        Date day = new Date();
+        day.setHours(0);
+        day.setMinutes(0);
+        day.setSeconds(0);
+
 
         List<Event> events = eventDAO.getEventsByDayForUser(day,user1.getId());
         assertReflectionEquals(events, Arrays.asList(event1, event2), ReflectionComparatorMode.LENIENT_ORDER);
+    }
+    @Test
+    public void test_GetEventsByDay(){
+        //Date day = new Date(116,12,18);
+        Date day = new Date();
+        day.setHours(0);
+        day.setMinutes(0);
+        day.setSeconds(0);
+
+        List<Event> events = eventDAO.getEventByStartDate(day);
+        assertReflectionEquals(events, Arrays.asList(event1, event2), ReflectionComparatorMode.LENIENT_ORDER);
+        assertTrue(events.get(1).getStartTime() instanceof Date);
     }
 
 }

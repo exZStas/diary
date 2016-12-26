@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.validation.client.impl.Validation;
 import com.google.inject.ImplementedBy;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.vm62.diary.common.constants.Gender;
 import com.vm62.diary.common.password.Password;
 import com.vm62.diary.common.password.PasswordEncoded;
@@ -24,6 +25,7 @@ import java.util.Date;
 /**
  * Created by Ира on 24.12.2016.
  */
+@Singleton
 public class ChangeProfileActivity implements BaseActivity {
     @ImplementedBy(ChangeProfileView.class)
     public interface IChangeProfileView extends IsWidget {
@@ -67,8 +69,6 @@ public class ChangeProfileActivity implements BaseActivity {
         addEventHandler();
         addEventHandlers();
     }
-
-
 
     public void addEventHandlers() {
         view.addAcceptButtonClickHandler(new ClickHandler() {

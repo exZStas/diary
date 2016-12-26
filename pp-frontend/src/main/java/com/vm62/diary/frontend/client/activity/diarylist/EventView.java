@@ -4,6 +4,9 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
+import com.google.inject.Inject;
+import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
+import com.vm62.diary.frontend.client.service.EventServiceAsync;
 import com.vm62.diary.common.constants.Status;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import gwt.material.design.client.constants.ButtonType;
@@ -16,7 +19,7 @@ import java.util.Date;
 /**
  * Created by Maria.
  */
-public class EventView extends Composite implements ClickHandler {
+public class EventView extends Composite {
     private Label name = new Label();
     private Label time = new Label();
     private Label description = new Label();
@@ -35,46 +38,30 @@ public class EventView extends Composite implements ClickHandler {
 
     private MaterialButton editButton = new MaterialButton(ButtonType.FLAT, "", new MaterialIcon(IconType.EDIT));
     private MaterialButton deleteButton = new MaterialButton(ButtonType.FLAT, "", new MaterialIcon(IconType.DELETE));
+    private EventServiceAsync eventServiceAsync;
+    private NavigationManager navigationManager;
+    private EventDTO event;
     private MaterialButton doneButton = new MaterialButton(ButtonType.FLAT, "", new MaterialIcon(IconType.CHECK));
     private MaterialButton undoneButton = new MaterialButton(ButtonType.FLAT, "", new MaterialIcon(IconType.CANCEL));
 
     private int HEIGHT_OF_ROW = 37;
 
-    public EventView(EventDTO event) {
-        Date startDate = event.getStartTime();
-        Date endDate = event.getEndTime();
-        wrapper.add(panel);
+    @Inject
+    public EventView(NavigationManager navigationManager){
+        this.navigationManager = navigationManager;
+        addEventHandlers();
+    }
 
-        panel.add(time);
-        panel.add(name);
-        panel.add(description);
-
-        id = event.getId();
-        idString += id;
-
-        name.setText(event.getName());
-        description.setText(event.getDescription());
-        time.setText(this.formatDateRange(startDate, endDate));
-
-        long eventHeight = HEIGHT_OF_ROW * (endDate.getTime() - startDate.getTime()) / (60000 * 60);
-        long eventTop = (startDate.getHours() + startDate.getMinutes() / 60) * HEIGHT_OF_ROW + 12;
-
-        if (eventHeight < HEIGHT_OF_ROW) {
-            eventHeight = HEIGHT_OF_ROW;
-        }
-        rightHeight = eventHeight;
-
-        editButton.setStyleName("event__edit btn-flat");
+    public void addEventHandlers(){
         editButton.addClickHandler(new ClickHandler() {
             @Override
-            public void onClick(ClickEvent event) {
-                event.preventDefault();
-                event.stopPropagation();
+            public void onClick(ClickEvent e) {
+                e.preventDefault();
+                e.stopPropagation();
+                navigationManager.navigate(new EditEventViewActivity.EditEventActivityPlace(event));
+
             }
         });
-        panel.add(editButton);
-
-        deleteButton.setStyleName("event__delete btn-flat");
         deleteButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
@@ -102,25 +89,6 @@ public class EventView extends Composite implements ClickHandler {
                 event.stopPropagation();
             }
         });
-        panel.add(undoneButton);
-
-        if (event.getStatus() != Status.undefined) {
-            doneButton.addStyleName("disabled");
-            undoneButton.addStyleName("disabled");
-        }
-
-        name.setStyleName("event__name");
-        description.setStyleName("event__description");
-        time.setStyleName("event__time");
-
-        initWidget(wrapper);
-
-        setStyleName("event " + idString);
-        getElement().getStyle().setProperty("top", eventTop + "px");
-        getElement().getStyle().setProperty("backgroundColor", event.getCategory().getColor());
-        getElement().getStyle().setProperty("height", eventHeight + "px");
-        getElement().getStyle().setProperty("minHeight", eventHeight + "px");
-
         wrapper.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
@@ -145,11 +113,61 @@ public class EventView extends Composite implements ClickHandler {
             }
         });
 
-        checkHeight();
     }
 
-    public void onClick(ClickEvent event) {
+    public EventView(EventDTO event) {
+        this.event = event;
+        Date startDate = event.getStartTime();
+        Date endDate = event.getEndTime();
+        wrapper.add(panel);
 
+        panel.add(time);
+        panel.add(name);
+        panel.add(description);
+
+        id = event.getId();
+        idString += id;
+
+        name.setText(event.getName());
+        description.setText(event.getDescription());
+        time.setText(this.formatDateRange(startDate, endDate));
+
+        long eventHeight = HEIGHT_OF_ROW * (endDate.getTime() - startDate.getTime()) / (60000 * 60);
+        long eventTop = (startDate.getHours() + startDate.getMinutes() / 60) * HEIGHT_OF_ROW + 12;
+
+        if (eventHeight < HEIGHT_OF_ROW) {
+            eventHeight = HEIGHT_OF_ROW;
+        }
+        rightHeight = eventHeight;
+
+        editButton.setStyleName("event__edit btn-flat");
+
+        panel.add(editButton);
+
+        deleteButton.setStyleName("event__delete btn-flat");
+
+        panel.add(undoneButton);
+
+        if (event.getStatus() != Status.undefined) {
+            doneButton.addStyleName("disabled");
+            undoneButton.addStyleName("disabled");
+        }
+
+        name.setStyleName("event__name");
+        description.setStyleName("event__description");
+        time.setStyleName("event__time");
+
+        initWidget(wrapper);
+
+        setStyleName("event " + idString);
+        getElement().getStyle().setProperty("top", eventTop + "px");
+        getElement().getStyle().setProperty("backgroundColor", event.getCategory().getColor());
+        getElement().getStyle().setProperty("height", eventHeight + "px");
+        getElement().getStyle().setProperty("minHeight", eventHeight + "px");
+
+
+
+        checkHeight();
     }
 
     protected native void slideToggle(String selector) /*-{
