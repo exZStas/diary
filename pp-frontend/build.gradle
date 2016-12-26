@@ -24,7 +24,7 @@ dependencies {
 }
 
 gwt {
-    maxHeapSize = '2048M'
+    maxHeapSize = '1024M'
     logLevel = 'INFO'
 
     gwtVersion='2.7.0'

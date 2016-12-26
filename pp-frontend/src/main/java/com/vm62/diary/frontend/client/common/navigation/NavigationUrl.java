@@ -17,6 +17,9 @@ public enum NavigationUrl {
     //Change profile
     URL_CHANGE_PROFILE_ACTIVITY,
 
+    //Edit event
+    URL_EDIT_EVENT_ACTIVITY;
+
     //Admin home page
     URL_HOME_ADMIN;
 

@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.ImplementedBy;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.vm62.diary.common.constants.Gender;
 import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
@@ -22,6 +23,7 @@ import java.util.List;
 /**
  * Created by Ира on 17.11.2016.
  */
+@Singleton
 public class DiaryListActivity implements BaseActivity{
     @ImplementedBy(DiaryListView.class)
     public interface IDiaryListView extends IsWidget {
@@ -29,6 +31,13 @@ public class DiaryListActivity implements BaseActivity{
         void setUserName(String name);
         void setUserPicture(Gender gender);
         void setSchedule(List<EventDTO> events);
+        void setNewEvent(EventDTO event);
+
+    }
+    @ImplementedBy(EventView.class)
+    public interface IEventView extends IsWidget {
+
+        void setEventParameters(EventDTO event);
 
     }
     private EventServiceAsync eventServiceAsync;

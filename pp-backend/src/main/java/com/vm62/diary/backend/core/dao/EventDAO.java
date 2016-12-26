@@ -7,11 +7,17 @@ import com.vm62.diary.backend.core.entities.Event;
 import com.vm62.diary.backend.core.entities.User;
 import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.common.constants.Status;
+import org.hibernate.Hibernate;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Ира on 18.12.2016.
@@ -61,6 +67,15 @@ public class EventDAO {
         query.setParameter("USER_ID", user_id);
         return query.getResultList();
     }
+    public List<Event> getEventByStartDate(Date day){
+        EntityManager em = emProvider.get();
+
+        TypedQuery<Event> query = em.createQuery("SELECT ev FROM "
+                + Event.class.getName() + " ev " + "WHERE ev.start_time > :DAY", Event.class);
+
+        query.setParameter("DAY", day, TemporalType.TIMESTAMP);
+        return query.getResultList();
+    }
     public List<Event> getEventByCategory(Category category){
         EntityManager em = emProvider.get();
         TypedQuery<Event> query = em.createQuery("SELECT us FROM "
@@ -94,13 +109,24 @@ public class EventDAO {
         query.setParameter("DONE_STATUS", done_status);
         return query.getResultList();
     }
+//    public List<Event> getEventsByDayForUser(Date day, Long user_id){
+//        EntityManager em = emProvider.get();
+//        Date nextDay = new Date(day.getTime()+ 24*60*60*1000);
+//        TypedQuery<Event> query = em.createQuery("SELECT ev FROM "
+//                + Event.class.getName() + " ev " + "WHERE ev.user_id = :USER_ID AND ev.start_time BETWEEN :day AND :next_day", Event.class);
+//
+//        query.setParameter("day",day).setParameter("next_day",nextDay).setParameter("USER_ID", user_id);
+//        return query.getResultList();
+//    }
     public List<Event> getEventsByDayForUser(Date day, Long user_id){
         EntityManager em = emProvider.get();
+
         Date nextDay = new Date(day.getTime()+ 24*60*60*1000);
         TypedQuery<Event> query = em.createQuery("SELECT ev FROM "
-                + Event.class.getName() + " ev " + "WHERE ev.user_id = :USER_ID AND ev.start_time BETWEEN :start_date and :end_date", Event.class);
+                + Event.class.getName() + " ev " + "WHERE ev.user_id = :USER_ID AND ev.start_time >= :day AND ev.end_time < :nextDay", Event.class);
 
-        query.setParameter("start_date",day).setParameter("end_date",nextDay).setParameter("USER_ID", user_id);
+        query.setParameter("day",day, TemporalType.TIMESTAMP).setParameter("nextDay",nextDay, TemporalType.TIMESTAMP).setParameter("USER_ID", user_id);
         return query.getResultList();
     }
+
 }

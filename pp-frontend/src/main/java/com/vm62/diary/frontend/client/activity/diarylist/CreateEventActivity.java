@@ -1,5 +1,7 @@
 package com.vm62.diary.frontend.client.activity.diarylist;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Image;
@@ -15,7 +17,9 @@ import com.vm62.diary.frontend.client.common.components.Signs;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.events.SelectEventHandler;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
+import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
+import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import com.vm62.diary.frontend.client.service.EventServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import gwt.material.design.client.ui.MaterialRow;
@@ -28,7 +32,7 @@ import static com.vm62.diary.frontend.client.resources.CommonSignResources.RESOU
  * Created by Ира on 15.12.2016.
  */
 
-@Singleton
+//@Singleton
 public class CreateEventActivity implements BaseActivity {
     @ImplementedBy(CreateEventView.class)
     public interface ICreateEventView extends IsWidget {
@@ -41,23 +45,37 @@ public class CreateEventActivity implements BaseActivity {
         Date getEndTime();
         void setSignImageList(SignImageListWidget signImageListWidget);
         void registerPatientHandler(SimpleEventHandler handler);
+        void setName(String name);
+        void setDescription(String description);
+        void setCategory(Category category);
+        void setComplexity(Boolean complexity);
+
+        //        void setSticker();
+//        void setStartTime(Date startTime);
+//        void setEndTime(Date endTime);
+//        void setDuration(Long duration);
+//
     }
 
     private ICreateEventView view;
     private EventServiceAsync eventServiceAsync;
     private NotificationManager notificationManager;
     private SignImageListWidget signImageListWidget;
+    private DiaryListActivity.IDiaryListView diaryListView;
     private String eventStickerDescription;
+    private NavigationManager navigationManager;
 
     @Inject
     CreateEventActivity(ICreateEventView view, EventServiceAsync eventServiceAsync, NotificationManager notificationManager,
-                        SignImageListWidget signImageListWidget) {
+                        SignImageListWidget signImageListWidget, NavigationManager navigationManager, DiaryListActivity.IDiaryListView diaryListView) {
 
         this.view = view;
+        this.diaryListView = diaryListView;
+        this.navigationManager = navigationManager;
         this.signImageListWidget = signImageListWidget;
         this.eventServiceAsync = eventServiceAsync;
         this.notificationManager = notificationManager;
-        view.setSignImageList(signImageListWidget);
+        this.view.setSignImageList(signImageListWidget);
         addEventHandlers();
     }
 
@@ -100,6 +118,8 @@ public class CreateEventActivity implements BaseActivity {
                             @Override
                             public void onSuccess(EventDTO result) {
                                 notificationManager.showInfoPopup("Event create!");
+                                diaryListView.setNewEvent(result);
+                                // // TODO: 26.12.2016 implement
                             }
                         });
             }
@@ -114,4 +134,5 @@ public class CreateEventActivity implements BaseActivity {
     public void stop() {
 
     }
+
 }

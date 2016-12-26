@@ -36,9 +36,11 @@ public class Event implements Serializable{
     private Category category;
 
     @Column(name="START_TIME",nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date start_time;
 
     @Column(name="END_TIME", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date end_time;
 
     @Column(name="COMPLEXITY",nullable = false, columnDefinition = "BIT", length = 1)
@@ -162,7 +164,7 @@ public class Event implements Serializable{
                 ", category='" + category+ '\'' +
                 ", complexity='" + complexity + '\'' +
                 ", start_time='" + start_time+ '\'' +
-                ", start_time='" + end_time+ '\'' +
+                ", end_time='" + end_time+ '\'' +
                 ", duration='" + duration+ '\'' +
                 ", done_status='" + done_status+ '\'' +
                 ", sticker='" + sticker+ '\'' +
