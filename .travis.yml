@@ -39,5 +39,5 @@ before_script:
   - mysql -u root diary_daotest < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db/migration/EVENT_TABLE_18-12-16.sql
   - mysql -u root diary_daotest < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db/migration/ADMIN_TABLE_26_12.sql
   - mysql -u root diary_daotest < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db/migration/CATEGORY_TABLE_26_12.sql
-  - mysql use diary
+  - mysql > use diary
   - mysql > show tables;
