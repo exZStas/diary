@@ -39,9 +39,6 @@ before_script:
   - mysql -u root diary_daotest < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db/migration/EVENT_TABLE_18-12-16.sql
   - mysql -u root diary_daotest < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db/migration/ADMIN_TABLE_26_12.sql
   - mysql -u root diary_daotest < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db/migration/CATEGORY_TABLE_26_12.sql
-  - mysql -u root -e "SHOW DATABASES;"
-  - mysql -u root -e "SHOW TABLES FROM diary;"
-  - mysql -u root -e "SHOW TABLES FROM diary_daotest;"
-  - mysql -u root diary_daotest < INSERT INTO admin (id, admin_name, admin_password) VALUES(1, 'admin', '0dea849e9fe91b89b411440f4cc0ae0f');
+  - mysql -u root diary_daotest < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db/migration/ADMIN_CREATE_26_12.sql
 
 script: ./gradlew check --info
