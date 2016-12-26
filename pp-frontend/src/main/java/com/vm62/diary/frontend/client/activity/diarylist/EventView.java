@@ -5,6 +5,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
 import com.vm62.diary.common.constants.Status;
+import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
+import com.vm62.diary.frontend.client.service.EventServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import gwt.material.design.client.constants.ButtonType;
 import gwt.material.design.client.constants.IconType;
@@ -36,6 +38,9 @@ public class EventView extends Composite {
     private MaterialButton deleteButton = new MaterialButton(ButtonType.FLAT, "", new MaterialIcon(IconType.DELETE));
     private MaterialButton doneButton = new MaterialButton(ButtonType.FLAT, "", new MaterialIcon(IconType.CHECK));
     private MaterialButton undoneButton = new MaterialButton(ButtonType.FLAT, "", new MaterialIcon(IconType.CANCEL));
+    private EventServiceAsync eventServiceAsync;
+    private NavigationManager navigationManager;
+    private EventDTO event;
 
     private int HEIGHT_OF_ROW = 37;
 
@@ -86,9 +91,10 @@ public class EventView extends Composite {
     private void setClickEvents() {
         editButton.addClickHandler(new ClickHandler() {
             @Override
-            public void onClick(ClickEvent event) {
-                event.preventDefault();
-                event.stopPropagation();
+            public void onClick(ClickEvent e) {
+                e.preventDefault();
+                e.stopPropagation();
+                navigationManager.navigate(new EditEventViewActivity.EditEventActivityPlace(event));
             }
         });
 
