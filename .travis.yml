@@ -40,3 +40,5 @@ before_script:
   - mysql -u root diary_daotest < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db/migration/ADMIN_TABLE_26_12.sql
   - mysql -u root diary_daotest < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db/migration/CATEGORY_TABLE_26_12.sql
   - mysql -u root -e "SHOW DATABASES;"
+  - mysql -u root -e "SHOW TABLES FROM diary;"
+  - mysql -u root -e "SHOW TABLES FROM diary_daotest;"
