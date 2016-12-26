@@ -24,6 +24,7 @@ import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import gwt.material.design.addins.client.sideprofile.MaterialSideProfile;
 import gwt.material.design.addins.client.timepicker.MaterialTimePicker;
+import gwt.material.design.client.constants.IconType;
 import gwt.material.design.client.ui.*;
 import com.google.gwt.user.client.ui.Label;
 
@@ -57,6 +58,10 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     MaterialImage userImage;
     @UiField
     MaterialSideProfile userProfile;
+    @UiField
+    MaterialButton btnScrollLeft;
+    @UiField
+    MaterialButton btnScrollRight;
  /*   @UiField
     protected MaterialModal modal;
     @UiField
@@ -90,6 +95,10 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
 
         scheduleList.getElement().getStyle().setProperty("height", "calc(100% - 150px)");
         scheduleList.addStyleName("schedule-list");
+        btnScrollLeft.addStyleName("scroll-btn left");
+        btnScrollRight.addStyleName("scroll-btn right");
+        btnScrollLeft.setIconType(IconType.KEYBOARD_ARROW_LEFT);
+        btnScrollRight.setIconType(IconType.KEYBOARD_ARROW_RIGHT);
 
     }
     @UiHandler("btnAddEvent")
@@ -107,6 +116,15 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_MAIN));
     }
 
+    @UiHandler("btnScrollLeft")
+    void onLeftScroll(ClickEvent e) {
+
+    }
+
+    @UiHandler("btnScrollRight")
+    void onRightScroll(ClickEvent e) {
+
+    }
 
     @Override
     public void setSchedule(List<EventDTO> events){

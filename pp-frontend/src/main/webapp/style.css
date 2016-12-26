@@ -145,3 +145,26 @@ button.btn-flat.event__undone:focus {
     color: white;
     border-radius: 0;
 }
+
+.scroll-btn {
+    position: fixed;
+    top: 50%;
+}
+
+.scroll-btn.left {
+    left: 290px;
+}
+
+.scroll-btn.right {
+    right: 10px;
+}
+
+@media screen and (max-width: 992px) {
+    .scroll-btn.left {
+        left: 5px;
+    }
+
+    .scroll-btn.right {
+        right: 5px;
+    }
+}

@@ -57,7 +57,8 @@
             padding-left: 7%;
             width: 90%;
         }
-    </ui:style>
+
+        </ui:style>
     <g:HTMLPanel ui:field="diaryPanel">
         <header>
             <!-- NavBar -->
@@ -92,7 +93,6 @@
             </m:MaterialSideNav>
         </header>
 
-        <!--Here comes experimenting-->
         <g:HTMLPanel ui:field="scheduleList">
             <div class="dividers-block">
                 <div class="time-divider">
@@ -169,6 +169,10 @@
                 </div>
             </div>
         </g:HTMLPanel>
+
+        <m:MaterialButton ui:field="btnScrollLeft" type="FLOATING" backgroundColor="BLUE" size="LARGE"/>
+        <m:MaterialButton ui:field="btnScrollRight" type="FLOATING" backgroundColor="BLUE" size="LARGE"/>
+
         <!-- FAB -->
         <m:MaterialFAB>
             <m:MaterialButton ui:field="btnAddEvent" type="FLOATING" backgroundColor="RED" iconType="ADD" size="LARGE"/>
