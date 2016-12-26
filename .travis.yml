@@ -29,9 +29,9 @@ before_script:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS diary;'
   - mysql -e 'CREATE DATABASE IF NOT EXISTS diary_daotest;'
 
-  - mysql -u root -e "CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';"
-  - mysql -u root -e "GRANT ALL ON diary.* TO 'root'@'localhost';"
-  - mysql -u root -e "GRANT ALL ON diary_daotest.* TO 'root'@'localhost';"
+  - mysql -u root -e "CREATE USER 'stas'@'localhost' IDENTIFIED BY 'stas';"
+  - mysql -u root -e "GRANT ALL ON diary.* TO 'stas'@'localhost';"
+  - mysql -u root -e "GRANT ALL ON diary_daotest.* TO 'stas'@'localhost';"
 
   - mysql -u root diary < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db/migration/USER_TABLE_20-11-16.sql
   - mysql -u root diary < /home/travis/build/exZStas/diary/pp-backend/src/main/resources/db/migration/EVENT_TABLE_18-12-16.sql
