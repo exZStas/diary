@@ -3,6 +3,7 @@ package com.vm62.diary.frontend.client;
 import com.vm62.diary.frontend.client.activity.MainPanelActivity;
 import com.vm62.diary.frontend.client.activity.MainPanelView;
 import com.vm62.diary.frontend.client.activity.admin.AdminLoginDialog;
+import com.vm62.diary.frontend.client.activity.login.LoginDialog;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.injection.InjectorDiary;
 import com.google.gwt.core.client.ScriptInjector;
@@ -21,6 +22,7 @@ public class DiaryEntryPoint extends MaterialDesign {
     public static final InjectorDiary injector = InjectorDiary.INSTANCE;
     private NavigationManager navigationManager;
     private AdminLoginDialog adminLoginDialog;
+    private LoginDialog loginDialog;
 
     private boolean ctrl = false;
     private boolean shift = false;
@@ -30,6 +32,7 @@ public class DiaryEntryPoint extends MaterialDesign {
         ScriptInjector.fromUrl("https://code.jquery.com/jquery-3.1.0.min.js");
         adminLoginDialog = injector.getAdminLoginDialog();
         navigationManager = injector.getNavigationManager();
+        loginDialog = injector.getLoginDialog();
 
         MainPanelView mainPanel = injector.getMainPanel();
 
@@ -91,6 +94,7 @@ public class DiaryEntryPoint extends MaterialDesign {
                         shift = true;
                     }
                     if (ne.getKeyCode() == KeyCodes.KEY_HOME && ctrl && shift) {
+                        loginDialog.hide();
                         adminLoginDialog.showDialog();
                         ctrl = false;
                         shift = false;

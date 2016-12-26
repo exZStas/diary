@@ -10,7 +10,8 @@ import static com.vm62.diary.frontend.client.service.ServletMappingConstants.*;
 public enum RpcServices {
     USER_SERVICE(USER_PROFILE_SERVICE_URL, UserProfileServiceImpl.class),
     LOGIN_SERVICE(LOGIN_SERVICE_URL, LoginServiceImpl.class),
-    EVENT_SERVICE(EVENT_SERVICE_URL, EventServiceImpl.class);
+    EVENT_SERVICE(EVENT_SERVICE_URL, EventServiceImpl.class),
+    ADMIN_SERVICE(ADMIN_SERVICE_URL, AdminServiceImpl.class);
 
     private String url;
     private Class<? extends HttpServlet> implClass;

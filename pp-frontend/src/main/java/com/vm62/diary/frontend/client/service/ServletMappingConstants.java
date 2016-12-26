@@ -26,4 +26,9 @@ public abstract class ServletMappingConstants {
 	public final static String EVENT_SERVICE_NAME = "EventService";
 	public final static String EVENT_SERVICE_RELATIVE_PATH = "eventService";
 	public final static String EVENT_SERVICE_URL = "/" + GWT_MODULE + "/" + EVENT_SERVICE_RELATIVE_PATH;
+
+	//admin service
+	public final static String ADMIN_SERVICE_NAME = "AdminService";
+	public final static String ADMIN_SERVICE_RELATIVE_PATH = "adminService";
+	public final static String ADMIN_SERVICE_URL = "/" + GWT_MODULE + "/" + ADMIN_SERVICE_RELATIVE_PATH;
 }

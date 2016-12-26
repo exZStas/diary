@@ -86,6 +86,16 @@ public class UserDAO {
         return updatedUser;
     }
 
+    public List<User> getUsers(){
+        EntityManager em = emProvider.get();
+
+        String queryString = "SELECT us FROM " + User.class.getName() + " us " +
+                " ORDER BY us.firstName ASC";
+
+        TypedQuery<User> query = em.createQuery(queryString, User.class);
+        return query.getResultList();
+    }
+
     public boolean isUserEmailExists(String email){
         EntityManager em = emProvider.get();
 

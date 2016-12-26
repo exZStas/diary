@@ -1,9 +1,7 @@
 package com.vm62.diary.frontend.server.service.dto;
 
-import com.vm62.diary.common.password.Password;
-import com.vm62.diary.common.password.PasswordEncoded;
 
-import javax.persistence.Transient;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,6 +14,7 @@ public class UserDTO implements Serializable{
     private Date birthday;
     private String email;
     private String password;
+    private Boolean isRegister;
 
     public UserDTO (String firstName, String lastName, String gender, String studyGroup, Date birthday, String email){
         this.firstName = firstName;
@@ -26,7 +25,7 @@ public class UserDTO implements Serializable{
         this.email = email;
     }
 
-    public UserDTO (String firstName, String lastName, String gender, String studyGroup, Date birthday, String email, String password){
+    public UserDTO (String firstName, String lastName, String gender, String studyGroup, Date birthday, String email, String password, Boolean isRegister ){
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -34,6 +33,7 @@ public class UserDTO implements Serializable{
         this.birthday = birthday;
         this.email = email;
         this.password = password;
+        this.isRegister = isRegister;
     }
 
     public UserDTO(){}
@@ -88,5 +88,9 @@ public class UserDTO implements Serializable{
     public String getPassword(){return password;}
 
     public void setPassword(String password){this.password = password;}
+
+    public Boolean isRegister(){
+        return this.isRegister;
+    }
 
 }

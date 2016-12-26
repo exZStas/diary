@@ -23,6 +23,7 @@ import gwt.material.design.client.ui.MaterialTextBox;
 
 @Singleton
 public class LoginDialog extends CDialogBox{
+
     interface LoginDialogUIBinder extends UiBinder<MaterialRow, LoginDialog>{
     }
     private static LoginDialogUIBinder uiBinder = GWT.create(LoginDialogUIBinder.class);

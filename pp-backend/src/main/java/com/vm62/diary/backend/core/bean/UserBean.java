@@ -8,6 +8,8 @@ import com.google.inject.persist.Transactional;
 import com.vm62.diary.common.ErrorType;
 import com.vm62.diary.common.ServiceException;
 
+import java.util.List;
+
 import static com.vm62.diary.common.utils.ValidationUtils.ifNull;
 import static com.vm62.diary.common.utils.ValidationUtils.ifNullOrEmpty;
 
@@ -52,6 +54,10 @@ public class UserBean {
         ifNullOrEmpty(registrationId, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "registrationId");
 
         return userDAO.getUserByRegistrationId(registrationId);
+    }
+
+    public List<User> getAllUsers(){
+        return userDAO.getUsers();
     }
 
 

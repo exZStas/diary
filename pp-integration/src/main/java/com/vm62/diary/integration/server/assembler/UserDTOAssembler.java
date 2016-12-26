@@ -16,7 +16,8 @@ public class UserDTOAssembler extends AbstractDTOAssembler<User, UserDTO> {
                 entity.getStudyGroup(),
                 entity.getBirthDate(),
                 entity.getEmail(),
-                entity.getPassword().getAsString()
+                entity.getPassword().getAsString(),
+                entity.isRegister()
                 );
     }
 }

@@ -1,7 +1,9 @@
 package com.vm62.diary.frontend.client.activity.admin;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.vm62.diary.frontend.client.activity.HeaderTitle;
 import com.vm62.diary.frontend.client.common.components.CDialogBox;
+import com.vm62.diary.frontend.client.common.components.MD5Digest;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.google.gwt.core.client.GWT;
@@ -12,11 +14,12 @@ import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Random;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
+import com.vm62.diary.frontend.client.service.AdminServiceAsync;
+import com.vm62.diary.frontend.server.service.dto.AdminDTO;
 import gwt.material.design.client.base.validator.BlankValidator;
 import gwt.material.design.client.ui.*;
 
@@ -40,12 +43,16 @@ public class AdminLoginDialog extends CDialogBox {
 
     private NavigationManager navigationManager;
     private NotificationManager notificationManager;
+    private AdminServiceAsync adminServiceAsync;
+    private AdminLoginDialog me;
 
     @Inject
     public AdminLoginDialog(NavigationManager navigationManager,
-                            NotificationManager notificationManager) {
+                            NotificationManager notificationManager, AdminServiceAsync adminServiceAsync) {
         this.navigationManager = navigationManager;
         this.notificationManager = notificationManager;
+        this.adminServiceAsync = adminServiceAsync;
+        me = this;
         setWidget(uiBinder.createAndBindUi(this));
         btnBack.getElement().getStyle().setBackgroundColor("#ff8f00");
 
@@ -60,7 +67,21 @@ public class AdminLoginDialog extends CDialogBox {
         if(!txtUsername.validate() && !txtPassword.validate()){
             return;
         }
+        adminServiceAsync.getAdmin(new AsyncCallback<AdminDTO>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                notificationManager.showErrorPopupWithoutDetails("Incorrect admin name and password!");
+            }
 
+            @Override
+            public void onSuccess(AdminDTO admin) {
+                if (admin != null && MD5Digest.getMD5(txtPassword.getText()).equals(admin.getAdminPassword())
+                        && admin.getAdminName().equals(txtUsername.getText())) {
+                    navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_HOME_ADMIN));
+                    me.hide();
+                }
+            }
+        });
     }
 
     @UiHandler("btnBack")
