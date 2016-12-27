@@ -68,6 +68,8 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     MaterialTextBox hourTextBox;
     @UiField
     MaterialTextBox minutesTextBox;
+    @UiField
+    MaterialButton btnCreate;
 
 
     private NavigationManager navigationManager;
@@ -203,7 +205,6 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
             endTime.setDate(endDate.getValue().getDay());
             endTime.setHours(tpEnd.getValue().getHours());
             endTime.setMinutes(tpEnd.getValue().getMinutes());
-
         }
         else {
             endTime.setTime(startTime.getTime()+getDuration());
@@ -217,25 +218,26 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     }
 
     @Override
-    public void setName(String name) {
+    public void changeForm(String name, String description, Category category, String sticker, Boolean complexity, Date startTime, Date endTime, Long duration) {
+        btnCreate.setText("Edit");
+        setCaptionHtml(HeaderTitle.CHANGE_PANEL.getText());
         eventName.setText(name);
-    }
-
-    @Override
-    public void setDescription(String description) {
         descriptArea.setText(description);
-    }
-
-    @Override
-    public void setCategory(Category category) {
         typeBox.setValue(category.getCategory());
-    }
-
-    @Override
-    public void setComplexity(Boolean complexity) {
         simple.setValue(complexity);
         complex.setValue(!complexity);
+        this.startTime.setTime(startTime.getTime());
+        this.endTime.setTime(endTime.getTime());
+        tp.setValue(startTime);
+        tpEnd.setValue(endTime);
+        endDate.setDate(endTime);
+        Date d = new Date(duration);
+        Integer min = d.getMinutes();
+        minutesTextBox.setValue(min.toString());
+        Integer hours = d.getHours();
+        hourTextBox.setValue(hours.toString());
     }
+
 
 
     @Override

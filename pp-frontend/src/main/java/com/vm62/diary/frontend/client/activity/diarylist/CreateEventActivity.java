@@ -1,7 +1,5 @@
 package com.vm62.diary.frontend.client.activity.diarylist;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Image;
@@ -9,7 +7,6 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.ImplementedBy;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.vm62.diary.frontend.client.common.components.SignImageListWidget;
@@ -19,7 +16,6 @@ import com.vm62.diary.frontend.client.common.events.SelectEventHandler;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
-import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import com.vm62.diary.frontend.client.service.EventServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import gwt.material.design.client.ui.MaterialRow;
@@ -45,10 +41,8 @@ public class CreateEventActivity implements BaseActivity {
         Date getEndTime();
         void setSignImageList(SignImageListWidget signImageListWidget);
         void registerPatientHandler(SimpleEventHandler handler);
-        void setName(String name);
-        void setDescription(String description);
-        void setCategory(Category category);
-        void setComplexity(Boolean complexity);
+        void changeForm(String name, String description, Category category, String sticker, Boolean complexity, Date startTime,
+                        Date endTime, Long duration);
 
         //        void setSticker();
 //        void setStartTime(Date startTime);

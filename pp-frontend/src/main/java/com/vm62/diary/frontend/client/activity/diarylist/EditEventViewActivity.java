@@ -32,11 +32,10 @@ public class EditEventViewActivity implements BaseActivity {
         this.place = (EditEventActivityPlace) place;
         display.add((Widget) view);
 
-        view.setCategory(this.place.eventDTO.getCategory());
-        view.setName(this.place.eventDTO.getName());
-        view.setDescription(this.place.eventDTO.getDescription());
-        view.setCategory(this.place.eventDTO.getCategory());
-        view.setComplexity(this.place.eventDTO.getComplexity());
+        view.changeForm(this.place.eventDTO.getName(),this.place.eventDTO.getDescription(),this.place.eventDTO.getCategory(),
+                this.place.eventDTO.getSticker(), this.place.eventDTO.getComplexity(), this.place.eventDTO.getStartTime(),
+                this.place.eventDTO.getEndTime(),this.place.eventDTO.getDuration());
+
 
     }
 

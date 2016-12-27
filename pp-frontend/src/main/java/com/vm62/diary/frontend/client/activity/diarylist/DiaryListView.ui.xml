@@ -99,10 +99,10 @@
                     <m:MaterialLabel ui:field="userNameLabel" addStyleNames="{style.name}"/>
 
                 </ma:sideprofile.MaterialSideProfile>
-                    <m:MaterialLink text="Events" textColor="BLUE" iconType="WHATSHOT" addStyleNames="{style.first}" shadow="3" waves="TEAL"/>
-                    <m:MaterialLink text="Chart" textColor="BLUE" iconType="PIE_CHART" addStyleNames="{style.first}" shadow="3" waves="TEAL"/>
+                    <m:MaterialLink ui:field="eventLink" text="Events" textColor="BLUE" iconType="WHATSHOT" addStyleNames="{style.first}" shadow="3" waves="TEAL"/>
+                    <m:MaterialLink ui:field="chartLink" text="Chart" textColor="BLUE" iconType="PIE_CHART" addStyleNames="{style.first}" shadow="3" waves="TEAL"/>
                     <m:MaterialLink text="Notifications" textColor="BLUE" iconType="NOTIFICATIONS" separator="true" addStyleNames="{style.first}" shadow="3" waves="TEAL"/>
-                    <m:MaterialLink text="Update schedule" textColor="BLUE" iconType="REFRESH" addStyleNames="{style.second}" waves="ORANGE"/>
+                    <m:MaterialLink ui:field="scheduleUpdateLink" text="Update schedule" textColor="BLUE" iconType="REFRESH" addStyleNames="{style.second}" waves="ORANGE"/>
                     <m:MaterialLink ui:field="changeBtn" text="Change profile" textColor="BLUE" iconType="CARD_MEMBERSHIP" addStyleNames="{style.second}" waves="ORANGE"/>
                     <m:MaterialLink ui:field="logOutBtn" text="Log out" textColor="BLUE" iconType="EXIT_TO_APP" addStyleNames="{style.second}" waves="ORANGE"/>
             </m:MaterialSideNav>

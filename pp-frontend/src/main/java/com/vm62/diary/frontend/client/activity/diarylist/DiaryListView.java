@@ -66,6 +66,12 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     MaterialButton btnScrollLeft;
     @UiField
     MaterialButton btnScrollRight;
+    @UiField
+    MaterialLink eventLink;
+    @UiField
+    MaterialLink scheduleUpdateLink;
+    @UiField
+    MaterialLink chartLink;
  /*   @UiField
     protected MaterialModal modal;
     @UiField
@@ -152,6 +158,10 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     @UiHandler("changeBtn")
     void onOpenChangeForm(ClickEvent e){
         navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_CHANGE_PROFILE_ACTIVITY));
+    }
+    @UiHandler("chartLink")
+    void onClickChartLink(ClickEvent e){
+        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_CHART_ACTIVITY));
     }
 
     @UiHandler("logOutBtn")

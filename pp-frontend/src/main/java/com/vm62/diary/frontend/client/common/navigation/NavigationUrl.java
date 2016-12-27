@@ -20,6 +20,9 @@ public enum NavigationUrl {
     //Edit event
     URL_EDIT_EVENT_ACTIVITY,
 
+    //Chart
+    URL_CHART_ACTIVITY,
+
     //Admin home page
     URL_HOME_ADMIN;
 

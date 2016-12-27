@@ -118,7 +118,7 @@ public class TestEventDAO {
     @Test
     public void test_GetEventsByDayForUser(){
         //Date day = new Date(116,12,18);
-        Date day = new Date();
+        Date day = new Date(start_time1.getTime());
         day.setHours(0);
         day.setMinutes(0);
         day.setSeconds(0);
@@ -130,7 +130,7 @@ public class TestEventDAO {
     @Test
     public void test_GetEventsByDay(){
         //Date day = new Date(116,12,18);
-        Date day = new Date();
+        Date day = new Date(start_time1.getTime());
         day.setHours(0);
         day.setMinutes(0);
         day.setSeconds(0);
