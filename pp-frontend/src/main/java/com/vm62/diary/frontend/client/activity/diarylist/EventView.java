@@ -5,6 +5,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
 import com.vm62.diary.common.constants.Status;
+import com.google.inject.Inject;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.service.EventServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
@@ -44,6 +45,11 @@ public class EventView extends Composite {
 
     private int HEIGHT_OF_ROW = 37;
 
+    @Inject
+    public EventView(NavigationManager navigationManager){
+        this.navigationManager = navigationManager;
+    }
+
     public EventView(EventDTO event) {
         VerticalPanel panel = new VerticalPanel();
 
@@ -60,7 +66,7 @@ public class EventView extends Composite {
         Date startDate = event.getStartTime();
         Date endDate = event.getEndTime();
         long eventHeight = HEIGHT_OF_ROW * (endDate.getTime() - startDate.getTime()) / (60000 * 60);
-        long eventTop = (startDate.getHours() + startDate.getMinutes() / 60) * HEIGHT_OF_ROW + 12;
+        long eventTop = (long)((startDate.getHours() + startDate.getMinutes() / 60.0) * HEIGHT_OF_ROW + 12);
 
         if (eventHeight < HEIGHT_OF_ROW) {
             eventHeight = HEIGHT_OF_ROW;
@@ -70,20 +76,24 @@ public class EventView extends Composite {
         id = event.getId();
         idString += id;
 
-        if (event.getStatus() != Status.undefined) {
-            doneButton.addStyleName("disabled");
-            undoneButton.addStyleName("disabled");
-        }
-
-        getElement().getStyle().setProperty("top", eventTop + "px");
-        getElement().getStyle().setProperty("backgroundColor", event.getCategory().getColor());
-        getElement().getStyle().setProperty("height", eventHeight + "px");
-        getElement().getStyle().setProperty("minHeight", eventHeight + "px");
+        wrapper.getElement().getStyle().setProperty("top", eventTop + "px");
+        wrapper.getElement().getStyle().setProperty("backgroundColor", event.getCategory().getColor());
+        wrapper.getElement().getStyle().setProperty("height", eventHeight + "px");
+        wrapper.getElement().getStyle().setProperty("minHeight", eventHeight + "px");
 
         setText(event.getName(), event.getDescription(), formatDateRange(startDate, endDate));
         setStyleNames();
         setClickEvents();
         checkHeight();
+
+        if (event.getStatus() != Status.undefined) {
+            doneButton.addStyleName("disabled");
+            undoneButton.addStyleName("disabled");
+        }
+
+        if (event.getStatus() != Status.active) {
+            editButton.addStyleName("disabled");
+        }
 
         initWidget(wrapper);
     }
@@ -157,7 +167,7 @@ public class EventView extends Composite {
         description.setStyleName("event__description");
         time.setStyleName("event__time");
 
-        setStyleName("event " + idString);
+        wrapper.setStyleName("event " + idString);
     }
 
     private void setText(String nameString, String descriptionString, String timeString) {
@@ -175,7 +185,7 @@ public class EventView extends Composite {
             description.getElement().getStyle().setProperty("display", "none");
             descriptionHidden = true;
             needDescriptionHiding = true;
-            getElement().getStyle().setProperty("height", "auto");
+            wrapper.getElement().getStyle().setProperty("height", "auto");
         }
         if (rightHeight < 58) {
             name.getElement().getStyle().setProperty("display", "none");

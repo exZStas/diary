@@ -66,12 +66,6 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     MaterialButton btnScrollLeft;
     @UiField
     MaterialButton btnScrollRight;
-    @UiField
-    MaterialLink eventLink;
-    @UiField
-    MaterialLink scheduleUpdateLink;
-    @UiField
-    MaterialLink chartLink;
  /*   @UiField
     protected MaterialModal modal;
     @UiField
@@ -93,8 +87,6 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     private EventServiceAsync eventServiceAsync;
 
     private List<EventView> eventViewList = new ArrayList<>();
-    private List<EventDTO> eventDTOs = new ArrayList<>();
-
 
     @Inject
     public DiaryListView(NavigationManager navigationManager, EventServiceAsync eventServiceAsync) {
@@ -105,6 +97,7 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         setWidget(uiBinder.createAndBindUi(this));
         userProfile.setUrl(Images.USER_BG.getImage());
 //        scheduleList.sinkEvents(Event.ONCLICK);
+
         scheduleList.getElement().getStyle().setProperty("height", "calc(100% - 150px)");
         scheduleList.addStyleName("schedule-list");
         btnScrollLeft.addStyleName("scroll-btn left");
@@ -113,24 +106,6 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         btnScrollRight.setIconType(IconType.KEYBOARD_ARROW_RIGHT);
 
         getEventDTOs();
-
-        for(EventDTO eventDTO : eventDTOs){
-            scheduleList.add(new EventView(eventDTO));
-        }
-
-//        EventDTO testEvent = new EventDTO(Long.valueOf(123), "AWESOME NAME", "Not so awesome description", Category.education, new Date(116, 11, 15, 7, 0), new Date(116, 11, 15, 10, 0), false, Long.valueOf(10800000), "", Status.active);
-//        EventDTO testEvent2 = new EventDTO(Long.valueOf(234), "Tes Test", "AAA BBB CCC DDD EEE FFF GGG HHH", Category.homework, new Date(116, 11, 15, 12, 0), new Date(116, 11, 15, 15, 0), false, Long.valueOf(10800000), "", Status.active);
-//        EventDTO testEvent3 = new EventDTO(Long.valueOf(456), "Little thing", "But very very important", Category.homework, new Date(116, 11, 15, 5, 0), new Date(116, 11, 15, 6, 0), false, Long.valueOf(3600000), "", Status.undefined);
-//        EventDTO testEvent4 = new EventDTO(Long.valueOf(567), "New one", "Hey hey hey hey", Category.other, new Date(116, 11, 15, 2, 0), new Date(116, 11, 15, 4, 0), false, Long.valueOf(7200000), "", Status.undefined);
-//        EventView EV1 = new EventView(testEvent);
-//        scheduleList.add(EV1);
-//        EventView EV2 = new EventView(testEvent2);
-//        scheduleList.add(EV2);
-//        EventView EV3 = new EventView(testEvent3);
-//        scheduleList.add(EV3);
-//        EventView EV4 = new EventView(testEvent4);
-//        scheduleList.add(EV4);
-
     }
 
     public void getEventDTOs(){
@@ -146,7 +121,7 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
 
             @Override
             public void onSuccess(List<EventDTO> result) {
-                eventDTOs.addAll(result);
+                setSchedule(result);
             }
         });
     }
@@ -181,10 +156,10 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
 
     @Override
     public void setSchedule(List<EventDTO> events){
-//        for (int i = 0; i < eventViewList.size(); i++) {
-//            scheduleList.remove(eventViewList.get(i));
-//        }
-//        scheduleList.clear();
+        for (int i = 0; i < eventViewList.size(); i++) {
+            scheduleList.remove(eventViewList.get(i));
+        }
+        eventViewList.clear();
 
         for (int i = 0; i < events.size(); i++) {
             EventView event = new EventView(events.get(i));
@@ -194,12 +169,11 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         return;
     }
 
-    @Override
     public void setNewEvent(EventDTO event) {
         EventView eventView = new EventView(event);
-
         scheduleList.add(eventView);
         eventViewList.add(eventView);
+        return;
     }
 
     @Override
@@ -213,4 +187,6 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         else
             userImage.setUrl(Images.WOMAN.getImage());
     }
+
+
 }

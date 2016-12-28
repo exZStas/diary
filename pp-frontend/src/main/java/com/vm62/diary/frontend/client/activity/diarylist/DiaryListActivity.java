@@ -71,18 +71,18 @@ public class DiaryListActivity implements BaseActivity{
                 view.setUserPicture(Gender.valueOf(result.getGender()));
             }
         });
-        eventServiceAsync.getEventsByDayForUser(today, new AsyncCallback<List<EventDTO>>(){
-            @Override
-            public void onFailure(Throwable caught) {
-                notificationManager.showErrorPopupWithoutDetails("Events is not avalible!");
-            }
-
-            @Override
-            public void onSuccess(List<EventDTO> result) {
-                view.setSchedule(result);
-
-            }
-        });
+//        eventServiceAsync.getEventsByDayForUser(today, new AsyncCallback<List<EventDTO>>(){
+//            @Override
+//            public void onFailure(Throwable caught) {
+//                notificationManager.showErrorPopupWithoutDetails("Events is not avalible!");
+//            }
+//
+//            @Override
+//            public void onSuccess(List<EventDTO> result) {
+//                view.setSchedule(result);
+//
+//            }
+//        });
     }
 
     @Override
