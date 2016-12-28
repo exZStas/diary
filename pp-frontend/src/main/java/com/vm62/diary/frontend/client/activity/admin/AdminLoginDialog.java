@@ -64,24 +64,7 @@ public class AdminLoginDialog extends CDialogBox {
 
     @UiHandler("btnLogin")
     protected void btnLoginClick(ClickEvent event) {
-        if(!txtUsername.validate() && !txtPassword.validate()){
-            return;
-        }
-        adminServiceAsync.getAdmin(new AsyncCallback<AdminDTO>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                notificationManager.showErrorPopupWithoutDetails("Incorrect admin name and password!");
-            }
-
-            @Override
-            public void onSuccess(AdminDTO admin) {
-                if (admin != null && MD5Digest.getMD5(txtPassword.getText()).equals(admin.getAdminPassword())
-                        && admin.getAdminName().equals(txtUsername.getText())) {
-                    navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_HOME_ADMIN));
-                    me.hide();
-                }
-            }
-        });
+        onLoginAttempt();
     }
 
     @UiHandler("btnBack")
@@ -124,5 +107,35 @@ public class AdminLoginDialog extends CDialogBox {
 				event.stopPropagation();
 			}
 		}, KeyDownEvent.getType());
+
+        txtPassword.addKeyDownHandler(new KeyDownHandler() {
+            @Override
+            public void onKeyDown(KeyDownEvent event) {
+                if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+                    onLoginAttempt();
+                }
+            }
+        });
 	}
+
+    protected void onLoginAttempt() {
+        if(!txtUsername.validate() && !txtPassword.validate()){
+            return;
+        }
+        adminServiceAsync.getAdmin(new AsyncCallback<AdminDTO>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                notificationManager.showErrorPopupWithoutDetails("Incorrect admin name and password!");
+            }
+
+            @Override
+            public void onSuccess(AdminDTO admin) {
+                if (admin != null && MD5Digest.getMD5(txtPassword.getText()).equals(admin.getAdminPassword())
+                        && admin.getAdminName().equals(txtUsername.getText())) {
+                    navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_HOME_ADMIN));
+                    me.hide();
+                }
+            }
+        });
+    }
 }

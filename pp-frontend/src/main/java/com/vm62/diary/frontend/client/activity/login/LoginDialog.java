@@ -1,7 +1,7 @@
 package com.vm62.diary.frontend.client.activity.login;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.*;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -22,7 +22,7 @@ import gwt.material.design.client.ui.MaterialRow;
 import gwt.material.design.client.ui.MaterialTextBox;
 
 @Singleton
-public class LoginDialog extends CDialogBox{
+public class LoginDialog extends CDialogBox {
 
     interface LoginDialogUIBinder extends UiBinder<MaterialRow, LoginDialog>{
     }
@@ -58,6 +58,16 @@ public class LoginDialog extends CDialogBox{
 
     @UiHandler("btnLogin")
     protected void btnLoginClick (ClickEvent event){
+        onLoginAttempt();
+    }
+
+    @UiHandler("btnRegistration")
+    protected void setBtnRegistrationClick (ClickEvent event){
+        this.hide();
+        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_REGISTRATION_ACTIVITY));
+    }
+
+    protected void onLoginAttempt() {
         if(!email.validate() && !password.validate()){
             return;
         }
@@ -77,18 +87,17 @@ public class LoginDialog extends CDialogBox{
                 notificationManager.showInfoPopup("unknow error");
             }
         });
-
-
-    }
-
-    @UiHandler("btnRegistration")
-    protected void setBtnRegistrationClick (ClickEvent event){
-        this.hide();
-        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_REGISTRATION_ACTIVITY));
     }
 
     void addEventHandlers(){
-
+        password.addKeyDownHandler(new KeyDownHandler() {
+            @Override
+            public void onKeyDown(KeyDownEvent event) {
+                if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+                    onLoginAttempt();
+                }
+            }
+        });
     }
 
     public void clear(){
