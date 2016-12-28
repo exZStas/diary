@@ -39,16 +39,7 @@ public class Parser {
         }
 
         Elements scheduleTables = doc.select(".c-table.schedule");
-        Elements classesTimesElements = scheduleTables.select(".time");
-        ArrayList<String> classesTimes = new ArrayList<String>();
-        String bufTime;
-
-        for (int i = 0; i < classesTimesElements.size(); i++) {
-            bufTime = classesTimesElements.get(i).text();
-            if (!classesTimes.contains(bufTime)) {
-                classesTimes.add(bufTime);
-            }
-        }
+        ArrayList<String> classesTimes = getClassesTimes(doc);
 
         for (int i = 0; i < scheduleTables.size(); i++) {
             Elements scheduleRows = scheduleTables.get(i).select("tr");
@@ -100,6 +91,27 @@ public class Parser {
         } else {
             return 1;
         }
+    }
+
+    public String getTitle(Document doc) {
+        String scheduleTitle = doc.select("head title").text();
+        return scheduleTitle;
+    }
+
+    public ArrayList<String> getClassesTimes(Document doc) {
+        Elements scheduleTables = doc.select(".c-table.schedule");
+        Elements classesTimesElements = scheduleTables.select(".time");
+        ArrayList<String> classesTimes = new ArrayList<String>();
+        String bufTime;
+
+        for (int i = 0; i < classesTimesElements.size(); i++) {
+            bufTime = classesTimesElements.get(i).text();
+            if (!classesTimes.contains(bufTime)) {
+                classesTimes.add(bufTime);
+            }
+        }
+
+        return classesTimes;
     }
 
 }
