@@ -43,13 +43,8 @@ public class CreateEventActivity implements BaseActivity {
         void registerPatientHandler(SimpleEventHandler handler);
         void changeForm(String name, String description, Category category, String sticker, Boolean complexity, Date startTime,
                         Date endTime, Long duration);
-
-        //        void setSticker();
-//        void setStartTime(Date startTime);
-//        void setEndTime(Date endTime);
-//        void setDuration(Long duration);
-//
     }
+
 
     private ICreateEventView view;
     private EventServiceAsync eventServiceAsync;
@@ -111,7 +106,7 @@ public class CreateEventActivity implements BaseActivity {
 
                             @Override
                             public void onSuccess(EventDTO result) {
-                                notificationManager.showInfoPopup("Event create!");
+                                notificationManager.showInfoPopup("Event edited!");
                                 diaryListView.setNewEvent(result);
                                 // // TODO: 26.12.2016 implement
                             }

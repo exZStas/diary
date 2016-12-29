@@ -23,7 +23,7 @@
     </ui:style>
     <m:MaterialRow>
         <m:MaterialRow>
-        <m:MaterialTextBox ui:field="eventName" placeholder="event" type="TEXT" iconType="EVENT_NOTE"/>
+        <m:MaterialTextBox ui:field="eventName" placeholder="event" type="TEXT" iconType="EVENT_NOTE" grid="s6 m3"/>
         </m:MaterialRow>
         <m:MaterialRow>
             <m:MaterialTextArea ui:field="descriptArea" placeholder="Text Area" length="120" iconType="TEXT_FIELDS"/>

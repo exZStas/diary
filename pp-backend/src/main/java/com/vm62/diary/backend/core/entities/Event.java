@@ -72,7 +72,21 @@ public class Event implements Serializable{
         this.done_status = active;
 
     }
+    public Event(Long id, Long user_id, String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
+                 Long duration, String sticker, Status status){
+        this.id = id;
+        this.user_id=user_id;
+        this.name=name;
+        this.description=description;
+        this.category=category;
+        this.complexity=complexity;
+        this.end_time=end_time;
+        this.start_time=start_time;
+        this.duration=duration;
+        this.sticker = sticker;
+        this.done_status = status;
 
+    }
     public Long getId(){return id;}
 
     public void setId(Long id) {

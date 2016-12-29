@@ -31,4 +31,5 @@ public enum Category implements Serializable{
     public String getColor(){
         return color;
     }
+
 }

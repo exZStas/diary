@@ -119,10 +119,6 @@ public class TestEventDAO {
     public void test_GetEventsByDayForUser(){
         //Date day = new Date(116,12,18);
         Date day = new Date(start_time1.getTime());
-        day.setHours(0);
-        day.setMinutes(0);
-        day.setSeconds(0);
-
 
         List<Event> events = eventDAO.getEventsByDayForUser(day,user1.getId());
         assertReflectionEquals(events, Arrays.asList(event1, event2), ReflectionComparatorMode.LENIENT_ORDER);
@@ -131,13 +127,16 @@ public class TestEventDAO {
     public void test_GetEventsByDay(){
         //Date day = new Date(116,12,18);
         Date day = new Date(start_time1.getTime());
-        day.setHours(0);
-        day.setMinutes(0);
-        day.setSeconds(0);
 
         List<Event> events = eventDAO.getEventByStartDate(day);
         assertReflectionEquals(events, Arrays.asList(event1, event2), ReflectionComparatorMode.LENIENT_ORDER);
         assertTrue(events.get(1).getStartTime() instanceof Date);
+    }
+    @Test
+    public void test_DeleteEventById(){
+        Long id = event3.getId();
+        eventDAO.deleteEvent(event3);
+        assertEquals(eventDAO.getEventById(id),null);
     }
 
 }

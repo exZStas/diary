@@ -8,16 +8,23 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.common.constants.Sticker;
 import com.vm62.diary.frontend.client.activity.HeaderTitle;
 import com.vm62.diary.frontend.client.common.components.CDialogBox;
 import com.vm62.diary.frontend.client.common.components.SignImageListWidget;
+import com.vm62.diary.frontend.client.common.components.Signs;
+
+import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
+import com.vm62.diary.frontend.client.common.events.SelectEventHandler;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
+import com.vm62.diary.frontend.client.service.EventServiceAsync;
+import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import gwt.material.design.addins.client.timepicker.MaterialTimePicker;
 import gwt.material.design.client.base.validator.BlankValidator;
 import gwt.material.design.client.base.validator.Validator;
@@ -28,9 +35,10 @@ import gwt.material.design.client.ui.html.Option;
 
 import java.lang.*;
 import java.util.Date;
-import java.util.List;
 
 import static com.vm62.diary.common.constants.Category.education;
+import static com.vm62.diary.frontend.client.resources.CommonSignResources.RESOURCES;
+
 import com.google.gwt.user.client.ui.Image;
 
 import javax.validation.constraints.Null;
@@ -79,7 +87,7 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     @Inject
     public CreateEventView(NavigationManager navigationManager) {
-        this.navigationManager = navigationManager;
+        this.navigationManager =navigationManager;
         setWidget(ourUiBinder.createAndBindUi(this));
         setCaptionHtml(HeaderTitle.EVENT_PANEL.getText());
         btnBack.getElement().getStyle().setBackgroundColor("#ff8f00");
@@ -123,10 +131,6 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     }
 
-//    @UiHandler("duration")
-//    void onRange(ChangeEvent e) {
-//        lblRange.setText("Duration: " + String.valueOf(duration.getValue()));
-//    }
     @UiHandler("btnBack")
     protected void onBackEvent(ClickEvent e){
         this.hide();
@@ -231,14 +235,15 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         tp.setValue(startTime);
         tpEnd.setValue(endTime);
         endDate.setDate(endTime);
-        Date d = new Date(duration);
-        Integer min = d.getMinutes();
+
+        Long min = duration%3600000;
+        Long hours = (duration/60000 - min)/60;
         minutesTextBox.setValue(min.toString());
-        Integer hours = d.getHours();
         hourTextBox.setValue(hours.toString());
+        //SignImageListWidget signs = new SignImageListWidget();
+        //setSignImageList(signs);
+
     }
-
-
 
     @Override
     public void setSignImageList(SignImageListWidget signImageListWidget){

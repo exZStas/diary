@@ -215,31 +215,33 @@ public class ChangeProfileView extends Composite implements ChangeProfileActivit
     }
 
     @Override
-    public void validateForm(){
+    public Boolean validateForm(){
         if(!firstName.validate() || !lastName.validate() || !studyGroup.validate() || !email.validate()){
-            return;
+            return false;
         }
         if (yes.getValue().booleanValue()){
             if(!password.validate()||!newPassword.validate()||!repeatNewPassword.validate())
-                return;
+                return false;
             try {
                 if (md5Digest.getMD5(password.getText()).equals(userPassword)) {
-                    if (!newPassword.getText().equals(repeatNewPassword.getText())){
+                    if (!newPassword.getText().equals(repeatNewPassword.getText()) || newPassword.getText().length()<5){
                         notificationManager.showErrorPopupWithoutDetails("New password is not equals pereated password");
-                        return;
+                        return false;
                     }
                     else userPassword = newPassword.getText();
+                    return true;
                 }
                 else {
                     notificationManager.showErrorPopupWithoutDetails("Password is wrong!");
-                    return;
+                    return false;
                 }
             }
             catch (Exception ex){
                 notificationManager.showErrorPopupWithoutDetails("Profile was'n changed!");
-                return;
+                return false;
             }
         }
+        return true;
     }
     @UiHandler("btnBack")
     public void backOnClick(ClickEvent e){

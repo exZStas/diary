@@ -3,10 +3,7 @@ package com.vm62.diary.frontend.client.common.navigation;
 import com.vm62.diary.frontend.client.activity.MainPanelActivity;
 
 import com.vm62.diary.frontend.client.activity.admin.AdminHomeActivity;
-import com.vm62.diary.frontend.client.activity.diarylist.ChangeProfileActivity;
-import com.vm62.diary.frontend.client.activity.diarylist.CreateEventActivity;
-import com.vm62.diary.frontend.client.activity.diarylist.DiaryListActivity;
-import com.vm62.diary.frontend.client.activity.diarylist.EditEventViewActivity;
+import com.vm62.diary.frontend.client.activity.diarylist.*;
 import com.vm62.diary.frontend.client.activity.login.RegistrationActivity;
 import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -34,6 +31,9 @@ public class NavigationManager {
     Provider<ActivityAsyncProxy<CreateEventActivity>> eventActivityProxy;
     @Inject
     Provider<ActivityAsyncProxy<EditEventViewActivity>> editActivityProxy;
+
+    @Inject
+    Provider<ActivityAsyncProxy<ChartViewActivity>> chartActivityProxy;
 
 
     private BaseActivity currentActivity = null;
@@ -104,6 +104,10 @@ public class NavigationManager {
                 currentActivityWidget = contentPanel;
             case URL_EDIT_EVENT_ACTIVITY:
                 currentActivity = editActivityProxy.get();
+                currentActivityWidget = contentPanel;
+                break;
+            case URL_CHART_ACTIVITY:
+                currentActivity = chartActivityProxy.get();
                 currentActivityWidget = contentPanel;
                 break;
         }

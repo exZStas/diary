@@ -39,14 +39,12 @@ public class EventDAO {
         em.flush();
         return updatedEvent;
     }
-   /* public Event setNewDoneStatus(Boolean doneStatus, Event event){
+    public void deleteEvent(Event event){
         EntityManager em = emProvider.get();
-        Event detectedEvent = em.find(Event.class, event);
-        detectedEvent.setDoneStatus(doneStatus);
-        Event updatedEvent = em.merge(detectedEvent);
+        em.remove(event);
         em.flush();
-        return updatedEvent;
-    }*/
+    }
+
     public Event getEventById(Long id) {
 
         EntityManager em = emProvider.get();
@@ -69,9 +67,12 @@ public class EventDAO {
     }
     public List<Event> getEventByStartDate(Date day){
         EntityManager em = emProvider.get();
+        day.setHours(0);
+        day.setMinutes(0);
+        day.setSeconds(0);
 
         TypedQuery<Event> query = em.createQuery("SELECT ev FROM "
-                + Event.class.getName() + " ev " + "WHERE ev.start_time > :DAY", Event.class);
+                + Event.class.getName() + " ev " + "WHERE ev.start_time >= :DAY", Event.class);
 
         query.setParameter("DAY", day, TemporalType.TIMESTAMP);
         return query.getResultList();
@@ -120,6 +121,9 @@ public class EventDAO {
 //    }
     public List<Event> getEventsByDayForUser(Date day, Long user_id){
         EntityManager em = emProvider.get();
+        day.setHours(0);
+        day.setMinutes(0);
+        day.setSeconds(0);
 
         Date nextDay = new Date(day.getTime()+ 24*60*60*1000);
         TypedQuery<Event> query = em.createQuery("SELECT ev FROM "

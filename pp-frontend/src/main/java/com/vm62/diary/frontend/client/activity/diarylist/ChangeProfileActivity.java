@@ -51,7 +51,7 @@ public class ChangeProfileActivity implements BaseActivity {
         void setStudyGroup(String studyGroup);
         void setEmail(String email);
         void checkPassword(String password);
-        void validateForm();
+        Boolean validateForm();
 
         void addAcceptButtonClickHandler (ClickHandler handler);
 
@@ -74,7 +74,7 @@ public class ChangeProfileActivity implements BaseActivity {
         view.addAcceptButtonClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                view.validateForm();
+                if (view.validateForm())
                 userProfileServiceAsync.changeProfile(view.getFirstName(),view.getLastName(),view.getPassword(),view.getGender(),
                         view.getStudyGroup(),view.getBirthDay(),view.getEmail(),view.getYes(), new AsyncCallback<UserDTO>() {
                             @Override
