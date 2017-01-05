@@ -79,17 +79,18 @@
         <header>
             <!-- NavBar -->
             <m:MaterialNavBar activates="sideNav" ui:field="navBar" paddingLeft="20" backgroundColor="BLUE">
-                <m:MaterialNavBrand text="TPU's diary"/>
+                <m:MaterialNavBrand text="{i18n.text.tpuDiary}"/>
                 <m:MaterialNavSection float="RIGHT">
-                    <m:MaterialTooltip text="Events" position="BOTTOM">
+                    <m:MaterialLabel ui:field="todayLabel"/>
+                    <m:MaterialTooltip text="{i18n.text.events}" position="BOTTOM">
                         <m:MaterialLink iconType="VIEW_MODULE" iconPosition="NONE"/>
                     </m:MaterialTooltip>
-                    <m:MaterialTooltip text="Chart" position="BOTTOM">
+                    <m:MaterialTooltip text="{i18n.text.charts}" position="BOTTOM">
                         <m:MaterialLink iconType="PIE_CHART" iconPosition="NONE"/>
                     </m:MaterialTooltip>
-                    <m:MaterialTooltip text="Notifications" position="BOTTOM">
-                        <m:MaterialLink activates="sideNav" iconType="NOTIFICATIONS" iconPosition="NONE"/>
-                    </m:MaterialTooltip>
+                    <!--<m:MaterialTooltip text="Notifications" position="BOTTOM">-->
+                        <!--<m:MaterialLink activates="sideNav" iconType="NOTIFICATIONS" iconPosition="NONE"/>-->
+                    <!--</m:MaterialTooltip>-->
                 </m:MaterialNavSection>
             </m:MaterialNavBar>
 
@@ -100,12 +101,12 @@
                     <m:MaterialLabel ui:field="userNameLabel" addStyleNames="{style.name}"/>
 
                 </ma:sideprofile.MaterialSideProfile>
-                    <m:MaterialLink ui:field="eventLink" text="Events" textColor="BLUE" iconType="WHATSHOT" addStyleNames="{style.first}" shadow="3" waves="TEAL"/>
-                    <m:MaterialLink ui:field="chartLink" text="Chart" textColor="BLUE" iconType="PIE_CHART" addStyleNames="{style.first}" shadow="3" waves="TEAL"/>
-                    <m:MaterialLink text="Notifications" textColor="BLUE" iconType="NOTIFICATIONS" separator="true" addStyleNames="{style.first}" shadow="3" waves="TEAL"/>
-                    <m:MaterialLink ui:field="scheduleUpdateLink" text="Update schedule" textColor="BLUE" iconType="REFRESH" addStyleNames="{style.second}" waves="ORANGE"/>
-                    <m:MaterialLink ui:field="changeProfileBtn" text="Change profile" textColor="BLUE" iconType="CARD_MEMBERSHIP" addStyleNames="{style.second}" waves="ORANGE"/>
-                    <m:MaterialLink ui:field="logOutBtn" text="Log out" textColor="BLUE" iconType="EXIT_TO_APP" addStyleNames="{style.second}" waves="ORANGE"/>
+                    <m:MaterialLink ui:field="eventLink" text="{i18n.text.events}" textColor="BLUE" iconType="WHATSHOT" addStyleNames="{style.first}" shadow="3" waves="TEAL"/>
+                    <m:MaterialLink ui:field="chartLink" text="{i18n.text.charts}" textColor="BLUE" iconType="PIE_CHART" addStyleNames="{style.first}" shadow="3" waves="TEAL"/>
+                    <!--<m:MaterialLink text="Notifications" textColor="BLUE" iconType="NOTIFICATIONS" separator="true" addStyleNames="{style.first}" shadow="3" waves="TEAL"/>-->
+                    <m:MaterialLink ui:field="scheduleUpdateLink" text="{i18n.text.updateSchedule}" textColor="BLUE" iconType="REFRESH" addStyleNames="{style.second}" waves="ORANGE"/>
+                    <m:MaterialLink ui:field="changeProfileBtn" text="{i18n.text.changeProfile}" textColor="BLUE" iconType="CARD_MEMBERSHIP" addStyleNames="{style.second}" waves="ORANGE"/>
+                    <m:MaterialLink ui:field="logOutBtn" text="{i18n.text.logOut}" textColor="BLUE" iconType="EXIT_TO_APP" addStyleNames="{style.second}" waves="ORANGE"/>
             </m:MaterialSideNav>
         </header>
         <m:MaterialContainer ui:field="container">

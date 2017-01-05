@@ -36,13 +36,13 @@
                 <m:MaterialTextBox ui:field="email" placeholder="your@mail.com" type="TEXT" iconType="ACCOUNT_CIRCLE"/>
             </m:MaterialRow>
             <m:MaterialRow>
-                <m:MaterialTextBox ui:field="password" placeholder="password" type="PASSWORD" iconType="LOCK_OPEN"/>
+                <m:MaterialTextBox ui:field="password" placeholder="{i18n.text.placeholderPassword}" type="PASSWORD" iconType="LOCK_OPEN"/>
             </m:MaterialRow>
             <m:MaterialRow textAlign="LEFT" marginBottom="0" backgroundColor="#ff8f00" addStyleNames="{style.regButton}">
-                <m:MaterialButton ui:field="btnRegistration" text="registration"/>
+                <m:MaterialButton ui:field="btnRegistration" text="{i18n.text.buttonRegistration}"/>
             </m:MaterialRow>
             <m:MaterialRow textAlign="RIGHT" marginBottom="0" addStyleNames="{style.loginButton}">
-                <m:MaterialButton ui:field="btnLogin" text="login"/>
+                <m:MaterialButton ui:field="btnLogin" text="{i18n.text.buttonLogin}"/>
             </m:MaterialRow>
         </m:MaterialColumn>
     </m:MaterialRow>

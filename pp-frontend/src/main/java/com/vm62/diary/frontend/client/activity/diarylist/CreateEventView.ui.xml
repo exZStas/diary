@@ -19,72 +19,64 @@
             text-align: left;
             margin-bottom: 0px;
         }
+        .checkButton {
+            padding-left: 25px;
+        }
 
     </ui:style>
     <m:MaterialRow>
         <m:MaterialRow>
-        <m:MaterialTextBox ui:field="eventName" placeholder="event" type="TEXT" iconType="EVENT_NOTE" grid="s6 m3"/>
+        <m:MaterialTextBox ui:field="eventName" placeholder="{i18n.text.placeholderNameOfEvent}" type="TEXT" iconType="EVENT_NOTE"/>
         </m:MaterialRow>
         <m:MaterialRow>
-            <m:MaterialTextArea ui:field="descriptArea" placeholder="Text Area" length="120" iconType="TEXT_FIELDS"/>
+            <m:MaterialTextArea ui:field="descriptArea" placeholder="{i18n.text.placeholderDescription}" length="120" iconType="TEXT_FIELDS"/>
         </m:MaterialRow>
         <m:MaterialRow>
             <ma:iconmorph.MaterialIconMorph iconSize="SMALL">
                 <m:MaterialIcon iconType="MENU"/>
                 <m:MaterialIcon iconType="SCHOOL"/>
             </ma:iconmorph.MaterialIconMorph>
-            <m:MaterialListBox ui:field="typeBox" placeholder="type" fontSize="1.5em">
-                <m:html.Option text="Education"/>
-                <m:html.Option text="Sport"/>
-                <m:html.Option text="Entertainment"/>
-                <m:html.Option text="Work"/>
-                <m:html.Option text="Homework"/>
-                <m:html.Option text="Trip"/>
-                <m:html.Option text="Household chores"/>
-                <m:html.Option text="Sleep"/>
-                <m:html.Option text="Eating"/>
-                <m:html.Option text="Other"/>
-            </m:MaterialListBox>
+            <m:MaterialListBox ui:field="typeBox" placeholder="{i18n.text.placeholderCategory}" fontSize="1.5em"/>
         </m:MaterialRow>
         <m:MaterialRow ui:field="signContainer">
         </m:MaterialRow>
         <m:MaterialRow>
-            <m:MaterialIcon iconType="EVENT_AVAILABLE" grid="3"/>
-            <m:MaterialLabel text="Complexity" grid="3" textAlign="LEFT"/>
-            <m:MaterialCheckBox ui:field="simple" text="simple" checked="true" width="20"/>
-            <m:MaterialCheckBox ui:field="complex" text="complex" width="20"/>
+            <m:MaterialIcon iconType="EVENT_AVAILABLE" grid="3" paddingLeft="0"/>
+            <m:MaterialLabel text="{i18n.text.complexity}" grid="3" textAlign="LEFT"/>
+            <m:MaterialCheckBox ui:field="simple" text="{i18n.text.placeholderSimple}" checked="true" width="200" addStyleNames="{style.checkButton}"/>
+            <m:MaterialCheckBox ui:field="complex" text="{i18n.text.placeholderComplex}" width="220" addStyleNames="{style.checkButton}"/>
         </m:MaterialRow>
         <m:MaterialRow>
-            <ma:timepicker.MaterialTimePicker ui:field="tp" placeholder="Start time" hour24="true" iconType="AV_TIMER"/>
+            <ma:timepicker.MaterialTimePicker ui:field="tp" placeholder="{i18n.text.placeholderStartTime}" hour24="true" iconType="AV_TIMER"/>
         </m:MaterialRow>
         <m:MaterialRow paddingBottom="0">
-            <m:MaterialIcon iconType="TIMELAPSE" grid="2"/>
-            <m:MaterialLabel text="Duration" grid="2" textAlign="LEFT"/>
+            <m:MaterialIcon iconType="TIMELAPSE" grid="3" paddingLeft="0"/>
+            <m:MaterialLabel text="{i18n.text.duration}" grid="3" textAlign="LEFT"/>
         </m:MaterialRow>
         <m:MaterialRow >
             <!--<m:MaterialRange ui:field="minRange" min="5" max="1440" value="25" />-->
             <m:MaterialColumn grid="10">
-                <m:MaterialTextBox ui:field="hourTextBox" placeholder="hours" type="NUMBER" iconType="HOURGLASS_EMPTY"/>
+                <m:MaterialTextBox ui:field="hourTextBox" placeholder="{i18n.text.placeholderHours}" type="NUMBER" iconType="SCHEDULE"/>
                 <!--<m:MaterialIntegerBox ui:field="minBox" value="5"/>-->
             </m:MaterialColumn>
             <m:MaterialColumn grid="10">
-                <m:MaterialTextBox ui:field="minutesTextBox" placeholder="minutes" type="NUMBER" iconType="SCHEDULE"/>
+                <m:MaterialTextBox ui:field="minutesTextBox" placeholder="{i18n.text.placeholderMinutes}" type="NUMBER" iconType="HOURGLASS_EMPTY"/>
                 <!--<m:MaterialIntegerBox ui:field="hourBox" placeholder="houres" iconType="SCHEDULE"/>-->
             </m:MaterialColumn>
         </m:MaterialRow>
 
         <m:MaterialRow>
-            <m:MaterialDatePicker ui:field="endDate" placeholder="Date of event's ending" selectionType="MONTH_DAY" iconType="DATE_RANGE" enabled="false"/>
+            <m:MaterialDatePicker ui:field="endDate" placeholder="{i18n.text.placeholderDateEnd}" selectionType="MONTH_DAY" iconType="DATE_RANGE" enabled="false"/>
         </m:MaterialRow>
         <m:MaterialRow>
-            <ma:timepicker.MaterialTimePicker ui:field="tpEnd" placeholder="Ending time" hour24="true" iconType="AV_TIMER" enabled="false"/>
+            <ma:timepicker.MaterialTimePicker ui:field="tpEnd" placeholder="{i18n.text.placeholderEndTime}" hour24="true" iconType="AV_TIMER" enabled="false"/>
         </m:MaterialRow>
         <!--<m:MaterialModalFooter>-->
             <m:MaterialRow addStyleNames="{style.backButton}">
-                <m:MaterialButton ui:field="btnBack" text="back"/>
+                <m:MaterialButton ui:field="btnBack" text="{i18n.text.buttonBack}"/>
             </m:MaterialRow>
             <m:MaterialRow addStyleNames="{style.crButton}">
-                <m:MaterialButton ui:field="btnCreate" text="create"/>
+                <m:MaterialButton ui:field="btnCreate" text="{i18n.text.buttonCreate}"/>
             </m:MaterialRow>
         <!--</m:MaterialModalFooter>-->
     </m:MaterialRow>

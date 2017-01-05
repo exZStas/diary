@@ -39,6 +39,7 @@ public class DiaryListActivity implements BaseActivity{
         void addChartButtonClickHandler (ClickHandler handler);
         void setDiaryList();
         void setChartParameters(Map<String,Long> dicUndone, Map<String,Long> dicDone);
+        void setDayOfList(Date today);
 
     }
     @ImplementedBy(EventView.class)
@@ -64,6 +65,7 @@ public class DiaryListActivity implements BaseActivity{
         this.userProfileServiceAsync = userProfileServiceAsync;
         this.navigationManager = navigationManager;
         this.view.setDiaryList();
+        this.view.setDayOfList(today);
         addEventHandlers();
 
 

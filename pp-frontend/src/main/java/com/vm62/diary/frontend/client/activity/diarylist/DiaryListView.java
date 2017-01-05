@@ -2,17 +2,12 @@ package com.vm62.diary.frontend.client.activity.diarylist;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.*;
-import com.google.gwt.event.logical.shared.OpenEvent;
-import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.googlecode.gwt.charts.client.ChartLoader;
 import com.googlecode.gwt.charts.client.ChartPackage;
 import com.googlecode.gwt.charts.client.ColumnType;
@@ -20,11 +15,12 @@ import com.googlecode.gwt.charts.client.DataTable;
 import com.googlecode.gwt.charts.client.corechart.PieChart;
 import com.googlecode.gwt.charts.client.corechart.PieChartOptions;
 import com.googlecode.gwt.charts.client.options.TextStyle;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.ibm.icu.text.DateFormat;
 import com.vm62.diary.common.constants.Gender;
+import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.components.Images;
-import com.vm62.diary.frontend.client.common.components.Signs;
 import com.vm62.diary.common.constants.Category;
-import com.vm62.diary.common.constants.Status;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
@@ -32,13 +28,11 @@ import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import com.vm62.diary.frontend.client.service.EventServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import gwt.material.design.addins.client.sideprofile.MaterialSideProfile;
-import gwt.material.design.addins.client.timepicker.MaterialTimePicker;
 import gwt.material.design.client.constants.IconType;
 import gwt.material.design.client.ui.*;
-import com.google.gwt.user.client.ui.Label;
-
 
 import java.util.*;
+
 
 //@Singleton
 public class DiaryListView extends Composite implements DiaryListActivity.IDiaryListView {
@@ -82,6 +76,8 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     MaterialColumn planedChartColumn;
     @UiField
     MaterialColumn realChartColumn;
+    @UiField
+    MaterialLabel todayLabel;
 
     private NavigationManager navigationManager;
     private EventServiceAsync eventServiceAsync;
@@ -89,6 +85,8 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     private List<EventView> eventViewList = new ArrayList<>();
     private List<EventDTO> eventDTOs = new ArrayList<>();
     private NotificationManager notificationManager;
+    private DiaryConstants constants = GWT.create(DiaryConstants.class);
+
     public static Gender userGender;
     public static String userName;
 
@@ -172,6 +170,7 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         container.setWidth("56%");
         container.setHeight("85%");
         scheduleList.removeFromParent();
+        String g= "Events";
 
         if (!dicUndone.isEmpty()) {
             createChart(chartLoader, dicUndone, planedChartColumn, "Chart of scheduled events");
@@ -184,6 +183,13 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         else realChartColumn.add(new MaterialLabel("No done events"));
 
     }
+
+    @Override
+    public void setDayOfList(Date today) {
+        DateTimeFormat df = DateTimeFormat.getMediumDateFormat();
+        todayLabel.setText(df.format(today));
+    }
+
     private void createChart(ChartLoader chartLoader, Map<String,Long> dictionary, MaterialColumn column, String title){
         pies = dictionary;
         col = column;

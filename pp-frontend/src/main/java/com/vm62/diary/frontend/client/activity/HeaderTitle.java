@@ -1,20 +1,21 @@
 package com.vm62.diary.frontend.client.activity;
 
+
+import com.vm62.diary.frontend.client.common.messages.MessagesProvider;
+
 public enum HeaderTitle {
 
-    ADMIN_LOGIN("Admin login"),
-    ADMIN_PANEL("Admin panel"),
-    LOGIN_PANEL("Enter to your personal diary"),
-    EVENT_PANEL("Create new Event"),
-    CHANGE_PANEL("Edit Event");
+    ADMIN_LOGIN(MessagesProvider.text().headerAdminLogin()),
+    ADMIN_PANEL(MessagesProvider.text().headerAdminPanel()),
+    LOGIN_PANEL(MessagesProvider.text().headerEnterDiary()),
+    EVENT_PANEL(MessagesProvider.text().headerCreateEvent()),
+    CHANGE_PANEL(MessagesProvider.text().headerEditEvent());
 
     private String text;
 
     HeaderTitle(String value) {
         this.text = value;
     }
-
-
 
     public String getText() {
         return text;

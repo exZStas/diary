@@ -20,6 +20,7 @@ import com.vm62.diary.frontend.client.common.components.Signs;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.events.SelectEventHandler;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
+import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
@@ -84,6 +85,7 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     private SimpleEventHandler registerPatient;
     private Date startTime = new Date();
     private Date endTime = new Date();
+    private DiaryConstants constants = GWT.create(DiaryConstants.class);
 
     @Inject
     public CreateEventView(NavigationManager navigationManager) {
@@ -100,9 +102,10 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         complex.setValue(false);
 
         // Возможно, правильнее так добавлять категории
-        typeBox.add(new Option(education.getCategory()));
+        for (String category:constants.category()) {
+            typeBox.add(new Option(category));
+        }
         endDate.addValidator(new BlankValidator<Date>("Please, provide event's start date!"));
-
         center();
         addEventHandlers();
         eventName.addValidator(new BlankValidator<String>("Please, provide event's name!"));
@@ -177,8 +180,7 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     @Override
     public Category getCategory() {
-
-        return Category.valueOf(typeBox.getSelectedItemText().toLowerCase());
+        return Category.values()[typeBox.getSelectedIndex()];
     }
     @Override
     public String getDescription(){

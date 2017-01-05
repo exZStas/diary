@@ -11,6 +11,7 @@ import com.google.inject.Singleton;
 import com.vm62.diary.frontend.client.activity.HeaderTitle;
 import com.vm62.diary.frontend.client.common.components.CDialogBox;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
+import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
@@ -41,6 +42,7 @@ public class LoginDialog extends CDialogBox {
     private LoginServiceAsync loginServiceAsync;
     private NotificationManager notificationManager;
     private LoginDialog me;
+    private static DiaryConstants constants = GWT.create(DiaryConstants.class);
 
     @Inject
     public LoginDialog(NavigationManager navigationManager, LoginServiceAsync loginServiceAsync, NotificationManager notificationManager){
@@ -51,8 +53,8 @@ public class LoginDialog extends CDialogBox {
         setWidget(uiBinder.createAndBindUi(this));
         btnRegistration.getElement().getStyle().setBackgroundColor("#ff8f00");
 
-        email.addValidator(new BlankValidator<String>("Please provide your email"));
-        password.addValidator(new BlankValidator<String>("Please provide password"));
+        email.addValidator(new BlankValidator<String>(constants.enterEmail()));
+        password.addValidator(new BlankValidator<String>(constants.enterPassword()));
         addEventHandlers();
     }
 
