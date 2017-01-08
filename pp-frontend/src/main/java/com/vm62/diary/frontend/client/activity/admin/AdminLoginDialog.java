@@ -109,18 +109,9 @@ public class AdminLoginDialog extends CDialogBox {
 				event.stopPropagation();
 			}
 		}, KeyDownEvent.getType());
-
-        txtPassword.addKeyDownHandler(new KeyDownHandler() {
-            @Override
-            public void onKeyDown(KeyDownEvent event) {
-                if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-                    onLoginAttempt();
-                }
-            }
-        });
 	}
 
-    protected void onLoginAttempt() {
+    private void onLoginAttempt() {
         if(!txtUsername.validate() && !txtPassword.validate()){
             return;
         }

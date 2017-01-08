@@ -42,7 +42,7 @@ public class EditEventViewActivity implements BaseActivity {
     EditEventViewActivity(CreateEventActivity.ICreateEventView view , EventServiceAsync eventServiceAsync, NotificationManager notificationManager,
                           SignImageListWidget signImageListWidget, NavigationManager navigationManager, DiaryListActivity.IDiaryListView diaryListView)
     {
-        this.view = view;this.view = view;
+        this.view = view;
         this.diaryListView = diaryListView;
         this.navigationManager = navigationManager;
         this.signImageListWidget = signImageListWidget;

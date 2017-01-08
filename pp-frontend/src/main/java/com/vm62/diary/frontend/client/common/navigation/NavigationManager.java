@@ -102,6 +102,7 @@ public class NavigationManager {
             case URL_HOME_ADMIN:
                 currentActivity = adminHomeActivityProxy.get();
                 currentActivityWidget = contentPanel;
+                break;
             case URL_EDIT_EVENT_ACTIVITY:
                 currentActivity = editActivityProxy.get();
                 currentActivityWidget = contentPanel;

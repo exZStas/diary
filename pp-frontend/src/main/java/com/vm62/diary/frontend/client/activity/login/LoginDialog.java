@@ -93,14 +93,20 @@ public class LoginDialog extends CDialogBox {
     }
 
     void addEventHandlers(){
-        password.addKeyDownHandler(new KeyDownHandler() {
+        this.addDomHandler(new KeyDownHandler() {
             @Override
             public void onKeyDown(KeyDownEvent event) {
-                if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-                    onLoginAttempt();
+                int keyCode = event.getNativeEvent().getKeyCode();
+                email.clearErrorOrSuccess();
+                password.clearErrorOrSuccess();
+                switch (keyCode) {
+                    case KeyCodes.KEY_ENTER:
+                        btnLoginClick(null);
+                        break;
                 }
+                event.stopPropagation();
             }
-        });
+        }, KeyDownEvent.getType());
     }
 
     public void clear(){
