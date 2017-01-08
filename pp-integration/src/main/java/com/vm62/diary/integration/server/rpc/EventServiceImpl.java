@@ -3,17 +3,19 @@ package com.vm62.diary.integration.server.rpc;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.vm62.diary.backend.core.Parser;
 import com.vm62.diary.backend.core.bean.EventBean;
 import com.vm62.diary.backend.core.entities.Event;
 import com.vm62.diary.common.ServiceException;
 import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.common.constants.Status;
-import com.vm62.diary.common.constants.Sticker;
 import com.vm62.diary.common.session.UserSessionHelper;
 import com.vm62.diary.frontend.client.service.EventService;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import com.vm62.diary.integration.server.assembler.EventDTOAssembler;
+import org.jsoup.Jsoup;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -38,7 +40,7 @@ public class EventServiceImpl extends RemoteServiceServlet implements EventServi
     @Override
     public EventDTO update(Long id, String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
                            Long duration, String sticker, Status status) throws ServiceException {
-        Event event = eventBean.createEvent(id, userSessionHelper.getUserId(), name, description, category, start_time, end_time, complexity, duration, sticker, status);
+        Event event = eventBean.updateEvent(id, userSessionHelper.getUserId(), name, description, category, start_time, end_time, complexity, duration, sticker, status);
         return new EventDTOAssembler().mapEntityToDTO(eventBean.updateEvent(event));
     }
 
@@ -51,6 +53,23 @@ public class EventServiceImpl extends RemoteServiceServlet implements EventServi
     @Override
     public Boolean deleteEventById(Long id) throws ServiceException {
         return eventBean.deleteEventById(id);
+    }
+
+    @Override
+    public Boolean parseSchedule(String userGroup) throws ServiceException {
+        Parser scheduleParser = new Parser();
+        String scheduleURL = "http://rasp.tpu.ru/view.php?for=" + userGroup + "&weekType=1";
+        try {
+            ArrayList<Event> scheduleEvents = scheduleParser.parseSchedule(Jsoup.connect(scheduleURL).get());
+            if (scheduleEvents.isEmpty()) return false;
+            for (Event event: scheduleEvents){
+                event.setUserById(userSessionHelper.getUserId());
+                eventBean.saveEven(event);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @Override

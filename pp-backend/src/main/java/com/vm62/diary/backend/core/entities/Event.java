@@ -53,7 +53,7 @@ public class Event implements Serializable{
     @Column(name="DONE_STATUS",nullable = false, length = 9, columnDefinition = "active")
     private Status done_status;
 
-    @Column(name="STICKER", nullable = false, length = 45)
+    @Column(name="STICKER", nullable = true, length = 45)
     private String sticker;
 
     public Event(){}

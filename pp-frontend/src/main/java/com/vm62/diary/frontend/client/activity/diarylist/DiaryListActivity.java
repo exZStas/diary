@@ -1,6 +1,7 @@
 package com.vm62.diary.frontend.client.activity.diarylist;
 
 import com.google.gwt.core.client.GWT;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -42,11 +43,15 @@ public class DiaryListActivity implements BaseActivity{
         void setDiaryList();
         void setChartParameters(Map<String,Long> dicUndone, Map<String,Long> dicDone);
         void setDayOfList(Date today);
+        void updateSchedule(ClickHandler handler);
+        void buttonScrollRightClick(ClickHandler handler);
+        void buttonScrollLeftClick(ClickHandler handler);
 
     }
     @ImplementedBy(EventView.class)
     public interface IEventView extends IsWidget {
 
+        void deleteEventFromList();
         void setEventParameters(EventDTO event);
 
     }
@@ -58,6 +63,7 @@ public class DiaryListActivity implements BaseActivity{
     private List<EventDTO> eventDTOs;
     private NavigationManager navigationManager;
     private DiaryConstants constants = GWT.create(DiaryConstants.class);
+    private String userGroup;
 
     @Inject
     DiaryListActivity(IDiaryListView view, NotificationManager notificationManager, NavigationManager navigationManager, EventServiceAsync eventServiceAsync, UserProfileServiceAsync userProfileServiceAsync){
@@ -83,6 +89,7 @@ public class DiaryListActivity implements BaseActivity{
 
             @Override
             public void onSuccess(UserDTO result) {
+                userGroup = result.getStudyGroup();
                 view.setUserName(result.getFirstName()+" "+result.getLastName());
                 view.setUserPicture(Gender.valueOf(result.getGender()));
             }
@@ -109,18 +116,52 @@ public class DiaryListActivity implements BaseActivity{
 
             }
         });
-//        eventServiceAsync.getEventsByDayForUser(today, new AsyncCallback<List<EventDTO>>(){
-//            @Override
-//            public void onFailure(Throwable caught) {
-//                notificationManager.showErrorPopupWithoutDetails("Events is not avalible!");
-//            }
-//
-//            @Override
-//            public void onSuccess(List<EventDTO> result) {
-//                view.setSchedule(result);
-//
-//            }
-//        });
+        view.updateSchedule(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                eventServiceAsync.parseSchedule(userGroup, new AsyncCallback<Boolean>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        notificationManager.showErrorPopupWithoutDetails(constants.errorCanNotUpdateSchedule());
+                    }
+
+                    @Override
+                    public void onSuccess(Boolean result) {
+                        if (result) notificationManager.showInfoPopup(constants.successScheduleUpdate());
+                        else notificationManager.showErrorPopupWithoutDetails(constants.errorCanNotUpdateSchedule());
+                    }
+                });
+
+            }
+        });
+        view.buttonScrollRightClick(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                today = new Date(today.getTime() + (1000 * 60 * 60 * 24));
+                setEventForDay(today);
+            }
+        });
+        view.buttonScrollLeftClick(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                today = new Date(today.getTime() - (1000 * 60 * 60 * 24));
+                setEventForDay(today);
+            }
+        });
+
+    }
+    private void setEventForDay(Date day){
+        eventServiceAsync.getEventsByDayForUser(today, new AsyncCallback<List<EventDTO>>(){
+            @Override
+            public void onFailure(Throwable caught) {
+                notificationManager.showErrorPopupWithoutDetails("Events is not avalible!");
+            }
+
+            @Override
+            public void onSuccess(List<EventDTO> result) {
+                view.setSchedule(result);
+            }
+        });
     }
 
     @Override

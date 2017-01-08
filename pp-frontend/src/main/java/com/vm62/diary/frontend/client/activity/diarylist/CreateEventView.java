@@ -5,11 +5,13 @@ import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.common.constants.Sticker;
 import com.vm62.diary.frontend.client.activity.HeaderTitle;
@@ -47,7 +49,7 @@ import javax.validation.constraints.Null;
 /**
  * Created by Ира on 15.12.2016.
  */
-
+//@Singleton
 public class CreateEventView extends CDialogBox implements CreateEventActivity.ICreateEventView{
     private static CreateEventViewUiBinder ourUiBinder = GWT.create(CreateEventViewUiBinder.class);
     interface CreateEventViewUiBinder extends UiBinder<MaterialRow, CreateEventView> {
@@ -108,16 +110,32 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         }
         endDate.addValidator(new BlankValidator<Date>("Please, provide event's start date!"));
         center();
-        addEventHandlers();
+        //addEventHandlers();
         eventName.addValidator(new BlankValidator<String>("Please, provide event's name!"));
 
 
 
     }
 
-    void addEventHandlers(){
-
-    }
+//    private EventServiceAsync eventServiceAsync;
+//    private NotificationManager notificationManager;
+//
+//    void addEventHandlers(){
+//        eventServiceAsync.create(getName(), getDescription() ,getCategory(), getStartTime(),getEndTime(),getComplexity(),getDuration(), eventStickerDescription, new AsyncCallback<EventDTO>() {
+//            @Override
+//            public void onFailure(Throwable caught) {
+//                notificationManager.showErrorPopupWithoutDetails("Event was canceled!");
+//            }
+//
+//            @Override
+//            public void onSuccess(EventDTO result) {
+//                notificationManager.showInfoPopup("Event edited!");
+//                diaryListView.setNewEvent(result);
+//                // // TODO: 26.12.2016 implement
+//            }
+//        });
+//
+//    }
 
     @UiHandler("btnCreate")
     void onCreateEvent(ClickEvent e) {
@@ -232,15 +250,15 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         descriptArea.setText(description);
         typeBox.setValue(category.getCategory());
         simple.setValue(complexity);
-        complex.setValue(!complexity);
+        //complex.setValue(!complexity);
         this.startTime.setTime(startTime.getTime());
         this.endTime.setTime(endTime.getTime());
         tp.setValue(startTime);
         tpEnd.setValue(endTime);
         endDate.setDate(endTime);
 
-        Long min = duration%3600000;
-        Long hours = (duration/60000 - min)/60;
+        Long min = (duration / (1000 * 60)) % 60;
+        Long hours = (duration / (1000 * 60 * 60)) % 24;
         minutesTextBox.setValue(min.toString());
         hourTextBox.setValue(hours.toString());
         //SignImageListWidget signs = new SignImageListWidget();

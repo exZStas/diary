@@ -4,6 +4,7 @@ package com.vm62.diary.frontend.client.injection;
 import com.vm62.diary.frontend.client.activity.MainPanelActivity;
 import com.vm62.diary.frontend.client.activity.MainPanelView;
 import com.vm62.diary.frontend.client.activity.admin.AdminLoginDialog;
+import com.vm62.diary.frontend.client.activity.diarylist.DiaryListActivity;
 import com.vm62.diary.frontend.client.activity.login.LoginDialog;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
@@ -29,6 +30,7 @@ public interface InjectorDiary extends Ginjector {
 
     NotificationManager getNotificationManager();
     NavigationManager getNavigationManager();
+    //DiaryListActivity getDiaryListActivity();
 
     MainPanelView getMainPanel();
     MainPanelActivity getMainPanelActivity();

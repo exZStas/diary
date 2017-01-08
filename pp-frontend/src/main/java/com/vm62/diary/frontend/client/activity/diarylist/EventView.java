@@ -115,7 +115,7 @@ public class EventView extends Composite {
             public void onClick(ClickEvent e) {
                 e.preventDefault();
                 e.stopPropagation();
-                navigationManager.navigate(new EditEventViewActivity.EditEventActivityPlace(event));
+                navigationManager.navigate(new EditEventViewActivity.EditEventActivityPlace(event,EventView.this));
             }
         });
 
@@ -133,6 +133,7 @@ public class EventView extends Composite {
                     @Override
                     public void onSuccess(Boolean result) {
                         notificationManager.showInfoPopup(constants.successEventWasDeleted());
+                        deleteEventFromList();
                     }
                 });
             }
@@ -201,6 +202,10 @@ public class EventView extends Composite {
                 }
             }
         });
+    }
+
+    public void deleteEventFromList(){
+        this.getWidget().setVisible(false);
     }
 
     private void setStyleNames() {

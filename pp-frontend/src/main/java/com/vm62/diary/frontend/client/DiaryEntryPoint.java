@@ -3,6 +3,7 @@ package com.vm62.diary.frontend.client;
 import com.vm62.diary.frontend.client.activity.MainPanelActivity;
 import com.vm62.diary.frontend.client.activity.MainPanelView;
 import com.vm62.diary.frontend.client.activity.admin.AdminLoginDialog;
+import com.vm62.diary.frontend.client.activity.diarylist.DiaryListActivity;
 import com.vm62.diary.frontend.client.activity.login.LoginDialog;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.injection.InjectorDiary;
@@ -23,6 +24,7 @@ public class DiaryEntryPoint extends MaterialDesign {
     private NavigationManager navigationManager;
     private AdminLoginDialog adminLoginDialog;
     private LoginDialog loginDialog;
+    //private DiaryListActivity diaryListActivity;
 
     private boolean ctrl = false;
     private boolean shift = false;
@@ -33,6 +35,7 @@ public class DiaryEntryPoint extends MaterialDesign {
         adminLoginDialog = injector.getAdminLoginDialog();
         navigationManager = injector.getNavigationManager();
         loginDialog = injector.getLoginDialog();
+        //diaryListActivity = injector.getDiaryListActivity();
 
         MainPanelView mainPanel = injector.getMainPanel();
 

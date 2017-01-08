@@ -29,4 +29,6 @@ public interface EventServiceAsync {
     void getEventsByDayForUser(Date day, AsyncCallback<List<EventDTO>> async);
 
     void deleteEventById(Long id, AsyncCallback<Boolean> async);
+
+    void parseSchedule(String userGroup, AsyncCallback<Boolean> async);
 }

@@ -12,6 +12,7 @@ import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.common.constants.Status;
 import org.apache.commons.lang.ObjectUtils;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +40,11 @@ public class EventBean {
 
         return eventDAO.createEvent(event);
     }
-    public Event createEvent(Long id, Long userId, String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
+
+    public void saveEven(Event event){
+        eventDAO.createEvent(event);
+    }
+    public Event updateEvent(Long id, Long userId, String name, String description, Category category, Date start_time, Date end_time, Boolean complexity,
                              Long duration, String sticker, Status status) throws ServiceException{
         ifNull(id, ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "id");
         ifNull(userId, ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "user_id");
@@ -53,18 +58,19 @@ public class EventBean {
         Event event = new Event(id, userId, name, description, category, start_time, end_time, complexity,
                 duration, sticker, status);
 
-        return eventDAO.createEvent(event);
+        return eventDAO.updateEvent(event);
     }
 
+    @Nullable
     public Event getEventById(Long id){
         return eventDAO.getEventById(id);
     }
 
     public Boolean deleteEventById(Long id){
         eventDAO.deleteEvent(getEventById(id));
-        if (eventDAO.getEventById(id).equals(null))
-            return true;
-        else return false;
+        if (getEventById(id) instanceof Event)
+            return false;
+        else return true;
     }
 
     public Event setEventDoneStatus(Status doneStatus, Event event) throws ServiceException {

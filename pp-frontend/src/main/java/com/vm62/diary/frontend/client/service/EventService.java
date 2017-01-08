@@ -30,4 +30,5 @@ public interface EventService extends RemoteService{
 
     Boolean deleteEventById(Long id) throws ServiceException;
 
+    Boolean parseSchedule(String userGroup) throws ServiceException;
 }

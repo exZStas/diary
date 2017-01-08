@@ -9,6 +9,7 @@ import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.common.constants.Status;
 import org.hibernate.Hibernate;
 
+import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
@@ -45,6 +46,7 @@ public class EventDAO {
         em.flush();
     }
 
+    @Nullable
     public Event getEventById(Long id) {
 
         EntityManager em = emProvider.get();

@@ -1,5 +1,6 @@
 package com.vm62.diary.frontend.client.common;
 
+import com.vm62.diary.frontend.client.activity.diarylist.DiaryListView;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.google.gwt.user.client.ui.HasWidgets;
 

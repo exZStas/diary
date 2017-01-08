@@ -187,4 +187,10 @@ public interface DiaryConstants extends Constants {
 
     @Key("error.canNotRetrieveUsers")
     String errorCanNotRetrieveUsers();
+
+    @Key("error.canNotUpdateSchedule")
+    String errorCanNotUpdateSchedule();
+
+    @Key("success.scheduleUpdate")
+    String successScheduleUpdate();
 }

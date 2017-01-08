@@ -8,6 +8,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.googlecode.gwt.charts.client.ChartLoader;
 import com.googlecode.gwt.charts.client.ChartPackage;
 import com.googlecode.gwt.charts.client.ColumnType;
@@ -34,7 +35,7 @@ import gwt.material.design.client.ui.*;
 import java.util.*;
 
 
-
+@Singleton
 public class DiaryListView extends Composite implements DiaryListActivity.IDiaryListView {
     private static DiaryListUiBinder uiBinder = GWT.create(DiaryListUiBinder.class);
 
@@ -193,6 +194,21 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         todayLabel.setText(df.format(today));
     }
 
+    @Override
+    public void updateSchedule(ClickHandler handler) {
+        scheduleUpdateLink.addClickHandler(handler);
+    }
+
+    @Override
+    public void buttonScrollRightClick(ClickHandler handler) {
+        scheduleList.clear();
+        btnScrollRight.addClickHandler(handler);
+    }
+    @Override
+    public void buttonScrollLeftClick(ClickHandler handler) {
+        scheduleList.clear();
+        btnScrollLeft.addClickHandler(handler);
+    }
     private void createChart(ChartLoader chartLoader, Map<String,Long> dictionary, MaterialColumn column, String title){
         pies = dictionary;
         col = column;

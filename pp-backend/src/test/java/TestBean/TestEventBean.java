@@ -64,4 +64,12 @@ public class TestEventBean {
         verify(eventDAO, times(1)).getEventById(id);
         assertEquals(event.getId(), event1.getId());
     }
+
+    @Test
+    public void test_deleteEventById(){
+        Long id = 12L;
+        Boolean res = eventBean.deleteEventById(id);
+        //then
+        assertEquals(res, true);
+    }
 }

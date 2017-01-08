@@ -81,6 +81,7 @@ public class EditEventViewActivity implements BaseActivity {
         view.registerPatientHandler(new SimpleEventHandler() {
             @Override
             public void onEvent() {
+                if (eventStickerDescription.isEmpty()) eventStickerDescription = place.eventDTO.getSticker();
                 eventServiceAsync.update(place.eventDTO.getId(),view.getName(), view.getDescription() ,view.getCategory(), view.getStartTime(),
                         view.getEndTime(),view.getComplexity(),view.getDuration(), eventStickerDescription, place.eventDTO.getStatus(), new AsyncCallback<EventDTO>() {
                     @Override
@@ -91,6 +92,7 @@ public class EditEventViewActivity implements BaseActivity {
                     @Override
                     public void onSuccess(EventDTO result) {
                         notificationManager.showInfoPopup(constants.successEventWasCreated());
+                        place.eventView.deleteEventFromList();
                         diaryListView.setNewEvent(result);
                         // // TODO: 26.12.2016 implement
                     }
@@ -117,11 +119,13 @@ public class EditEventViewActivity implements BaseActivity {
     public static class EditEventActivityPlace extends NavigationPlace{
 
         private EventDTO eventDTO;
+        private EventView eventView;
 
-        public EditEventActivityPlace(EventDTO eventDTO)
+        public EditEventActivityPlace(EventDTO eventDTO, EventView eventView)
         {
             super(NavigationUrl.URL_EDIT_EVENT_ACTIVITY);
             this.eventDTO = eventDTO;
+            this.eventView = eventView;
         }
     }
 }
