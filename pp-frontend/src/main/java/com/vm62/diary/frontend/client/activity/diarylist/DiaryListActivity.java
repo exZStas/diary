@@ -1,5 +1,6 @@
 package com.vm62.diary.frontend.client.activity.diarylist;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -12,6 +13,7 @@ import com.google.inject.Singleton;
 import com.vm62.diary.common.constants.Gender;
 import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
+import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.service.EventServiceAsync;
@@ -55,6 +57,7 @@ public class DiaryListActivity implements BaseActivity{
     private UserProfileServiceAsync userProfileServiceAsync;
     private List<EventDTO> eventDTOs;
     private NavigationManager navigationManager;
+    private DiaryConstants constants = GWT.create(DiaryConstants.class);
 
     @Inject
     DiaryListActivity(IDiaryListView view, NotificationManager notificationManager, NavigationManager navigationManager, EventServiceAsync eventServiceAsync, UserProfileServiceAsync userProfileServiceAsync){
@@ -75,7 +78,7 @@ public class DiaryListActivity implements BaseActivity{
         userProfileServiceAsync.getUser(new AsyncCallback<UserDTO>() {
             @Override
             public void onFailure(Throwable caught) {
-                notificationManager.showErrorPopupWithoutDetails("Profile is not avalible!");
+                notificationManager.showErrorPopupWithoutDetails(constants.errorProfileIsNotAvailable());
             }
 
             @Override
@@ -92,13 +95,13 @@ public class DiaryListActivity implements BaseActivity{
                 eventServiceAsync.getEventsByDayForUser(today, new AsyncCallback<List<EventDTO>>(){
                     @Override
                     public void onFailure(Throwable caught) {
-                        notificationManager.showErrorPopupWithoutDetails("Events is not avalible!");
+                        notificationManager.showErrorPopupWithoutDetails(constants.errorEventsAreNotAvailable());
                     }
 
                     @Override
                     public void onSuccess(List<EventDTO> result) {
                         eventDTOs = result;
-                        if (eventDTOs.isEmpty()) notificationManager.showErrorPopupWithoutDetails("Day haven't events");
+                        if (eventDTOs.isEmpty()) notificationManager.showErrorPopupWithoutDetails(constants.errorCurrentDayHasNoEvents());
                         else navigationManager.navigate(new ChartViewActivity.ChartViewActivityPlace(eventDTOs));
 
                     }

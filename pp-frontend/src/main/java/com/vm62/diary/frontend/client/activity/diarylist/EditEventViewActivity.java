@@ -1,5 +1,6 @@
 package com.vm62.diary.frontend.client.activity.diarylist;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -13,6 +14,7 @@ import com.vm62.diary.frontend.client.common.components.Signs;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.events.SelectEventHandler;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
+import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
@@ -35,6 +37,7 @@ public class EditEventViewActivity implements BaseActivity {
     private String eventStickerDescription;
     private NavigationManager navigationManager;
     private EditEventActivityPlace place;
+    private DiaryConstants constants = GWT.create(DiaryConstants.class);
     @Inject
     EditEventViewActivity(CreateEventActivity.ICreateEventView view , EventServiceAsync eventServiceAsync, NotificationManager notificationManager,
                           SignImageListWidget signImageListWidget, NavigationManager navigationManager, DiaryListActivity.IDiaryListView diaryListView)
@@ -82,12 +85,12 @@ public class EditEventViewActivity implements BaseActivity {
                         view.getEndTime(),view.getComplexity(),view.getDuration(), eventStickerDescription, place.eventDTO.getStatus(), new AsyncCallback<EventDTO>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        notificationManager.showErrorPopupWithoutDetails("Event was canceled!");
+                        notificationManager.showErrorPopupWithoutDetails(constants.errorEventWasCanceled());
                     }
 
                     @Override
                     public void onSuccess(EventDTO result) {
-                        notificationManager.showInfoPopup("Event create!");
+                        notificationManager.showInfoPopup(constants.successEventWasCreated());
                         diaryListView.setNewEvent(result);
                         // // TODO: 26.12.2016 implement
                     }

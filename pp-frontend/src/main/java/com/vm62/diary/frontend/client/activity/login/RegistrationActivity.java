@@ -1,5 +1,6 @@
 package com.vm62.diary.frontend.client.activity.login;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -13,6 +14,7 @@ import com.vm62.diary.common.ServiceException;
 import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
+import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
@@ -51,6 +53,7 @@ public class RegistrationActivity implements BaseActivity {
     private LoginServiceAsync loginServiceAsync;
     private NotificationManager notificationManager;
     private NavigationManager navigationManager;
+    private DiaryConstants constants = GWT.create(DiaryConstants.class);
 
     @Inject
     RegistrationActivity(IRegistrationView view, LoginServiceAsync loginServiceAsync, NotificationManager notificationManager,
@@ -79,12 +82,12 @@ public class RegistrationActivity implements BaseActivity {
                         view.getStudyGroup(), view.getBirthDay(), view.getEmail(), new AsyncCallback<UserDTO>() {
                             @Override
                             public void onFailure(Throwable caught) {
-                                notificationManager.showErrorPopupWithoutDetails("Registration was failed!");
+                                notificationManager.showErrorPopupWithoutDetails(constants.errorRegistrationFailed());
                             }
 
                             @Override
                             public void onSuccess(UserDTO result) {
-                                notificationManager.showInfoPopup("Registration successful!");
+                                notificationManager.showInfoPopup(constants.successRegistrationSuccessful());
                             }
                         });
             }

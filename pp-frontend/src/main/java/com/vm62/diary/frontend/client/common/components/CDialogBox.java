@@ -133,7 +133,7 @@ public abstract class CDialogBox extends Composite {
         }
     }
     public void removeLangButtons(){
-        getLangElement().removeFromParent();
+        getLangElement().setVisible(false);
     }
 
     public void doOnKeyUp(NativeEvent event) {

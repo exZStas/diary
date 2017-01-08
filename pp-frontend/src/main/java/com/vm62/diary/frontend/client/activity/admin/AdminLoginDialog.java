@@ -5,6 +5,7 @@ import com.vm62.diary.frontend.client.activity.HeaderTitle;
 import com.vm62.diary.frontend.client.common.components.CDialogBox;
 import com.vm62.diary.frontend.client.common.components.MD5Digest;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
+import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -45,6 +46,7 @@ public class AdminLoginDialog extends CDialogBox {
     private NotificationManager notificationManager;
     private AdminServiceAsync adminServiceAsync;
     private AdminLoginDialog me;
+    private DiaryConstants constants = GWT.create(DiaryConstants.class);
 
     @Inject
     public AdminLoginDialog(NavigationManager navigationManager,
@@ -125,7 +127,7 @@ public class AdminLoginDialog extends CDialogBox {
         adminServiceAsync.getAdmin(new AsyncCallback<AdminDTO>() {
             @Override
             public void onFailure(Throwable caught) {
-                notificationManager.showErrorPopupWithoutDetails("Incorrect admin name and password!");
+                notificationManager.showErrorPopupWithoutDetails(constants.errorIncorrectEmailOrPassword());
             }
 
             @Override

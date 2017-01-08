@@ -1,5 +1,6 @@
 package com.vm62.diary.frontend.client.activity.diarylist;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Image;
@@ -14,8 +15,10 @@ import com.vm62.diary.frontend.client.common.components.Signs;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.events.SelectEventHandler;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
+import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
+import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import com.vm62.diary.frontend.client.service.EventServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import gwt.material.design.client.ui.MaterialRow;
@@ -53,6 +56,7 @@ public class CreateEventActivity implements BaseActivity {
     private DiaryListActivity.IDiaryListView diaryListView;
     private String eventStickerDescription;
     private NavigationManager navigationManager;
+    private DiaryConstants constants = GWT.create(DiaryConstants.class);
 
     @Inject
     CreateEventActivity(ICreateEventView view, EventServiceAsync eventServiceAsync, NotificationManager notificationManager,
@@ -101,13 +105,17 @@ public class CreateEventActivity implements BaseActivity {
                 eventServiceAsync.create(view.getName(), view.getDescription() ,view.getCategory(), view.getStartTime(),view.getEndTime(),view.getComplexity(),view.getDuration(), eventStickerDescription, new AsyncCallback<EventDTO>() {
                             @Override
                             public void onFailure(Throwable caught) {
-                                notificationManager.showErrorPopupWithoutDetails("Event was canceled!");
+                                notificationManager.showErrorPopupWithoutDetails(constants.errorEventWasCanceled());
                             }
 
                             @Override
                             public void onSuccess(EventDTO result) {
-                                notificationManager.showInfoPopup("Event edited!");
+                                notificationManager.showInfoPopup(constants.successEventWasCreated());
                                 diaryListView.setNewEvent(result);
+//                                diaryListView.asWidget().setVisible(false);
+//                                diaryListView.asWidget().setVisible(true);
+//                                diaryListView.setNewEvent(result);
+//                                navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
                                 // // TODO: 26.12.2016 implement
                             }
                         });

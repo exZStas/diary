@@ -1,5 +1,6 @@
 package com.vm62.diary.frontend.client.activity.diarylist;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -8,6 +9,7 @@ import com.google.gwt.user.client.ui.*;
 import com.vm62.diary.common.constants.Status;
 import com.google.inject.Inject;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
+import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.service.EventServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
@@ -45,6 +47,8 @@ public class EventView extends Composite {
     private NavigationManager navigationManager;
     private NotificationManager notificationManager;
     private EventDTO event;
+
+    private DiaryConstants constants = GWT.create(DiaryConstants.class);
 
     private int HEIGHT_OF_ROW = 37;
 
@@ -123,12 +127,12 @@ public class EventView extends Composite {
                 eventServiceAsync.deleteEventById(event.getId(), new AsyncCallback<Boolean>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        notificationManager.showErrorPopupWithoutDetails("Event was not deleted!");
+                        notificationManager.showErrorPopupWithoutDetails(constants.errorEventWasNotDeleted());
                     }
 
                     @Override
                     public void onSuccess(Boolean result) {
-                        notificationManager.showInfoPopup("Event deleted!");
+                        notificationManager.showInfoPopup(constants.successEventWasDeleted());
                     }
                 });
             }
@@ -143,12 +147,12 @@ public class EventView extends Composite {
                         event.getEndTime(), event.getComplexity(), event.getDuration(), event.getSticker(), Status.undone, new AsyncCallback<EventDTO>() {
                             @Override
                             public void onFailure(Throwable caught) {
-                                notificationManager.showErrorPopupWithoutDetails("Event is not available!");
+                                notificationManager.showErrorPopupWithoutDetails(constants.errorEventIsNotAvailable());
                             }
 
                             @Override
                             public void onSuccess(EventDTO result) {
-                                notificationManager.showInfoPopup("Status edited!");
+                                notificationManager.showInfoPopup(constants.successStatusWasEdited());
                             }
                         });
             }
@@ -163,12 +167,12 @@ public class EventView extends Composite {
                         event.getEndTime(), event.getComplexity(), event.getDuration(), event.getSticker(), Status.done, new AsyncCallback<EventDTO>() {
                             @Override
                             public void onFailure(Throwable caught) {
-                                notificationManager.showErrorPopupWithoutDetails("Event is not available!");
+                                notificationManager.showErrorPopupWithoutDetails(constants.errorEventIsNotAvailable());
                             }
 
                             @Override
                             public void onSuccess(EventDTO result) {
-                                notificationManager.showInfoPopup("Status edited!");
+                                notificationManager.showInfoPopup(constants.successStatusWasEdited());
                             }
                         });
             }

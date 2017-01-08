@@ -202,7 +202,7 @@
         <!-- Footer -->
         <m:MaterialFooter backgroundColor="BLUE" type="FIXED">
             <m:MaterialFooterCopyright>
-                <m:MaterialLabel text="© 2016 Copyright VM62 design group" />
+                <m:MaterialLabel ui:field="footerCopyright" text="© 2016 Copyright VM62 design group" />
             </m:MaterialFooterCopyright>
         </m:MaterialFooter>
 

@@ -119,4 +119,72 @@ public interface DiaryConstants extends Constants {
 
     @Key("button.registration")
     String buttonRegistration();
+
+    String copyright();
+
+    @Key("error.eventWasNotDeleted")
+    String errorEventWasNotDeleted();
+
+    @Key("error.eventIsNotAvailable")
+    String errorEventIsNotAvailable();
+
+    @Key("success.eventWasDeleted")
+    String successEventWasDeleted();
+
+    @Key("success.statusWasEdited")
+    String successStatusWasEdited();
+
+    @Key("error.unknownError")
+    String errorUnknownError();
+
+    @Key("error.incorrectEmailOrPassword")
+    String errorIncorrectEmailOrPassword();
+
+    @Key("error.eventWasCanceled")
+    String errorEventWasCanceled();
+
+    @Key("success.eventWasCreated")
+    String successEventWasCreated();
+
+    @Key("error.profileWasNotChanged")
+    String errorProfileWasNotChanged();
+
+    @Key("error.profileIsNotAvailable")
+    String errorProfileIsNotAvailable();
+
+    @Key("success.profileWasChanged")
+    String successProfileWasChanged();
+
+    @Key("error.eventsAreNotAvailable")
+    String errorEventsAreNotAvailable();
+
+    @Key("error.currentDayHasNoEvents")
+    String errorCurrentDayHasNoEvents();
+
+    @Key("error.registrationFailed")
+    String errorRegistrationFailed();
+
+    @Key("success.registrationSuccessful")
+    String successRegistrationSuccessful();
+
+    @Key("error.incorrectPassword")
+    String errorIncorrectPassword();
+
+    @Key("error.newPasswordIsNotEqualToRepeated")
+    String errorNewPasswordIsNotEqualToRepeated();
+
+    @Key("error.categoryCreationFailed")
+    String errorCategoryCreationFailed();
+
+    @Key("success.categoryCreationSuccessful")
+    String successCategoryCreationSuccessful();
+
+    @Key("error.userBanFailed")
+    String errorUserBanFailed();
+
+    @Key("error.userUnbanFailed")
+    String errorUserUnbanFailed();
+
+    @Key("error.canNotRetrieveUsers")
+    String errorCanNotRetrieveUsers();
 }

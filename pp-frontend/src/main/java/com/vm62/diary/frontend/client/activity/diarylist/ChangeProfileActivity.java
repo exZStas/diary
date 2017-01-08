@@ -1,5 +1,6 @@
 package com.vm62.diary.frontend.client.activity.diarylist;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -16,6 +17,7 @@ import com.vm62.diary.common.password.PasswordEncoded;
 import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
+import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.service.UserProfileServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.UserDTO;
@@ -60,6 +62,7 @@ public class ChangeProfileActivity implements BaseActivity {
     private IChangeProfileView view;
     private NotificationManager notificationManager;
     private UserProfileServiceAsync userProfileServiceAsync;
+    private DiaryConstants constants = GWT.create(DiaryConstants.class);
 
     @Inject
     ChangeProfileActivity(IChangeProfileView view, NotificationManager notificationManager, UserProfileServiceAsync userProfileServiceAsync){
@@ -79,12 +82,12 @@ public class ChangeProfileActivity implements BaseActivity {
                         view.getStudyGroup(),view.getBirthDay(),view.getEmail(),view.getYes(), new AsyncCallback<UserDTO>() {
                             @Override
                             public void onFailure(Throwable caught) {
-                                notificationManager.showErrorPopupWithoutDetails("Profile was'n changed!");
+                                notificationManager.showErrorPopupWithoutDetails(constants.errorProfileWasNotChanged());
                             }
 
                             @Override
                             public void onSuccess(UserDTO result) {
-                                notificationManager.showInfoPopup("Profile changed!");
+                                notificationManager.showInfoPopup(constants.successProfileWasChanged());
                             }
                         });
             }
@@ -94,7 +97,7 @@ public class ChangeProfileActivity implements BaseActivity {
                 userProfileServiceAsync.getUser(new AsyncCallback<UserDTO>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        notificationManager.showErrorPopupWithoutDetails("Profile is not avalible!");
+                        notificationManager.showErrorPopupWithoutDetails(constants.errorProfileIsNotAvailable());
                     }
 
                     @Override

@@ -14,6 +14,7 @@ import com.vm62.diary.common.constants.Gender;
 import com.vm62.diary.frontend.client.common.components.MD5Digest;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
+import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
@@ -64,6 +65,7 @@ public class ChangeProfileView extends Composite implements ChangeProfileActivit
     private NotificationManager notificationManager;
     private String userPassword;
     private MD5Digest md5Digest = new MD5Digest();
+    private DiaryConstants constants = GWT.create(DiaryConstants.class);
 
     @Inject
     public ChangeProfileView(NavigationManager navigationManager, NotificationManager notificationManager) {
@@ -225,19 +227,19 @@ public class ChangeProfileView extends Composite implements ChangeProfileActivit
             try {
                 if (md5Digest.getMD5(password.getText()).equals(userPassword)) {
                     if (!newPassword.getText().equals(repeatNewPassword.getText()) || newPassword.getText().length()<5){
-                        notificationManager.showErrorPopupWithoutDetails("New password is not equals pereated password");
+                        notificationManager.showErrorPopupWithoutDetails(constants.errorNewPasswordIsNotEqualToRepeated());
                         return false;
                     }
                     else userPassword = newPassword.getText();
                     return true;
                 }
                 else {
-                    notificationManager.showErrorPopupWithoutDetails("Password is wrong!");
+                    notificationManager.showErrorPopupWithoutDetails(constants.errorIncorrectPassword());
                     return false;
                 }
             }
             catch (Exception ex){
-                notificationManager.showErrorPopupWithoutDetails("Profile was'n changed!");
+                notificationManager.showErrorPopupWithoutDetails(constants.errorProfileWasNotChanged());
                 return false;
             }
         }

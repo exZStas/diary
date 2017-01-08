@@ -1,6 +1,7 @@
 package com.vm62.diary.frontend.client.activity.admin;
 
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -14,6 +15,7 @@ import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.vm62.diary.frontend.client.common.dialogs.ConfirmDialog;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.events.SelectEventHandler;
+import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
@@ -41,6 +43,7 @@ public class AdminHomeActivity implements BaseActivity {
     private NotificationManager notificationManager;
     private ConfirmDialog confirmDialog;
     private Long currentUserId;
+    private DiaryConstants constants = GWT.create(DiaryConstants.class);
 
     @Inject
     public AdminHomeActivity(IAdminHomeView view, NavigationManager navigationManager, AdminServiceAsync adminServiceAsync,
@@ -60,12 +63,12 @@ public class AdminHomeActivity implements BaseActivity {
                 adminServiceAsync.createCategory(view.getCategoryName(), view.getCategoryColor(), new AsyncCallback<Void>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        notificationManager.showErrorPopupWithoutDetails("Can't create category");
+                        notificationManager.showErrorPopupWithoutDetails(constants.errorCategoryCreationFailed());
                     }
 
                     @Override
                     public void onSuccess(Void result) {
-                        notificationManager.showErrorPopupWithoutDetails("Category successfully created!");
+                        notificationManager.showErrorPopupWithoutDetails(constants.successCategoryCreationSuccessful());
                     }
                 });
             }
@@ -94,7 +97,7 @@ public class AdminHomeActivity implements BaseActivity {
                                     adminServiceAsync.banUser(currentUserId, new AsyncCallback<Void>() {
                                         @Override
                                         public void onFailure(Throwable caught) {
-                                            notificationManager.showErrorPopupWithoutDetails("can't ban user");
+                                            notificationManager.showErrorPopupWithoutDetails(constants.errorUserBanFailed());
                                         }
 
                                         @Override
@@ -126,7 +129,7 @@ public class AdminHomeActivity implements BaseActivity {
                                     adminServiceAsync.unbanUser(currentUserId, new AsyncCallback<Void>() {
                                         @Override
                                         public void onFailure(Throwable caught) {
-                                            notificationManager.showErrorPopupWithoutDetails("can't unban user");
+                                            notificationManager.showErrorPopupWithoutDetails(constants.errorUserUnbanFailed());
                                         }
 
                                         @Override
@@ -157,7 +160,7 @@ public class AdminHomeActivity implements BaseActivity {
         adminServiceAsync.getUsers(new AsyncCallback<List<UserDTO>>() {
             @Override
             public void onFailure(Throwable caught) {
-                notificationManager.showErrorPopupWithoutDetails("Can't retrieve users from database!");
+                notificationManager.showErrorPopupWithoutDetails(constants.errorCanNotRetrieveUsers());
             }
 
             @Override

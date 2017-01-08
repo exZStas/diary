@@ -34,7 +34,7 @@ import gwt.material.design.client.ui.*;
 import java.util.*;
 
 
-//@Singleton
+
 public class DiaryListView extends Composite implements DiaryListActivity.IDiaryListView {
     private static DiaryListUiBinder uiBinder = GWT.create(DiaryListUiBinder.class);
 
@@ -78,6 +78,8 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     MaterialColumn realChartColumn;
     @UiField
     MaterialLabel todayLabel;
+    @UiField
+    MaterialLabel footerCopyright;
 
     private NavigationManager navigationManager;
     private EventServiceAsync eventServiceAsync;
@@ -100,6 +102,7 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         setWidget(uiBinder.createAndBindUi(this));
         userProfile.setUrl(Images.USER_BG.getImage());
 //        scheduleList.sinkEvents(Event.ONCLICK);
+        footerCopyright.setText("© " + constants.copyright());
 
         scheduleList.getElement().getStyle().setProperty("height", "calc(100% - 150px)");
         scheduleList.addStyleName("schedule-list");
