@@ -11,6 +11,7 @@
             margin-bottom: 0px;
             text-align: right;
         }
+
         .backButton {
             width: 10%;
             float: left;
@@ -19,10 +20,42 @@
             text-align: left;
             margin-bottom: 0px;
         }
+
         .checkButton {
-            padding-left: 25px;
+            margin-left: 3rem;
         }
 
+        .category-list-box {
+            margin-left: 3rem;
+            width: calc(100% - 3rem);
+        }
+
+        .category-list-box label {
+            font-size: 1rem;
+        }
+
+        .category-icon {
+            position: absolute;
+        }
+
+        .complexity-icon {
+            position: absolute;
+            font-size: 29px;
+            padding: 0 !important;
+        }
+
+        .complexity-label {
+            float: none;
+            margin-left: 3rem;
+            padding: 0 !important;
+            padding-top: 0.2rem !important;
+            padding-bottom: 1rem !important;
+        }
+
+        .duration-hour {
+            padding: 0 !important;
+            margin-left: 3rem;
+        }
     </ui:style>
     <m:MaterialRow>
         <m:MaterialRow>
@@ -32,17 +65,14 @@
             <m:MaterialTextArea ui:field="descriptArea" placeholder="{i18n.text.placeholderDescription}" length="120" iconType="TEXT_FIELDS"/>
         </m:MaterialRow>
         <m:MaterialRow>
-            <ma:iconmorph.MaterialIconMorph iconSize="SMALL">
-                <m:MaterialIcon iconType="MENU"/>
-                <m:MaterialIcon iconType="SCHOOL"/>
-            </ma:iconmorph.MaterialIconMorph>
-            <m:MaterialListBox ui:field="typeBox" placeholder="{i18n.text.placeholderCategory}" fontSize="1.5em"/>
+            <m:MaterialIcon addStyleNames="{style.category-icon}" iconType="SCHOOL"/>
+            <m:MaterialListBox addStyleNames="{style.category-list-box}" ui:field="typeBox" placeholder="{i18n.text.placeholderCategory}" fontSize="1.5em"/>
         </m:MaterialRow>
         <m:MaterialRow ui:field="signContainer">
         </m:MaterialRow>
         <m:MaterialRow>
-            <m:MaterialIcon iconType="EVENT_AVAILABLE" grid="3" paddingLeft="0"/>
-            <m:MaterialLabel text="{i18n.text.complexity}" grid="3" textAlign="LEFT"/>
+            <m:MaterialIcon addStyleNames="{style.complexity-icon}" iconType="EVENT_AVAILABLE" grid="3"/>
+            <m:MaterialLabel addStyleNames="{style.complexity-label}" text="{i18n.text.complexity}" grid="3" textAlign="LEFT"/>
             <m:MaterialCheckBox ui:field="simple" text="{i18n.text.placeholderSimple}" checked="true" width="200" addStyleNames="{style.checkButton}"/>
             <m:MaterialCheckBox ui:field="complex" text="{i18n.text.placeholderComplex}" width="220" addStyleNames="{style.checkButton}"/>
         </m:MaterialRow>
@@ -56,7 +86,7 @@
         <m:MaterialRow >
             <!--<m:MaterialRange ui:field="minRange" min="5" max="1440" value="25" />-->
             <m:MaterialColumn grid="10">
-                <m:MaterialTextBox ui:field="hourTextBox" placeholder="{i18n.text.placeholderHours}" type="NUMBER" iconType="SCHEDULE"/>
+                <m:MaterialTextBox addStyleNames="{style.duration-hour}" ui:field="hourTextBox" placeholder="{i18n.text.placeholderHours}" type="NUMBER" iconType="SCHEDULE"/>
                 <!--<m:MaterialIntegerBox ui:field="minBox" value="5"/>-->
             </m:MaterialColumn>
             <m:MaterialColumn grid="10">
