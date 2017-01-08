@@ -4,19 +4,22 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import gwt.material.design.client.constants.CenterOn;
-import gwt.material.design.client.ui.MaterialModal;
-import gwt.material.design.client.ui.MaterialModalContent;
-import gwt.material.design.client.ui.MaterialRow;
-import gwt.material.design.client.ui.MaterialTitle;
+import gwt.material.design.client.ui.*;
 
 /**
  * inheriting you dialog box from this class helps you modal dialog to close on CloseDialogBoxEvent fired
@@ -52,9 +55,31 @@ public abstract class CDialogBox extends Composite {
         getTitleElement().setPaddingTop(24);
         getTitleElement().setPaddingBottom(10);
         getTitleElement().setPaddingLeft(24);
+        getContentElement().setPaddingTop(0);
+
+        getEnButton().addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                if (!LocaleInfo.getCurrentLocale().equals("en"))
+                    Window.Location.assign( // or replace()
+                            Window.Location.createUrlBuilder()
+                                    .setParameter(LocaleInfo.getLocaleQueryParam(), "en")
+                                    .buildString());
+            }
+        });
+        getRuButton().addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                if (!LocaleInfo.getCurrentLocale().equals("ru"))
+                    Window.Location.assign( // or replace()
+                            Window.Location.createUrlBuilder()
+                                    .setParameter(LocaleInfo.getLocaleQueryParam(), "ru")
+                                    .buildString());
+            }
+        });
+
 
     }
-
     protected void registerKeyEvents() {
         if (null == handlerNativePreviewRegistration) {
             handlerNativePreviewRegistration = Event.addNativePreviewHandler(new Event.NativePreviewHandler() {
@@ -107,6 +132,9 @@ public abstract class CDialogBox extends Composite {
             handlerNativePreviewRegistration = null;
         }
     }
+    public void removeLangButtons(){
+        getLangElement().removeFromParent();
+    }
 
     public void doOnKeyUp(NativeEvent event) {
         event.stopPropagation();
@@ -127,6 +155,18 @@ public abstract class CDialogBox extends Composite {
     private MaterialRow getContainerElement() {
         return (MaterialRow) getContentElement().getWidget(0);
     }
+    private MaterialRow getLangElement(){
+        return (MaterialRow) root.getWidget(1);
+    }
+
+    private MaterialButton getEnButton(){
+        return (MaterialButton) getLangElement().getWidget(0);
+    }
+
+    private MaterialButton getRuButton(){
+        return (MaterialButton) getLangElement().getWidget(1);
+    }
+
 
     public void setCaptionHtml(String text) {
         getTitleElement().setTitle(text);

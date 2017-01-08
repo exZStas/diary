@@ -17,15 +17,25 @@
 
         .headerSplitter {
             padding-bottom: 0px;
+            margin-bottom: 0 !important;
+            margin-top: -20px !important;
         }
 
         .content{
             margin-bottom: 0 !important;
         }
+        .lang {
+            margin-right: 3%;
+            float: right;
+        }
+
     </ui:style>
     <m:MaterialModal type="WINDOW" dismissable="false" inDuration="500" outDuration="500" addStyleNames="{style.modal}">
         <m:MaterialTitle title="" description="" addStyleNames="{style.header}"/>
-        <m:MaterialRow addStyleNames="{style.headerSplitter}"/>
+        <m:MaterialRow addStyleNames="{style.headerSplitter}">
+            <m:MaterialButton ui:field="enButton" type="FLOATING" waves="ORANGE" text="en" addStyleNames="{style.lang}"/>
+            <m:MaterialButton ui:field="ruButton" type="FLOATING" waves="ORANGE" text="ru" float="RIGHT"/>
+        </m:MaterialRow>
         <m:MaterialModalContent>
             <m:MaterialRow addStyleNames="{style.content}">
 

@@ -90,6 +90,7 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     @Inject
     public CreateEventView(NavigationManager navigationManager) {
         this.navigationManager =navigationManager;
+        removeLangButtons();
         setWidget(ourUiBinder.createAndBindUi(this));
         setCaptionHtml(HeaderTitle.EVENT_PANEL.getText());
         btnBack.getElement().getStyle().setBackgroundColor("#ff8f00");
