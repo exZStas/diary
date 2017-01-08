@@ -47,8 +47,6 @@ public class AdminHomeView extends Composite implements AdminHomeActivity.IAdmin
     private static final int MAX_TABLE_SIZE = 100;
     private ListDataProvider<UserDTO> userDTOListDataProvider = new ListDataProvider<UserDTO>();
     private SelectEventHandler<UserDTO> userBanHandler;
-    private ClickHandler createCategoryClickHandler;
-    private ClickHandler comeBackHandler;
 
     @Inject
     public AdminHomeView(){
@@ -164,13 +162,13 @@ public class AdminHomeView extends Composite implements AdminHomeActivity.IAdmin
     }
 
     @Override
-    public void addComeBackClickHandler(ClickHandler handler){
-        comeBackHandler = handler;
+    public void addComeBackClickHandler(ClickHandler clickHandler){
+        comeBackButton.addClickHandler(clickHandler);
     }
 
     @Override
     public void setCreateCategoryButtonHandler(ClickHandler clickHandler){
-        createCategoryClickHandler = clickHandler;
+        createButton.addClickHandler(clickHandler);
     }
 
     @Override
@@ -181,5 +179,11 @@ public class AdminHomeView extends Composite implements AdminHomeActivity.IAdmin
     @Override
     public String getCategoryColor(){
         return categoryColor.getText();
+    }
+
+    @Override
+    public void clearCategoryNameAndColor(){
+        categoryName.clear();
+        categoryColor.clear();
     }
 }

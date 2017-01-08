@@ -35,6 +35,7 @@ public class AdminHomeActivity implements BaseActivity {
         String getCategoryName();
         String getCategoryColor();
         void addComeBackClickHandler(ClickHandler handler);
+        void clearCategoryNameAndColor();
     }
 
     private IAdminHomeView view;
@@ -69,6 +70,7 @@ public class AdminHomeActivity implements BaseActivity {
                     @Override
                     public void onSuccess(Void result) {
                         notificationManager.showErrorPopupWithoutDetails(constants.successCategoryCreationSuccessful());
+                        view.clearCategoryNameAndColor();
                     }
                 });
             }
