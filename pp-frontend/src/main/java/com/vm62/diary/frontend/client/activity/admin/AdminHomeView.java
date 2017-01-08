@@ -15,6 +15,7 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.vm62.diary.frontend.client.common.events.SelectEventHandler;
+import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.server.service.dto.UserDTO;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialPanel;
@@ -47,6 +48,7 @@ public class AdminHomeView extends Composite implements AdminHomeActivity.IAdmin
     private static final int MAX_TABLE_SIZE = 100;
     private ListDataProvider<UserDTO> userDTOListDataProvider = new ListDataProvider<UserDTO>();
     private SelectEventHandler<UserDTO> userBanHandler;
+    private DiaryConstants constants = GWT.create(DiaryConstants.class);
 
     @Inject
     public AdminHomeView(){
@@ -91,7 +93,7 @@ public class AdminHomeView extends Composite implements AdminHomeActivity.IAdmin
                 return user.getFirstName();
             }
         };
-        userTable.addColumn(firstNameColumn, "First name");
+        userTable.addColumn(firstNameColumn, constants.userFirstNameBig());
         userTable.setColumnWidth(firstNameColumn, "20%");
     }
 
@@ -102,7 +104,7 @@ public class AdminHomeView extends Composite implements AdminHomeActivity.IAdmin
                 return user.getLastName();
             }
         };
-        userTable.addColumn(lastNameColumn, "Last name");
+        userTable.addColumn(lastNameColumn, constants.userLastNameBig());
         userTable.setColumnWidth(lastNameColumn, "20%");
     }
 
@@ -113,7 +115,7 @@ public class AdminHomeView extends Composite implements AdminHomeActivity.IAdmin
                 return user.getStudyGroup();
             }
         };
-        userTable.addColumn(groupColumn, "Study group");
+        userTable.addColumn(groupColumn, constants.userStudyGroupBig());
         userTable.setColumnWidth(groupColumn, "20%");
     }
 
@@ -124,7 +126,7 @@ public class AdminHomeView extends Composite implements AdminHomeActivity.IAdmin
                 return user.getEmail();
             }
         };
-        userTable.addColumn(emailColumn, "Email");
+        userTable.addColumn(emailColumn, constants.userEmailBig());
         userTable.setColumnWidth(emailColumn, "20%");
     }
 
@@ -139,13 +141,13 @@ public class AdminHomeView extends Composite implements AdminHomeActivity.IAdmin
             @Override
             public void render(Cell.Context context, UserDTO user, SafeHtmlBuilder sb) {
                 if(user.isRegister()){
-                    sb.appendHtmlConstant("<span style=\"color:green\">ACTIVE</span>");
+                    sb.appendHtmlConstant("<span style=\"color:green\">" + constants.active() + "</span>");
                 } else {
-                    sb.appendHtmlConstant("<span color:red>INACTIVE</span>");
+                    sb.appendHtmlConstant("<span color:red>" + constants.inactive() + "</span>");
                 }
             }
         };
-        userTable.addColumn(statusColumn, "Status");
+        userTable.addColumn(statusColumn, constants.userStatus());
         userTable.setColumnWidth(statusColumn, "20%");
     }
 

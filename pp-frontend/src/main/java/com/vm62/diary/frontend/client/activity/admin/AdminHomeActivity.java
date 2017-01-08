@@ -89,8 +89,8 @@ public class AdminHomeActivity implements BaseActivity {
                 currentUserId = user.getUserId();
                 if(user.isRegister()){
                     confirmDialog.showDialog(
-                            "Ban user",
-                            "Do you want ban user " + user.getFirstName() + " " + user.getLastName() + "?",
+                            constants.headerBanUser(),
+                            constants.wantToBanUser() + user.getFirstName() + " " + user.getLastName() + "?",
                             null,
                             null,
                             new ClickHandler() {
@@ -116,13 +116,13 @@ public class AdminHomeActivity implements BaseActivity {
                                     confirmDialog.hide();
                                 }
                             },
-                            "Ban",
-                            "Back"
+                            constants.ban(),
+                            constants.buttonBack()
                     );
                 } else {
                     confirmDialog.showDialog(
-                            "Unban user",
-                            "Do you want to unban/force register user " + user.getFirstName() + " " + user.getLastName() + "?",
+                            constants.headerUnbanUser(),
+                            constants.wantToUnbanUser() + user.getFirstName() + " " + user.getLastName() + "?",
                             null,
                             null,
                             new ClickHandler() {
@@ -148,8 +148,8 @@ public class AdminHomeActivity implements BaseActivity {
                                     confirmDialog.hide();
                                 }
                             },
-                            "Unban",
-                            "Back"
+                            constants.unban(),
+                            constants.buttonBack()
                     );
                 }
             }

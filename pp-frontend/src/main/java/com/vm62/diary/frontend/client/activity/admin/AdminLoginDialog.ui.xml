@@ -38,16 +38,16 @@
     <m:MaterialRow overflow="HIDDEN" addStyleNames="{style.row}">
         <m:MaterialColumn grid="s12 m12 l12" addStyleNames="{style.width}">
             <m:MaterialRow>
-                <m:MaterialTextBox ui:field="txtUsername" placeholder="name" type="TEXT" iconType="ACCOUNT_CIRCLE"/>
+                <m:MaterialTextBox ui:field="txtUsername" placeholder="{i18n.text.userName}" type="TEXT" iconType="ACCOUNT_CIRCLE"/>
             </m:MaterialRow>
             <m:MaterialRow>
-                <m:MaterialTextBox ui:field="txtPassword" placeholder="password" type="PASSWORD" iconType="LOCK_OPEN"/>
+                <m:MaterialTextBox ui:field="txtPassword" placeholder="{i18n.text.placeholderPassword}" type="PASSWORD" iconType="LOCK_OPEN"/>
             </m:MaterialRow>
             <m:MaterialRow textAlign="LEFT" marginBottom="0" backgroundColor="#ff8f00" addStyleNames="{style.backButton}">
-                <m:MaterialButton ui:field="btnBack" text="BACK"/>
+                <m:MaterialButton ui:field="btnBack" text="{i18n.text.buttonBack}"/>
             </m:MaterialRow>
             <m:MaterialRow textAlign="RIGHT" marginBottom="0" addStyleNames="{style.buttons}">
-                <m:MaterialButton ui:field="btnLogin" text="login"/>
+                <m:MaterialButton ui:field="btnLogin" text="{i18n.text.buttonLogin}"/>
             </m:MaterialRow>
         </m:MaterialColumn>
     </m:MaterialRow>

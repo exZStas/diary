@@ -22,17 +22,26 @@
             width: 10%;
             float: left;
             color: white !important;
-            margin-left: 10%;
+            margin-left: 25%;
         }
 
         .gender {
             width: 80%;
+            position: relative;
+        }
+
+        .gender .material-icons {
+            position: absolute;
+        }
+
+        .gender .gwt-CheckBox {
+            margin-left: 3rem;
         }
 
         .container {
-                     width: 60%;
-                     margin-left: 15%;
-                 }
+            width: 60%;
+            margin-left: 15%;
+        }
 
         .rows {
             width: 80%;
@@ -41,39 +50,39 @@
     </ui:style>
     <m:MaterialPanel overflow="AUTO" height="90%" addStyleNames="{style.container}" shadow="5">
         <m:MaterialNavBar>
-            <m:MaterialNavBrand float="LEFT" marginLeft="5">Registration</m:MaterialNavBrand>
+            <m:MaterialNavBrand float="LEFT" marginLeft="5" text="{i18n.text.registration}"/>
         </m:MaterialNavBar>
             <m:MaterialRow addStyleNames="{style.rows}">
-                <m:MaterialTextBox ui:field="firstName" placeholder="first name" type="TEXT" iconType="FACE"/>
+                <m:MaterialTextBox ui:field="firstName" placeholder="{i18n.text.userFirstName}" type="TEXT" iconType="FACE"/>
             </m:MaterialRow>
             <m:MaterialRow addStyleNames="{style.rows}">
-                <m:MaterialTextBox ui:field="lastName" placeholder="last name" type="TEXT" iconType="ACCOUNT_CIRCLE"/>
+                <m:MaterialTextBox ui:field="lastName" placeholder="{i18n.text.userLastName}" type="TEXT" iconType="ACCOUNT_CIRCLE"/>
             </m:MaterialRow>
             <m:MaterialRow addStyleNames="{style.rows}">
-                <m:MaterialDatePicker ui:field="birthDate" placeholder="birthDate" selectionType="YEAR" iconType="DATE_RANGE"/>
+                <m:MaterialDatePicker ui:field="birthDate" placeholder="{i18n.text.userBirthDate}" selectionType="YEAR" iconType="DATE_RANGE"/>
             </m:MaterialRow>
             <m:MaterialRow addStyleNames="{style.rows}">
                 <m:MaterialTextBox ui:field="email" placeholder="your@mail.com" type="TEXT" iconType="MAIL"/>
             </m:MaterialRow>
             <m:MaterialRow addStyleNames="{style.gender}">
                 <m:MaterialIcon iconType="WC" />
-                <m:MaterialCheckBox ui:field="men" text="men" checked="true" width="20"/>
-                <m:MaterialCheckBox ui:field="woman" text="woman" width="20"/>
+                <m:MaterialCheckBox ui:field="men" text="{i18n.text.userMale}" checked="true" width="20"/>
+                <m:MaterialCheckBox ui:field="woman" text="{i18n.text.userFemale}" width="20"/>
             </m:MaterialRow>
             <m:MaterialRow addStyleNames="{style.rows}">
-                <m:MaterialTextBox ui:field="studyGroup" placeholder="study group" type="TEXT" iconType="GROUP"/>
+                <m:MaterialTextBox ui:field="studyGroup" placeholder="{i18n.text.userStudyGroup}" type="TEXT" iconType="GROUP"/>
             </m:MaterialRow>
             <m:MaterialRow addStyleNames="{style.rows}">
-                <m:MaterialTextBox ui:field="password" placeholder="password" type="PASSWORD" iconType="LOCK_OPEN"/>
+                <m:MaterialTextBox ui:field="password" placeholder="{i18n.text.placeholderPassword}" type="PASSWORD" iconType="LOCK_OPEN"/>
             </m:MaterialRow>
             <m:MaterialRow addStyleNames="{style.rows}">
-                <m:MaterialTextBox ui:field="repeatPassword" placeholder="repeat password" type="PASSWORD" iconType="ENHANCED_ENCRYPTION"/>
+                <m:MaterialTextBox ui:field="repeatPassword" placeholder="{i18n.text.placeholderRepeatPassword}" type="PASSWORD" iconType="ENHANCED_ENCRYPTION"/>
             </m:MaterialRow>
             <m:MaterialRow textAlign="LEFT" marginBottom="0" addStyleNames="{style.regButton}">
-                <m:MaterialButton ui:field="btnDecline" text="back"/>
+                <m:MaterialButton ui:field="btnDecline" text="{i18n.text.buttonBack}"/>
             </m:MaterialRow>
             <m:MaterialRow textAlign="RIGHT" marginBottom="0" addStyleNames="{style.loginButton}">
-                <m:MaterialButton ui:field="btnAccept" text="register me"/>
+                <m:MaterialButton ui:field="btnAccept" text="{i18n.text.buttonRegisterMe}"/>
             </m:MaterialRow>
     </m:MaterialPanel>
 

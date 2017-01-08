@@ -193,4 +193,93 @@ public interface DiaryConstants extends Constants {
 
     @Key("success.scheduleUpdate")
     String successScheduleUpdate();
+
+    @Key("placeholder.repeatPassword")
+    String placeholderRepeatPassword();
+
+    String registration();
+
+    @Key("user.firstName")
+    String userFirstName();
+
+    @Key("user.lastName")
+    String userLastName();
+
+    @Key("user.birthDate")
+    String userBirthDate();
+
+    @Key("user.male")
+    String userMale();
+
+    @Key("user.female")
+    String userFemale();
+
+    @Key("user.studyGroup")
+    String userStudyGroup();
+
+    @Key("button.registerMe")
+    String buttonRegisterMe();
+
+    String wantToChangePassword();
+
+    String yes();
+
+    String no();
+
+    @Key("placeholder.newPassword")
+    String placeholderNewPassword();
+
+    @Key("placeholder.repeatNewPassword")
+    String placeholderRepeatNewPassword();
+
+    @Key("button.change")
+    String buttonChange();
+
+    @Key("user.name")
+    String userName();
+
+    String createCategory();
+
+    String enterCategoryName();
+
+    String enterColorOfCategory();
+
+    @Key("button.createCategory")
+    String buttonCreateCategory();
+
+    @Key("user.firstNameBig")
+    String userFirstNameBig();
+
+    @Key("user.lastNameBig")
+    String userLastNameBig();
+
+    @Key("user.studyGroupBig")
+    String userStudyGroupBig();
+
+    @Key("user.emailBig")
+    String userEmailBig();
+
+    String active();
+
+    String inactive();
+
+    @Key("user.status")
+    String userStatus();
+
+    @Key("header.usersTable")
+    String headerUsersTable();
+
+    String wantToBanUser();
+
+    String wantToUnbanUser();
+
+    String ban();
+
+    String unban();
+
+    @Key("header.banUser")
+    String headerBanUser();
+
+    @Key("header.unbanUser")
+    String headerUnbanUser();
 }

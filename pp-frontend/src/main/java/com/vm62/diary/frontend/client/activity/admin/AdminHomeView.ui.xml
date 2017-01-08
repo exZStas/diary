@@ -3,6 +3,8 @@
              xmlns:d="urn:import:com.google.gwt.user.cellview.client"
 >
 
+    <ui:with field="i18n" type="com.vm62.diary.frontend.client.common.messages.MessagesProvider"/>
+
     <ui:style>
 
         .introText {
@@ -57,7 +59,7 @@
 
     <m:MaterialPanel>
         <m:MaterialRow>
-            <m:MaterialLabel ui:field="tableName" text="Users table" addStyleNames="{style.introText}"/>
+            <m:MaterialLabel ui:field="tableName" text="{i18n.text.headerUsersTable}" addStyleNames="{style.introText}"/>
         </m:MaterialRow>
 
         <m:MaterialRow addStyleNames="{style.gridRow}">
@@ -67,19 +69,19 @@
         </m:MaterialRow>
 
         <m:MaterialRow>
-            <m:MaterialLabel text="Create event category" addStyleNames="{style.introText}"/>
+            <m:MaterialLabel text="{i18n.text.createCategory}" addStyleNames="{style.introText}"/>
         </m:MaterialRow>
 
         <m:MaterialRow>
-            <m:MaterialLabel text="Enter category name: " addStyleNames="{style.categoryLabel}" />
+            <m:MaterialLabel text="{i18n.text.enterCategoryName}" addStyleNames="{style.categoryLabel}" />
             <m:MaterialTextBox ui:field="categoryName" addStyleNames="{style.categoryTextBox}" />
         </m:MaterialRow>
 
         <m:MaterialRow>
-            <m:MaterialLabel text="Enter color of category: " addStyleNames="{style.categoryLabel}" />
+            <m:MaterialLabel text="{i18n.text.enterColorOfCategory}" addStyleNames="{style.categoryLabel}" />
             <m:MaterialTextBox ui:field="categoryColor" addStyleNames="{style.categoryTextBox}" />
-            <m:MaterialButton ui:field="createButton" text="Create category" addStyleNames="{style.createButtonStyle}" />
-            <m:MaterialButton ui:field="comeBackButton" text="Back" addStyleNames="{style.comeBackButtonStyle}" />
+            <m:MaterialButton ui:field="createButton" text="{i18n.text.buttonCreateCategory}" addStyleNames="{style.createButtonStyle}" />
+            <m:MaterialButton ui:field="comeBackButton" text="{i18n.text.buttonBack}" addStyleNames="{style.comeBackButtonStyle}" />
         </m:MaterialRow>
 
         <!--<m:MaterialRow addStyleNames="{style.categoryViewer}">-->
