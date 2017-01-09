@@ -97,12 +97,13 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         setCaptionHtml(HeaderTitle.EVENT_PANEL.getText());
         btnBack.getElement().getStyle().setBackgroundColor("#ff8f00");
         endDate.setDateMin(new Date(90,1,0));
-        endDate.setDateMax(new Date());
+        endDate.setDateMax(new Date(118,1,0));
         minutesTextBox.setType(InputType.NUMBER);
         minutesTextBox.setValue("5");
         hourTextBox.setValue("0");
         simple.setValue(true);
         complex.setValue(false);
+
 
         // Возможно, правильнее так добавлять категории
         for (String category:constants.category()) {
@@ -143,7 +144,9 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
             tp.setIconColor("red");
             return;
         }
-        else if (getComplexity()&&(!eventName.validate() || tp.getTime().isEmpty() || tpEnd.getTime().isEmpty())){
+        else if (getComplexity()&&(!eventName.validate() || !endDate.validate() || tpEnd.getTime().isEmpty()||getEndTime().before(getStartTime()))){
+            if (getEndTime().before(getStartTime()))
+                endDate.setIconColor("red");
             return;
         }
 
@@ -232,9 +235,10 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         if (getComplexity()) {
             endTime.setYear(endDate.getValue().getYear());
             endTime.setMonth(endDate.getValue().getMonth());
-            endTime.setDate(endDate.getValue().getDay());
+            endTime.setDate(endDate.getValue().getDate());
             endTime.setHours(tpEnd.getValue().getHours());
             endTime.setMinutes(tpEnd.getValue().getMinutes());
+
         }
         else {
             endTime.setTime(startTime.getTime()+getDuration());

@@ -221,7 +221,7 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
             public void run() {
                 if (!pies.isEmpty()) {
                     PieChart chart = new PieChart();
-                    chart.setWidth("50%");
+                    chart.setWidth("100%");
                     chart.setHeight("100%");
                     unDonePanel.add(chart);
                     DataTable dataTable = getDataTableForChart();
@@ -236,7 +236,7 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
                 pies = doneEvents;
                 if (!pies.isEmpty()) {
                     PieChart chart2 = new PieChart();
-                    chart2.setWidth("50%");
+                    chart2.setWidth("100%");
                     chart2.setHeight("100%");
                     donePanel.add(chart2);
                     DataTable dataTable2 = getDataTableForChart();

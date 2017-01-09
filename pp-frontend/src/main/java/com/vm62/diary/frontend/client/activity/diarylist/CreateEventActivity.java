@@ -120,10 +120,11 @@ public class CreateEventActivity implements BaseActivity {
                     else {
                         Integer dayCount=0;
                         durationPerDay = view.getDuration()/days;
+                        endDateTime.setTime(startDateTime.getTime());
                         endDateTime.setHours(23);
                         endDateTime.setMinutes(59);
                         endDateTime.setSeconds(59);
-                        while (dayCount<days){
+                        while (dayCount<=days){
                             eventServiceAsync.findFreeTime(startDateTime,endDateTime, new AsyncCallback<Map<Date, Date>>() {
                                 @Override
                                 public void onFailure(Throwable caught) {
@@ -145,6 +146,7 @@ public class CreateEventActivity implements BaseActivity {
 
                                 }
                             });
+                            dayCount++;
                             startDateTime.setHours(0);
                             startDateTime.setMinutes(0);
                             startDateTime.setSeconds(0);
@@ -158,6 +160,7 @@ public class CreateEventActivity implements BaseActivity {
                     }
 
                 }
+                else
                 eventServiceAsync.create(view.getName(), view.getDescription() ,view.getCategory(), view.getStartTime(),view.getEndTime(),view.getComplexity(),view.getDuration(), eventStickerDescription, new AsyncCallback<EventDTO>() {
                             @Override
                             public void onFailure(Throwable caught) {
