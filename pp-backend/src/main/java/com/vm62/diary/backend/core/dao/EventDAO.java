@@ -134,5 +134,14 @@ public class EventDAO {
         query.setParameter("day",day, TemporalType.TIMESTAMP).setParameter("nextDay",nextDay, TemporalType.TIMESTAMP).setParameter("USER_ID", user_id);
         return query.getResultList();
     }
+    public List<Event> getEventsBetweenDaysForUser(Date startDay, Date endDay, Long userId){
+        EntityManager em = emProvider.get();
+
+        TypedQuery<Event> query = em.createQuery("SELECT ev FROM "
+                + Event.class.getName() + " ev " + "WHERE ev.user_id = :USER_ID AND ev.start_time >= :startDay AND ev.end_time < :endDay", Event.class);
+
+        query.setParameter("startDay",startDay, TemporalType.TIMESTAMP).setParameter("endDay",endDay, TemporalType.TIMESTAMP).setParameter("USER_ID", userId);
+        return query.getResultList();
+    }
 
 }

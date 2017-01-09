@@ -11,6 +11,7 @@ import com.vm62.diary.frontend.server.service.dto.EventDTO;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Ира on 16.12.2016.
@@ -31,4 +32,9 @@ public interface EventService extends RemoteService{
     Boolean deleteEventById(Long id) throws ServiceException;
 
     Boolean parseSchedule(String userGroup) throws ServiceException;
+
+    Date scheduleUpdate(String userGroup,Date startDay) throws ServiceException;
+
+    Map<Date,Date> findFreeTime(Date date,Date endTime) throws ServiceException;
+
 }

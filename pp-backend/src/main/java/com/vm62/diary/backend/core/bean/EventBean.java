@@ -91,7 +91,15 @@ public class EventBean {
 
      public List<Event> getEventsByDayForUser(Date day, Long userId) throws ServiceException{
          ifNull(day, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "day");
+         ifNull(userId, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "userId");
          return eventDAO.getEventsByDayForUser(day,userId);
      }
+
+    public List<Event> getEventsBetweenDaysForUser(Date startDay, Date endDay, Long userId) throws ServiceException{
+        ifNull(startDay, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "day");
+        ifNull(endDay, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "day");
+        ifNull(userId, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "userId");
+        return eventDAO.getEventsBetweenDaysForUser(startDay, endDay,userId);
+    }
 
 }

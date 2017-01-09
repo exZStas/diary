@@ -74,7 +74,7 @@ public class Parser {
                         Date classEndDate = new Date(classDate.getTime());
                         classEndDate.setMinutes(classEndDate.getMinutes() + 95);
                         long duration = classEndDate.getTime() - classDate.getTime();
-                        Event classEvent = new Event(userId, subject.attr("title"), subjectDescription, Category.education, classDate, classEndDate, false, duration, "");
+                        Event classEvent = new Event(userId, subject.attr("title"), subjectDescription, Category.classes, classDate, classEndDate, false, duration, "");
                         scheduleEvents.add(classEvent);
                     }
                 }

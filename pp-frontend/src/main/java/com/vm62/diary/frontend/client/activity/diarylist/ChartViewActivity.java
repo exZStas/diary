@@ -39,7 +39,9 @@ public class ChartViewActivity implements BaseActivity {
 
         //view.setUserName(this.place.eventDTOs.get(0).getName());
         piesOfCategories(this.place.eventDTOs);
-        view.setChartParameters(dicUndone, dicDone);
+        view.setChartParameters();
+        view.createPieCharts(dicUndone, dicDone);
+
 
     }
     private void piesOfCategories(List<EventDTO> eventDTOs){

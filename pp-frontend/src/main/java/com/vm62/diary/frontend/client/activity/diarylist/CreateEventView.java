@@ -85,7 +85,7 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     private NavigationManager navigationManager;
     private SimpleEventHandler registerPatient;
-    private Date startTime = new Date();
+    private Date startTime;
     private Date endTime = new Date();
     private DiaryConstants constants = GWT.create(DiaryConstants.class);
 
@@ -207,6 +207,11 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     }
     @Override
     public Boolean getComplexity(){return complex.getValue();}
+
+    @Override
+    public void setToday(Date today) {
+        startTime = today;
+    }
 
     @Override
     public Date getStartTime(){

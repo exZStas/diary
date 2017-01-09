@@ -16,6 +16,11 @@ import com.vm62.diary.integration.server.assembler.EventDTOAssembler;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -58,8 +63,13 @@ public class EventServiceImpl extends RemoteServiceServlet implements EventServi
     @Override
     public Boolean parseSchedule(String userGroup) throws ServiceException {
         Parser scheduleParser = new Parser();
-        String scheduleURL = "http://rasp.tpu.ru/view.php?for=" + userGroup + "&weekType=1";
+        String scheduleURL = null;
         try {
+            scheduleURL = "http://rasp.tpu.ru/view.php?for=" + URLEncoder.encode(userGroup,"utf-8") + "&weekType=1";}
+        catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        try{
             ArrayList<Event> scheduleEvents = scheduleParser.parseSchedule(Jsoup.connect(scheduleURL).get());
             if (scheduleEvents.isEmpty()) return false;
             for (Event event: scheduleEvents){
@@ -73,9 +83,66 @@ public class EventServiceImpl extends RemoteServiceServlet implements EventServi
     }
 
     @Override
+    public Date scheduleUpdate(String userGroup, Date startDay) throws ServiceException {
+        Parser scheduleParser = new Parser();
+        String scheduleURL = null;
+        Date endDay = startDay;
+        try {
+            scheduleURL = "http://rasp.tpu.ru/view.php?for=" + URLEncoder.encode(userGroup,"utf-8") + "&weekType=1";}
+        catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        try {
+            ArrayList<Event> scheduleEvents = scheduleParser.parseSchedule(Jsoup.connect(scheduleURL).get());
+            if (scheduleEvents.isEmpty()) return startDay;
+
+            endDay = scheduleEvents.get(scheduleEvents.size()-1).getEndTime();
+
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(startDay);
+
+            //Delete old classes
+            while (calendar.getTime().before(endDay)) {
+                for (EventDTO odlEvent:getEventsByDayForUser(calendar.getTime())) {
+                    if (odlEvent.getCategory().equals(Category.classes)) deleteEventById(odlEvent.getId());
+                }
+                calendar.add(Calendar.DATE, 1);
+            }
+            //Set new classes
+            for (Event event: scheduleEvents){
+                event.setUserById(userSessionHelper.getUserId());
+                eventBean.saveEven(event);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return endDay;
+    }
+
+    @Override
+    public Map<Date, Date> findFreeTime(Date date,Date endTime) throws ServiceException {
+        List<Event> events = eventBean.getEventsBetweenDaysForUser(date,endTime,userSessionHelper.getUserId());
+
+        Date nextDate = new Date(date.getTime()+ 24*60*59*1000);
+        Map<Date, Date> freeTime = new HashMap<>();
+        Date buffer = date;
+
+        for (Event event:events) {
+            if (event.getStartTime().after(date))
+            freeTime.put(buffer,event.getStartTime());
+            buffer = event.getEndTime();
+        }
+        freeTime.put(buffer,endTime);
+        return freeTime;
+    }
+
+
+    @Override
     public List<EventDTO> getEventsByDayForUser(Date day) throws ServiceException {
         List<Event> events = eventBean.getEventsByDayForUser(day, userSessionHelper.getUserId());
         return new EventDTOAssembler().mapEntitiesToDTOs(events);
     }
+
+
 
 }

@@ -19,12 +19,14 @@ import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
 import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
-import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import com.vm62.diary.frontend.client.service.EventServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import gwt.material.design.client.ui.MaterialRow;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import java.util.Date;
+import java.util.Map;
 
 import static com.vm62.diary.frontend.client.resources.CommonSignResources.RESOURCES;
 
@@ -40,6 +42,7 @@ public class CreateEventActivity implements BaseActivity {
         String getDescription();
         Category getCategory();
         Boolean getComplexity();
+        void setToday(Date today);
         Date getStartTime();
         Long getDuration();
         Date getEndTime();
@@ -58,6 +61,7 @@ public class CreateEventActivity implements BaseActivity {
     private String eventStickerDescription;
     private NavigationManager navigationManager;
     private DiaryConstants constants = GWT.create(DiaryConstants.class);
+    private Long durationPerDay;
 
     @Inject
     CreateEventActivity(ICreateEventView view, EventServiceAsync eventServiceAsync, NotificationManager notificationManager,
@@ -70,6 +74,7 @@ public class CreateEventActivity implements BaseActivity {
         this.eventServiceAsync = eventServiceAsync;
         this.notificationManager = notificationManager;
         this.view.setSignImageList(signImageListWidget);
+        this.view.setToday(diaryListView.getToday());
         addEventHandlers();
     }
 
@@ -103,6 +108,56 @@ public class CreateEventActivity implements BaseActivity {
         view.registerPatientHandler(new SimpleEventHandler() {
             @Override
             public void onEvent() {
+                if (view.getComplexity()){
+                    Date startDateTime = view.getStartTime();
+
+                    Date endDateTime = view.getEndTime();
+
+                    int days = (int)(endDateTime.getTime() - startDateTime.getTime())/ (1000 * 60 * 60 * 24);
+                    if (view.getDuration()/(60000*days) < 60) {
+                        notificationManager.showErrorPopupWithoutDetails(constants.errorSmallEventTime());
+                    }
+                    else {
+                        Integer dayCount=0;
+                        durationPerDay = view.getDuration()/days;
+                        endDateTime.setHours(23);
+                        endDateTime.setMinutes(59);
+                        endDateTime.setSeconds(59);
+                        while (dayCount<days){
+                            eventServiceAsync.findFreeTime(startDateTime,endDateTime, new AsyncCallback<Map<Date, Date>>() {
+                                @Override
+                                public void onFailure(Throwable caught) {
+                                    notificationManager.showErrorPopupWithoutDetails(constants.errorEventsAreNotAvailable());
+                                }
+
+                                @Override
+                                public void onSuccess(Map<Date, Date> result) {
+
+                                    for (Map.Entry entry : result.entrySet()) {
+                                        Date start = (Date)entry.getKey();
+                                        Date end = (Date)entry.getValue();
+                                        if (durationPerDay <= (end.getTime()-start.getTime())) {
+                                            createPartOfComplexEvent(start, end, durationPerDay);
+                                            break;
+                                        }
+                                        //Something else
+                                    }
+
+                                }
+                            });
+                            startDateTime.setHours(0);
+                            startDateTime.setMinutes(0);
+                            startDateTime.setSeconds(0);
+                            startDateTime.setTime(startDateTime.getTime()+24*60*60*1000);
+                            if (days-dayCount==1)
+                                endDateTime = view.getEndTime();
+                            else endDateTime.setTime(endDateTime.getTime()+24*60*60*1000);
+
+
+                        }
+                    }
+
+                }
                 eventServiceAsync.create(view.getName(), view.getDescription() ,view.getCategory(), view.getStartTime(),view.getEndTime(),view.getComplexity(),view.getDuration(), eventStickerDescription, new AsyncCallback<EventDTO>() {
                             @Override
                             public void onFailure(Throwable caught) {
@@ -123,6 +178,21 @@ public class CreateEventActivity implements BaseActivity {
             }
         });
     }
+    private void createPartOfComplexEvent(Date start, Date end, Long duration){
+        eventServiceAsync.create(view.getName(), view.getDescription() ,view.getCategory(), start,end,view.getComplexity(),duration, eventStickerDescription, new AsyncCallback<EventDTO>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                notificationManager.showErrorPopupWithoutDetails(constants.errorEventWasCanceled());
+            }
+
+            @Override
+            public void onSuccess(EventDTO result) {
+                notificationManager.showInfoPopup(constants.successEventWasCreated());
+                if (result.getStartTime().equals(diaryListView.getToday())) diaryListView.setNewEvent(result);
+            }
+        });
+    }
+
     @Override
     public void start(HasWidgets display, NavigationPlace place) {
         display.add((Widget) view);

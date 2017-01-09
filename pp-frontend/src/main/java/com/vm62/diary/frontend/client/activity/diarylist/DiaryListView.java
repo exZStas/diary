@@ -1,6 +1,7 @@
 package com.vm62.diary.frontend.client.activity.diarylist;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -9,15 +10,13 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.googlecode.gwt.charts.client.ChartLoader;
-import com.googlecode.gwt.charts.client.ChartPackage;
-import com.googlecode.gwt.charts.client.ColumnType;
-import com.googlecode.gwt.charts.client.DataTable;
+import com.googlecode.gwt.charts.client.*;
 import com.googlecode.gwt.charts.client.corechart.PieChart;
 import com.googlecode.gwt.charts.client.corechart.PieChartOptions;
+import com.googlecode.gwt.charts.client.event.ReadyEvent;
+import com.googlecode.gwt.charts.client.event.ReadyHandler;
 import com.googlecode.gwt.charts.client.options.TextStyle;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.ibm.icu.text.DateFormat;
 import com.vm62.diary.common.constants.Gender;
 import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.components.Images;
@@ -31,6 +30,8 @@ import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import gwt.material.design.addins.client.sideprofile.MaterialSideProfile;
 import gwt.material.design.client.constants.IconType;
 import gwt.material.design.client.ui.*;
+import com.googlecode.gwt.charts.client.DataTable;
+import com.googlecode.gwt.charts.client.Selection;
 
 import java.util.*;
 
@@ -72,15 +73,15 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     @UiField
     MaterialLink changeProfileBtn;
     @UiField
-    MaterialContainer container;
-    @UiField
-    MaterialColumn planedChartColumn;
-    @UiField
-    MaterialColumn realChartColumn;
+    MaterialRow container;
     @UiField
     MaterialLabel todayLabel;
     @UiField
     MaterialLabel footerCopyright;
+    @UiField
+    HTMLPanel unDonePanel;
+    @UiField
+    HTMLPanel donePanel;
 
     private NavigationManager navigationManager;
     private EventServiceAsync eventServiceAsync;
@@ -92,6 +93,13 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
 
     public static Gender userGender;
     public static String userName;
+    public Date today = new Date();
+    private Map<String,Long> pies = new HashMap<String, Long>();
+    private MaterialColumn col = new MaterialColumn();
+    private String pieTitle = new String();
+    private Map<String, Long> unDoneEvents = new HashMap<String, Long>();
+    private Map<String, Long> doneEvents = new HashMap<String, Long>();
+
 
     @Inject
     public DiaryListView(NavigationManager navigationManager, EventServiceAsync eventServiceAsync, NotificationManager notificationManager) {
@@ -162,30 +170,15 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
             scheduleList.add(new EventView(eventDTO, navigationManager, eventServiceAsync, notificationManager ));
         }
     }
-    private Map<String,Long> pies = new HashMap<String, Long>();
-    private MaterialColumn col = new MaterialColumn();
-    private String pieTitle = new String();
 
     @Override
-    public void setChartParameters(Map<String,Long> dicUndone,Map<String,Long> dicDone) {
+    public void setChartParameters() {
         setUserName(userName);
         setUserPicture(userGender);
-        ChartLoader chartLoader = new ChartLoader(ChartPackage.CORECHART);
-        container.setWidth("56%");
+        container.setWidth("80%");
         container.setHeight("85%");
+        container.setFloat(Style.Float.RIGHT);
         scheduleList.removeFromParent();
-        String g= "Events";
-
-        if (!dicUndone.isEmpty()) {
-            createChart(chartLoader, dicUndone, planedChartColumn, "Chart of scheduled events");
-        }
-        else planedChartColumn.add(new MaterialLabel("No scheduled events"));
-
-        if (!dicDone.isEmpty()){
-            createChart(chartLoader,dicDone,realChartColumn,"Chart of done events" );
-        }
-        else realChartColumn.add(new MaterialLabel("No done events"));
-
     }
 
     @Override
@@ -209,47 +202,74 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         scheduleList.clear();
         btnScrollLeft.addClickHandler(handler);
     }
-    private void createChart(ChartLoader chartLoader, Map<String,Long> dictionary, MaterialColumn column, String title){
-        pies = dictionary;
-        col = column;
-        pieTitle = title;
+
+    @Override
+    public Date getToday() {
+        return today;
+    }
+    private String[] colors;
+
+    @Override
+    public void createPieCharts( Map<String,Long> unDone, Map<String,Long> done){
+        unDoneEvents = unDone;
+        doneEvents =done;
+        pies = unDoneEvents;
+        ChartLoader chartLoader = new ChartLoader(ChartPackage.CORECHART);
 
         chartLoader.loadApi(new Runnable() {
-
             @Override
             public void run() {
+                if (!pies.isEmpty()) {
+                    PieChart chart = new PieChart();
+                    chart.setWidth("50%");
+                    chart.setHeight("100%");
+                    unDonePanel.add(chart);
+                    DataTable dataTable = getDataTableForChart();
 
-                PieChart chart = new PieChart();
-                chart.setWidth("100%");
-                chart.setHeight("100%");
-
-                col.add(chart);
-
-                DataTable dataTable = DataTable.create();
-                dataTable.addColumn(ColumnType.STRING, "Category");
-                dataTable.addColumn(ColumnType.NUMBER, "Minutes per Day");
-                dataTable.addRows(pies.size());
-                String[] colors = new String[pies.size()];
-                Integer i = 0, j = 0;
-                for (Map.Entry entry : pies.entrySet()) {
-                    //получить ключ
-                    dataTable.setValue(i, j, entry.getKey().toString());
-                    //получить значение
-                    dataTable.setValue(i, j + 1, Integer.parseInt(entry.getValue().toString()));
-                    colors[i] = Category.valueOf(entry.getKey().toString().toLowerCase()).getColor();
-                    i++;
-                    j = 0;
+                    PieOpt opt = new PieOpt();
+                    opt.setColors(colors);
+                    opt.setTitle(constants.headerUndoneChart());
+                    chart.draw(dataTable, opt.get());
                 }
+                else notificationManager.showErrorPopupWithoutDetails(constants.errorNoUndoneEvents());
 
-                PieOpt opt = new PieOpt();
-                opt.setColors(colors);
-                opt.setTitle(pieTitle);
+                pies = doneEvents;
+                if (!pies.isEmpty()) {
+                    PieChart chart2 = new PieChart();
+                    chart2.setWidth("50%");
+                    chart2.setHeight("100%");
+                    donePanel.add(chart2);
+                    DataTable dataTable2 = getDataTableForChart();
 
-                chart.draw(dataTable, opt.get());
+                    PieOpt opt2 = new PieOpt();
+                    opt2.setColors(colors);
+                    opt2.setTitle(constants.headerDoneChart());
+                    chart2.draw(dataTable2, opt2.get());
+                }
+                else notificationManager.showErrorPopupWithoutDetails(constants.errorNoDoneEvents());
             }
         });
     }
 
+    private DataTable getDataTableForChart(){
+        DataTable dataTable = DataTable.create();
+        dataTable.addColumn(ColumnType.STRING, "Category");
+        dataTable.addColumn(ColumnType.NUMBER, "Minutes per Day");
+        dataTable.addRows(pies.size());
+        colors = new String[pies.size()];
+        Integer i = 0, j = 0;
+        for (Map.Entry entry : pies.entrySet()) {
+            //получить ключ
+            dataTable.setValue(i, j, entry.getKey().toString());
+            //получить значение
+            dataTable.setValue(i, j + 1, Integer.parseInt(entry.getValue().toString()));
+            colors[i] = Category.valueOf(entry.getKey().toString().toLowerCase()).getColor();
+            i++;
+            j = 0;
+        }
+        return dataTable;
+
+    }
     @UiHandler("logOutBtn")
     void onClickLogOutBtn(ClickEvent e){
         navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_MAIN));

@@ -282,4 +282,19 @@ public interface DiaryConstants extends Constants {
 
     @Key("header.unbanUser")
     String headerUnbanUser();
+
+    @Key("header.undoneChart")
+    String headerUndoneChart();
+
+    @Key("header.doneChart")
+    String headerDoneChart();
+
+    @Key("error.noUndoneEvents")
+    String errorNoUndoneEvents();
+
+    @Key("error.noDoneEvents")
+    String errorNoDoneEvents();
+
+    @Key("error.smallEventTime")
+    String errorSmallEventTime();
 }

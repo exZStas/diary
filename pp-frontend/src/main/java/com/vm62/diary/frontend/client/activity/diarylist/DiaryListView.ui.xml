@@ -74,6 +74,9 @@
             margin-right: 40px;
             color: #00b8d4;
         }
+        .container{
+            display: inline-block;
+        }
     </ui:style>
     <g:HTMLPanel ui:field="diaryPanel">
         <header>
@@ -109,10 +112,10 @@
                     <m:MaterialLink ui:field="logOutBtn" text="{i18n.text.logOut}" textColor="BLUE" iconType="EXIT_TO_APP" addStyleNames="{style.second}" waves="ORANGE"/>
             </m:MaterialSideNav>
         </header>
-        <m:MaterialContainer ui:field="container">
-            <m:MaterialColumn ui:field="planedChartColumn"/>
-            <m:MaterialColumn ui:field="realChartColumn"/>
-        </m:MaterialContainer>
+        <m:MaterialRow ui:field="container">
+            <m:MaterialColumn grid="s12 m6"><g:HTMLPanel ui:field="unDonePanel"/></m:MaterialColumn>
+            <m:MaterialColumn grid="s12 m6"><g:HTMLPanel ui:field="donePanel"/></m:MaterialColumn>
+        </m:MaterialRow>
 
         <g:HTMLPanel ui:field="scheduleList">
             <div class="dividers-block">

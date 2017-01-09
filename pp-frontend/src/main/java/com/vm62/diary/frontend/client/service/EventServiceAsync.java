@@ -12,6 +12,7 @@ import com.vm62.diary.frontend.server.service.dto.UserDTO;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Ира on 16.12.2016.
@@ -31,4 +32,8 @@ public interface EventServiceAsync {
     void deleteEventById(Long id, AsyncCallback<Boolean> async);
 
     void parseSchedule(String userGroup, AsyncCallback<Boolean> async);
+
+    void scheduleUpdate(String userGroup, Date startDay, AsyncCallback<Date> async);
+
+    void findFreeTime(Date date,Date endTime, AsyncCallback<Map<Date, Date>> async);
 }

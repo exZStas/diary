@@ -8,7 +8,7 @@ import java.util.Date;
 
 public interface BaseActivity<T extends NavigationPlace> {
 
-    public static Date today = new Date();
+    //public Date today = new Date();
     public abstract void start(HasWidgets display, T place);
     public abstract void stop();
 
