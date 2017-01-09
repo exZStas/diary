@@ -253,7 +253,7 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     @Override
     public void changeForm(String name, String description, Category category, String sticker, Boolean complexity, Date startTime, Date endTime, Long duration) {
-        btnCreate.setText("Edit");
+        btnCreate.setText(constants.buttonEdit());
         setCaptionHtml(HeaderTitle.CHANGE_PANEL.getText());
         eventName.setText(name);
         descriptArea.setText(description);
