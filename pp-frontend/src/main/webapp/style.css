@@ -168,3 +168,16 @@ button.btn-flat.event__undone:focus {
         right: 5px;
     }
 }
+
+.event__sticker {
+    position: absolute;
+    width: 50px;
+    left: -40px;
+    top: -40px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.event:hover .event__sticker {
+    opacity: 1;
+}

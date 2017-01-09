@@ -29,6 +29,37 @@ public enum Signs {
         return image;
     }
 
+    public Signs getSignByDescription(String description) {
+        switch (description) {
+            case "alertSign":
+                return Signs.ALERT_SIGN;
+            case "birdSign":
+                return Signs.BIRD_SIGN;
+            case "eatingSign":
+                return Signs.EATING_SIGN;
+            case "educationSign":
+                return Signs.EDUCATION_SIGN;
+            case "entertaimentSign":
+                return Signs.ENTERTAIMENT_SIGN;
+            case "homeworkSign":
+                return Signs.HOMEWORK_SIGN;
+            case "householdchoresSign":
+                return Signs.HOUSEHOLDCHORES_SIGN;
+            case "questionSign":
+                return Signs.QUESTION_SIGN;
+            case "sleepSign":
+                return Signs.SLEEP_SIGN;
+            case "sportSign":
+                return Signs.SPORT_SIGN;
+            case "tripSign":
+                return Signs.TRIP_SIGN;
+            case "workSign":
+                return Signs.WORK_SIGN;
+            default:
+                return null;
+        }
+    }
+
     public String getDescriptionOfImage(){
         return descriptionOfImage;
     }

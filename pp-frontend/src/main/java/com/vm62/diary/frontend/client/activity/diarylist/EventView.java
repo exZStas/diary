@@ -8,6 +8,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.vm62.diary.common.constants.Status;
 import com.google.inject.Inject;
+import com.vm62.diary.frontend.client.common.components.Signs;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
@@ -28,6 +29,9 @@ public class EventView extends Composite {
     private Label time = new Label();
     private Label description = new Label();
     private FocusPanel wrapper = new FocusPanel();
+
+    private Image sticker;
+    private boolean stickerExists = false;
 
     private long id;
     private String idString = "event-";
@@ -66,6 +70,12 @@ public class EventView extends Composite {
 
         wrapper.add(panel);
 
+        if (!this.event.getSticker().isEmpty()) {
+            sticker = new Image(Signs.WORK_SIGN.getSignByDescription(this.event.getSticker()).getImage());
+            stickerExists = true;
+        }
+
+
         panel.add(time);
         panel.add(name);
         panel.add(description);
@@ -73,6 +83,9 @@ public class EventView extends Composite {
         panel.add(deleteButton);
         panel.add(doneButton);
         panel.add(undoneButton);
+        if (stickerExists) {
+            panel.add(sticker);
+        }
 
         Date startDate = event.getStartTime();
         Date endDate = event.getEndTime();
@@ -217,6 +230,10 @@ public class EventView extends Composite {
         name.setStyleName("event__name");
         description.setStyleName("event__description");
         time.setStyleName("event__time");
+
+        if (stickerExists) {
+            sticker.addStyleName("event__sticker");
+        }
 
         wrapper.setStyleName("event " + idString);
     }
