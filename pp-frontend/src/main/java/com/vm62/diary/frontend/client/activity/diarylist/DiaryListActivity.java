@@ -35,8 +35,8 @@ import java.util.Map;
 public class DiaryListActivity implements BaseActivity{
     @ImplementedBy(DiaryListView.class)
     public interface IDiaryListView extends IsWidget {
-
         void setUserName(String name);
+        void setUserGroup(String group);
         void setUserPicture(Gender gender);
         void setSchedule(List<EventDTO> events);
         void setNewEvent(EventDTO event);
@@ -49,8 +49,9 @@ public class DiaryListActivity implements BaseActivity{
         void buttonScrollRightClick(ClickHandler handler);
         void buttonScrollLeftClick(ClickHandler handler);
         Date getToday();
-
+        String getUserGroup();
     }
+
     @ImplementedBy(EventView.class)
     public interface IEventView extends IsWidget {
 
@@ -65,7 +66,6 @@ public class DiaryListActivity implements BaseActivity{
     private List<EventDTO> eventDTOs;
     private NavigationManager navigationManager;
     private DiaryConstants constants = GWT.create(DiaryConstants.class);
-    private String userGroup;
     private CommonMessages messages = GWT.create(CommonMessages.class);
 
     @Inject
@@ -83,7 +83,6 @@ public class DiaryListActivity implements BaseActivity{
 
     }
     public void addEventHandlers() {
-
         userProfileServiceAsync.getUser(new AsyncCallback<UserDTO>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -92,9 +91,9 @@ public class DiaryListActivity implements BaseActivity{
 
             @Override
             public void onSuccess(UserDTO result) {
-                userGroup = result.getStudyGroup();
                 view.setUserName(result.getFirstName()+" "+result.getLastName());
                 view.setUserPicture(Gender.valueOf(result.getGender()));
+                view.setUserGroup(result.getStudyGroup());
             }
         });
         view.addChartButtonClickHandler(new ClickHandler() {
@@ -122,7 +121,7 @@ public class DiaryListActivity implements BaseActivity{
         view.updateSchedule(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                eventServiceAsync.scheduleUpdate(userGroup, view.getToday(), new AsyncCallback<Date>() {
+                eventServiceAsync.scheduleUpdate(view.getUserGroup(), view.getToday(), new AsyncCallback<Date>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         notificationManager.showErrorPopupWithoutDetails(constants.errorCanNotUpdateSchedule());
@@ -131,6 +130,7 @@ public class DiaryListActivity implements BaseActivity{
                     @Override
                     public void onSuccess(Date result) {
                         notificationManager.showInfoPopup(messages.updatedTo(result));
+                        setEventForDay(result);
                     }
                 });
 
@@ -140,16 +140,16 @@ public class DiaryListActivity implements BaseActivity{
             @Override
             public void onClick(ClickEvent event) {
                 Date today = new Date(view.getToday().getTime() + (1000 * 60 * 60 * 24));
-                setEventForDay(today);
                 view.setDayOfList(today);
+                setEventForDay(today);
             }
         });
         view.buttonScrollLeftClick(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
                 Date today = new Date(view.getToday().getTime() - (1000 * 60 * 60 * 24));
-                setEventForDay(today);
                 view.setDayOfList(today);
+                setEventForDay(today);
             }
         });
 

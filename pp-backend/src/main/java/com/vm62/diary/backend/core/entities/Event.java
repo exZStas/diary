@@ -25,7 +25,7 @@ public class Event implements Serializable{
     @Column(name = "USER_ID", nullable = false, length = 11)
     private  Long user_id;
 
-    @Column(name = "NAME", nullable = false, length = 45)
+    @Column(name = "NAME", nullable = false, length = 90)
     private String name;
 
     @Column(name = "DESCRIPTION", nullable = true, length = 200)

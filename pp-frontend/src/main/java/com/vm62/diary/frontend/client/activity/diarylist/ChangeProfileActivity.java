@@ -63,10 +63,13 @@ public class ChangeProfileActivity implements BaseActivity {
     private NotificationManager notificationManager;
     private UserProfileServiceAsync userProfileServiceAsync;
     private DiaryConstants constants = GWT.create(DiaryConstants.class);
+    private DiaryListActivity.IDiaryListView diaryListView;
 
     @Inject
-    ChangeProfileActivity(IChangeProfileView view, NotificationManager notificationManager, UserProfileServiceAsync userProfileServiceAsync){
+    ChangeProfileActivity(IChangeProfileView view, NotificationManager notificationManager,
+                          UserProfileServiceAsync userProfileServiceAsync,DiaryListActivity.IDiaryListView diaryListView){
         this.view = view;
+        this.diaryListView = diaryListView;
         this.notificationManager = notificationManager;
         this.userProfileServiceAsync = userProfileServiceAsync;
         addEventHandler();
@@ -88,6 +91,9 @@ public class ChangeProfileActivity implements BaseActivity {
                             @Override
                             public void onSuccess(UserDTO result) {
                                 notificationManager.showInfoPopup(constants.successProfileWasChanged());
+                                diaryListView.setUserName(result.getFirstName()+result.getLastName());
+                                diaryListView.setUserPicture(Gender.valueOf(result.getGender()));
+                                diaryListView.setUserGroup(result.getStudyGroup());
                             }
                         });
             }

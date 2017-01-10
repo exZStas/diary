@@ -36,4 +36,8 @@ public interface EventServiceAsync {
     void scheduleUpdate(String userGroup, Date startDay, AsyncCallback<Date> async);
 
     void findFreeTime(Date date,Date endTime, AsyncCallback<Map<Date, Date>> async);
+
+    void createComplexEvent(String name, String description, Category category, Date startTime, Date endTime, Boolean complexity,
+                            Long duration, String sticker,Integer days, AsyncCallback<EventDTO> async);
+
 }

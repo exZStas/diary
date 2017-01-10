@@ -37,4 +37,7 @@ public interface EventService extends RemoteService{
 
     Map<Date,Date> findFreeTime(Date date,Date endTime) throws ServiceException;
 
+    EventDTO createComplexEvent(String name, String description, Category category, Date startTime, Date endTime, Boolean complexity,
+                                Long duration, String sticke, Integer days) throws ServiceException;
+
 }

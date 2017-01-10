@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.ImplementedBy;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.vm62.diary.common.ServiceException;
 import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.vm62.diary.frontend.client.common.components.SignImageListWidget;
@@ -19,12 +20,10 @@ import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
 import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
+import com.vm62.diary.frontend.client.service.EventService;
 import com.vm62.diary.frontend.client.service.EventServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import gwt.material.design.client.ui.MaterialRow;
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-
 import java.util.Date;
 import java.util.Map;
 
@@ -61,7 +60,6 @@ public class CreateEventActivity implements BaseActivity {
     private String eventStickerDescription;
     private NavigationManager navigationManager;
     private DiaryConstants constants = GWT.create(DiaryConstants.class);
-    private Long durationPerDay;
 
     @Inject
     CreateEventActivity(ICreateEventView view, EventServiceAsync eventServiceAsync, NotificationManager notificationManager,
@@ -109,56 +107,28 @@ public class CreateEventActivity implements BaseActivity {
             @Override
             public void onEvent() {
                 if (view.getComplexity()){
-                    Date startDateTime = view.getStartTime();
+                    Date startDateTime = new Date(view.getStartTime().getTime());
+                    Date endDateTime = new Date(view.getEndTime().getTime());
 
-                    Date endDateTime = view.getEndTime();
-
-                    int days = (int)(endDateTime.getTime() - startDateTime.getTime())/ (1000 * 60 * 60 * 24);
-                    if (view.getDuration()/(60000*days) < 60) {
-                        notificationManager.showErrorPopupWithoutDetails(constants.errorSmallEventTime());
-                    }
-                    else {
-                        Integer dayCount=0;
-                        durationPerDay = view.getDuration()/days;
-                        endDateTime.setTime(startDateTime.getTime());
-                        endDateTime.setHours(23);
-                        endDateTime.setMinutes(59);
-                        endDateTime.setSeconds(59);
-                        while (dayCount<=days){
-                            eventServiceAsync.findFreeTime(startDateTime,endDateTime, new AsyncCallback<Map<Date, Date>>() {
-                                @Override
-                                public void onFailure(Throwable caught) {
-                                    notificationManager.showErrorPopupWithoutDetails(constants.errorEventsAreNotAvailable());
-                                }
-
-                                @Override
-                                public void onSuccess(Map<Date, Date> result) {
-
-                                    for (Map.Entry entry : result.entrySet()) {
-                                        Date start = (Date)entry.getKey();
-                                        Date end = (Date)entry.getValue();
-                                        if (durationPerDay <= (end.getTime()-start.getTime())) {
-                                            createPartOfComplexEvent(start, end, durationPerDay);
-                                            break;
-                                        }
-                                        //Something else
+                    Integer days = (int)(trimDate(endDateTime).getTime() - trimDate(startDateTime).getTime())/ (1000 * 60 * 60 * 24);
+                    if (days>0) {
+                        if (view.getDuration() / (60000 * days) < 60) {
+                            notificationManager.showErrorPopupWithoutDetails(constants.errorSmallEventTime());
+                        } else
+                            eventServiceAsync.createComplexEvent(view.getName(), view.getDescription(), view.getCategory(), view.getStartTime(), view.getEndTime(),
+                                view.getComplexity(), view.getDuration(), eventStickerDescription, days, new AsyncCallback<EventDTO>() {
+                                    @Override
+                                    public void onFailure(Throwable caught) {
+                                        notificationManager.showErrorPopupWithoutDetails(constants.errorEventWasCanceled());
                                     }
 
-                                }
-                            });
-                            dayCount++;
-                            startDateTime.setHours(0);
-                            startDateTime.setMinutes(0);
-                            startDateTime.setSeconds(0);
-                            startDateTime.setTime(startDateTime.getTime()+24*60*60*1000);
-                            if (days-dayCount==1)
-                                endDateTime = view.getEndTime();
-                            else endDateTime.setTime(endDateTime.getTime()+24*60*60*1000);
-
-
-                        }
+                                    @Override
+                                    public void onSuccess(EventDTO result) {
+                                        notificationManager.showInfoPopup(constants.successEventWasCreated());
+                                        diaryListView.setNewEvent(result);
+                                    }
+                                });
                     }
-
                 }
                 else
                 eventServiceAsync.create(view.getName(), view.getDescription() ,view.getCategory(), view.getStartTime(),view.getEndTime(),view.getComplexity(),view.getDuration(), eventStickerDescription, new AsyncCallback<EventDTO>() {
@@ -181,19 +151,12 @@ public class CreateEventActivity implements BaseActivity {
             }
         });
     }
-    private void createPartOfComplexEvent(Date start, Date end, Long duration){
-        eventServiceAsync.create(view.getName(), view.getDescription() ,view.getCategory(), start,end,view.getComplexity(),duration, eventStickerDescription, new AsyncCallback<EventDTO>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                notificationManager.showErrorPopupWithoutDetails(constants.errorEventWasCanceled());
-            }
-
-            @Override
-            public void onSuccess(EventDTO result) {
-                notificationManager.showInfoPopup(constants.successEventWasCreated());
-                if (result.getStartTime().equals(diaryListView.getToday())) diaryListView.setNewEvent(result);
-            }
-        });
+    private Date trimDate(Date date){
+        Date day = new Date(0,0,0,0,0,0);
+        day.setYear(date.getYear());
+        day.setMonth(date.getMonth());
+        day.setDate(date.getDate());
+        return day;
     }
 
     @Override

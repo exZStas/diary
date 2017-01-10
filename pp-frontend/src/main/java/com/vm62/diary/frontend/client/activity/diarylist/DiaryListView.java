@@ -93,13 +93,12 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
 
     public static Gender userGender;
     public static String userName;
-    public Date today = new Date();
+    public static Date today;
+    public static String userGroup;
+
     private Map<String,Long> pies = new HashMap<String, Long>();
-    private MaterialColumn col = new MaterialColumn();
-    private String pieTitle = new String();
     private Map<String, Long> unDoneEvents = new HashMap<String, Long>();
     private Map<String, Long> doneEvents = new HashMap<String, Long>();
-
 
     @Inject
     public DiaryListView(NavigationManager navigationManager, EventServiceAsync eventServiceAsync, NotificationManager notificationManager) {
@@ -108,6 +107,7 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         this.notificationManager = notificationManager;
         this.navigationManager = navigationManager;
         this.eventServiceAsync = eventServiceAsync;
+        today = new Date();
         setWidget(uiBinder.createAndBindUi(this));
         userProfile.setUrl(Images.USER_BG.getImage());
 //        scheduleList.sinkEvents(Event.ONCLICK);
@@ -144,6 +144,10 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     @UiHandler("btnAddEvent")
     void onOpenCreateEventWindow(ClickEvent e) {
         navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_CREATE_EVENT_ACTIVITY));
+    }
+    @UiHandler("eventLink")
+    void onDiaryListForm(ClickEvent e){
+        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
     }
 
     @UiHandler("changeProfileBtn")
@@ -182,7 +186,8 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     }
 
     @Override
-    public void setDayOfList(Date today) {
+    public void setDayOfList(Date day) {
+        today = day;
         DateTimeFormat df = DateTimeFormat.getMediumDateFormat();
         todayLabel.setText(df.format(today));
     }
@@ -201,6 +206,7 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     public void buttonScrollLeftClick(ClickHandler handler) {
         scheduleList.clear();
         btnScrollLeft.addClickHandler(handler);
+
     }
 
     @Override
@@ -212,7 +218,7 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     @Override
     public void createPieCharts( Map<String,Long> unDone, Map<String,Long> done){
         unDoneEvents = unDone;
-        doneEvents =done;
+        doneEvents = done;
         pies = unDoneEvents;
         ChartLoader chartLoader = new ChartLoader(ChartPackage.CORECHART);
 
@@ -312,6 +318,16 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         userNameLabel.setText(name);
         userName = name;
     }
+
+    @Override
+    public void setUserGroup(String group) {
+        userGroup = group;
+    }
+    @Override
+    public String getUserGroup() {
+        return userGroup;
+    }
+
     @Override
     public void setUserPicture(Gender gender){
         if (gender.equals(Gender.M))

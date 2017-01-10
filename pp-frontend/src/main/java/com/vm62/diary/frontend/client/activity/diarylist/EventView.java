@@ -70,7 +70,7 @@ public class EventView extends Composite {
 
         wrapper.add(panel);
 
-        if (this.event.getSticker() != null) {
+        if (!this.event.getSticker().equals("")) {
             sticker = new Image(Signs.WORK_SIGN.getSignByDescription(this.event.getSticker()).getImage());
             stickerExists = true;
         }

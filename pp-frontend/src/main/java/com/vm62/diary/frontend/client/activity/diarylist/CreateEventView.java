@@ -85,7 +85,7 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     private NavigationManager navigationManager;
     private SimpleEventHandler registerPatient;
-    private Date startTime;
+    private Date startTime = new Date();
     private Date endTime = new Date();
     private DiaryConstants constants = GWT.create(DiaryConstants.class);
 

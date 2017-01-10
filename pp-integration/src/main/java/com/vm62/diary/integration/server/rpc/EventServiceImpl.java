@@ -94,19 +94,32 @@ public class EventServiceImpl extends RemoteServiceServlet implements EventServi
         }
         try {
             ArrayList<Event> scheduleEvents = scheduleParser.parseSchedule(Jsoup.connect(scheduleURL).get());
+
             if (scheduleEvents.isEmpty()) return startDay;
 
-            endDay = scheduleEvents.get(scheduleEvents.size()-1).getEndTime();
-
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(startDay);
-
-            //Delete old classes
-            while (calendar.getTime().before(endDay)) {
-                for (EventDTO odlEvent:getEventsByDayForUser(calendar.getTime())) {
-                    if (odlEvent.getCategory().equals(Category.classes)) deleteEventById(odlEvent.getId());
+            Comparator<Event> dateCompare = new Comparator<Event>() {
+                @Override
+                public int compare(Event o1, Event o2) {
+                    return o1.getStartTime().compareTo(o2.getStartTime());
                 }
-                calendar.add(Calendar.DATE, 1);
+            };
+            Collections.sort(scheduleEvents,dateCompare);
+
+            endDay = scheduleEvents.get(scheduleEvents.size()-1).getEndTime();
+            Date buffer = new Date(scheduleEvents.get(0).getStartTime().getYear(),scheduleEvents.get(0).getStartTime().getMonth(),
+                    scheduleEvents.get(0).getStartTime().getDate(),0,0,0);
+            List<EventDTO> oldEventList;
+            //Delete old classes
+            for (Event event:scheduleEvents) {
+                if (event.getStartTime().after(buffer)) {
+                    oldEventList = getEventsByDayForUser(event.getStartTime());
+                    for (EventDTO odlEvent : oldEventList) {
+                        if (odlEvent.getCategory().equals(Category.classes))
+                            deleteEventById(odlEvent.getId());
+                    }
+                    buffer.setDate(event.getStartTime().getDate());
+                    buffer.setTime(buffer.getTime()+24*60*60*1000);
+                }
             }
             //Set new classes
             for (Event event: scheduleEvents){
@@ -121,19 +134,58 @@ public class EventServiceImpl extends RemoteServiceServlet implements EventServi
 
     @Override
     public Map<Date, Date> findFreeTime(Date date,Date endTime) throws ServiceException {
-        List<Event> events = eventBean.getEventsBetweenDaysForUser(date,endTime,userSessionHelper.getUserId());
+        //List<Event> events = eventBean.getEventsBetweenDaysForUser(date,endTime,userSessionHelper.getUserId());
+        List<Event> events = eventBean.getEventsByDayForUser(date,userSessionHelper.getUserId());
 
-        Date nextDate = new Date(date.getTime()+ 24*60*59*1000);
         Map<Date, Date> freeTime = new HashMap<>();
         Date buffer = date;
 
         for (Event event:events) {
-            if (event.getStartTime().after(date))
-            freeTime.put(buffer,event.getStartTime());
-            buffer = event.getEndTime();
+            if(event.getStartTime().before(date)) {
+                if (event.getEndTime().after(date)&&event.getEndTime().before(endTime))
+                    buffer = event.getEndTime();
+            }else if (event.getStartTime().before(endTime)){
+                if (event.getEndTime().before(endTime)) {
+                    freeTime.put(buffer, event.getStartTime());
+                    buffer = event.getEndTime();
+                }
+                else {
+                    freeTime.put(buffer,event.getStartTime());
+                    buffer = endTime;
+                }
+            }
         }
         freeTime.put(buffer,endTime);
         return freeTime;
+    }
+
+    @Override
+    public EventDTO createComplexEvent(String name, String description, Category category, Date startTime, Date endTime, Boolean complexity, Long duration, String sticker, Integer days) throws ServiceException {
+
+        Date endDateTime = new Date(startTime.getYear(),startTime.getMonth(),startTime.getDate(),23,59,59);
+        Date startDateTime = new Date(startTime.getTime());
+        EventDTO eventDTO = null;
+        Integer dayCount = 0;
+        Long durationPerDay = duration/ (1+days);
+        while (dayCount <= days) {
+            Map<Date, Date> result = new TreeMap<>(findFreeTime(startDateTime, endDateTime));
+            for (Map.Entry entry : result.entrySet()) {
+                Date start = (Date) entry.getKey();
+                Date end = (Date) entry.getValue();
+                if (durationPerDay <= (end.getTime() - start.getTime())) {
+                    if(dayCount==0)
+                    eventDTO = create(name, description, category, start, new Date(start.getTime() + durationPerDay), complexity, durationPerDay, sticker);
+                    else create(name, description, category, start, new Date(start.getTime() + durationPerDay), complexity, durationPerDay, sticker);
+                    break;
+                }
+            }
+            dayCount++;
+            startDateTime.setTime(new Date(startDateTime.getYear(), startDateTime.getMonth(), startDateTime.getDate(), 0, 0, 0).getTime() + 24 * 60 * 60 * 1000);
+            if (days == dayCount)
+                endDateTime.setTime(endTime.getTime());
+            else endDateTime.setTime(endDateTime.getTime() + 24 * 60 * 60 * 1000);
+        }
+        return eventDTO;
     }
 
 
@@ -142,7 +194,5 @@ public class EventServiceImpl extends RemoteServiceServlet implements EventServi
         List<Event> events = eventBean.getEventsByDayForUser(day, userSessionHelper.getUserId());
         return new EventDTOAssembler().mapEntitiesToDTOs(events);
     }
-
-
 
 }

@@ -13,7 +13,7 @@ public enum Category implements Serializable{
     entertainment("Entertainment","#ef9a9a"),
     sleep("Sleep","#1e88e5"),
     eating("Eating","#ffb300"),
-    classes("Class", "#a1887f"),
+    classes("Classes", "#a1887f"),
     homework("Homework","#fff9c4"),
     household("Household chores","#aed581"),
     trip("Trip","#ba68c8"),

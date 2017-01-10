@@ -121,15 +121,13 @@ public class EventDAO {
 //        query.setParameter("day",day).setParameter("next_day",nextDay).setParameter("USER_ID", user_id);
 //        return query.getResultList();
 //    }
-    public List<Event> getEventsByDayForUser(Date day, Long user_id){
+    public List<Event> getEventsByDayForUser(Date date, Long user_id){
         EntityManager em = emProvider.get();
-        day.setHours(0);
-        day.setMinutes(0);
-        day.setSeconds(0);
+        Date day = new Date(date.getYear(),date.getMonth(),date.getDate(),0,0,0);
 
         Date nextDay = new Date(day.getTime()+ 24*60*60*1000);
         TypedQuery<Event> query = em.createQuery("SELECT ev FROM "
-                + Event.class.getName() + " ev " + "WHERE ev.user_id = :USER_ID AND ev.start_time >= :day AND ev.end_time < :nextDay", Event.class);
+                + Event.class.getName() + " ev " + "WHERE ev.user_id = :USER_ID AND ev.start_time >= :day AND ev.end_time < :nextDay ORDER BY ev.start_time", Event.class);
 
         query.setParameter("day",day, TemporalType.TIMESTAMP).setParameter("nextDay",nextDay, TemporalType.TIMESTAMP).setParameter("USER_ID", user_id);
         return query.getResultList();
@@ -138,7 +136,7 @@ public class EventDAO {
         EntityManager em = emProvider.get();
 
         TypedQuery<Event> query = em.createQuery("SELECT ev FROM "
-                + Event.class.getName() + " ev " + "WHERE ev.user_id = :USER_ID AND ev.start_time >= :startDay AND ev.end_time < :endDay", Event.class);
+                + Event.class.getName() + " ev " + "WHERE ev.user_id = :USER_ID AND ev.start_time >= :startDay AND ev.end_time < :endDay ORDER BY ev.start_time", Event.class);
 
         query.setParameter("startDay",startDay, TemporalType.TIMESTAMP).setParameter("endDay",endDay, TemporalType.TIMESTAMP).setParameter("USER_ID", userId);
         return query.getResultList();
