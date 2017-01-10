@@ -18,6 +18,7 @@ import com.vm62.diary.frontend.client.common.messages.CommonMessages;
 import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
+import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import com.vm62.diary.frontend.client.service.EventServiceAsync;
 import com.vm62.diary.frontend.client.service.UserProfileServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
@@ -41,6 +42,7 @@ public class DiaryListActivity implements BaseActivity{
         void setSchedule(List<EventDTO> events);
         void setNewEvent(EventDTO event);
         void addChartButtonClickHandler (ClickHandler handler);
+        void addEventsButtonClickHandler (ClickHandler handler);
         void setDiaryList();
         void setChartParameters();
         void createPieCharts( Map<String,Long> unDone, Map<String,Long> done);
@@ -116,6 +118,14 @@ public class DiaryListActivity implements BaseActivity{
                     }
                 });
 
+            }
+        });
+        view.addEventsButtonClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                event.preventDefault();
+                event.stopPropagation();
+                navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
             }
         });
         view.updateSchedule(new ClickHandler() {

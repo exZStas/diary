@@ -82,6 +82,10 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     HTMLPanel unDonePanel;
     @UiField
     HTMLPanel donePanel;
+    @UiField
+    MaterialLink navEventLink;
+    @UiField
+    MaterialLink navChartLink;
 
     private NavigationManager navigationManager;
     private EventServiceAsync eventServiceAsync;
@@ -157,6 +161,12 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     @Override
     public void addChartButtonClickHandler (ClickHandler handler){
         chartLink.addClickHandler(handler);
+        navChartLink.addClickHandler(handler);
+    }
+    @Override
+    public void addEventsButtonClickHandler (ClickHandler handler) {
+        eventLink.addClickHandler(handler);
+        navEventLink.addClickHandler(handler);
     }
 
     @Override

@@ -86,10 +86,10 @@
                 <m:MaterialNavSection float="RIGHT">
                     <m:MaterialLabel ui:field="todayLabel"/>
                     <m:MaterialTooltip text="{i18n.text.events}" position="BOTTOM">
-                        <m:MaterialLink iconType="VIEW_MODULE" iconPosition="NONE"/>
+                        <m:MaterialLink ui:field="navEventLink" iconType="WHATSHOT" iconPosition="NONE"/>
                     </m:MaterialTooltip>
                     <m:MaterialTooltip text="{i18n.text.charts}" position="BOTTOM">
-                        <m:MaterialLink iconType="PIE_CHART" iconPosition="NONE"/>
+                        <m:MaterialLink ui:field="navChartLink" iconType="PIE_CHART" iconPosition="NONE"/>
                     </m:MaterialTooltip>
                     <!--<m:MaterialTooltip text="Notifications" position="BOTTOM">-->
                         <!--<m:MaterialLink activates="sideNav" iconType="NOTIFICATIONS" iconPosition="NONE"/>-->
