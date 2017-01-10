@@ -11,6 +11,7 @@ import com.vm62.diary.common.ServiceException;
 import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.common.constants.Status;
 import org.apache.commons.lang.ObjectUtils;
+import org.omg.PortableInterceptor.ACTIVE;
 
 import javax.annotation.Nullable;
 import java.util.Date;
@@ -100,6 +101,20 @@ public class EventBean {
         ifNull(endDay, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "day");
         ifNull(userId, ErrorType.CANNOT_BE_NULL_OR_EMPTY, "userId");
         return eventDAO.getEventsBetweenDaysForUser(startDay, endDay,userId);
+    }
+
+
+    public void processAddledEvents(){
+        List<Event> events = eventDAO.getEventByDoneStatus(Status.active);
+        Long currentDateInMillis = System.currentTimeMillis();
+        if(events != null && !events.isEmpty()){
+            for(Event event : events){
+                if(event.getEndTime().getTime() < currentDateInMillis){
+                    event.setDoneStatus(Status.undefined);
+                    eventDAO.updateEvent(event);
+                }
+            }
+        }
     }
 
 }

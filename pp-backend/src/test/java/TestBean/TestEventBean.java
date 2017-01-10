@@ -8,6 +8,7 @@ import com.vm62.diary.backend.core.entities.Event;
 import com.vm62.diary.backend.core.entities.User;
 import com.vm62.diary.common.constants.Category;
 import com.vm62.diary.common.constants.Gender;
+import com.vm62.diary.common.constants.Status;
 import com.vm62.diary.common.password.PasswordEncoded;
 import org.junit.Before;
 import org.junit.Test;
@@ -71,5 +72,23 @@ public class TestEventBean {
         Boolean res = eventBean.deleteEventById(id);
         //then
         assertEquals(res, true);
+    }
+
+    @Test
+    public void test_processAddledEvents(){
+        Date startDate = new Date();
+        startDate.setTime(48*60*60*1000);
+        Date endDate = new Date();
+        endDate.setTime(24*60*60*1000);
+        Event updatedEvent = new Event(1L, 1L,"someName", "some description", Category.eating,
+                startDate, endDate, false, new Date(startDate.getTime() - endDate.getTime()).getTime(), "sticker", Status.undefined);
+
+        Event event = new Event(1L, 1L,"someName", "some description", Category.eating,
+                startDate, endDate, false, new Date(startDate.getTime() - endDate.getTime()).getTime(), "sticker", Status.active);
+
+        when(eventDAO.getEventByDoneStatus(Status.active)).thenReturn(Arrays.asList(event));
+        when(eventDAO.updateEvent(event)).thenReturn(updatedEvent);
+
+        eventBean.processAddledEvents();
     }
 }

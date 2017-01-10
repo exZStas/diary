@@ -11,6 +11,7 @@
 		<class>com.vm62.diary.backend.core.entities.User</class>
 		<class>com.vm62.diary.backend.core.entities.Event</class>
 		<class>com.vm62.diary.backend.core.entities.Admin</class>
+		<class>com.vm62.diary.backend.core.entities.Category</class>
 
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>

@@ -15,6 +15,7 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.vm62.diary.frontend.client.common.events.SelectEventHandler;
+import com.vm62.diary.frontend.server.service.dto.CategoryDTO;
 import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.server.service.dto.UserDTO;
 import gwt.material.design.client.ui.MaterialButton;
@@ -33,6 +34,9 @@ public class AdminHomeView extends Composite implements AdminHomeActivity.IAdmin
     @UiField(provided = true)
     protected DataGrid<UserDTO> userTable;
 
+    @UiField(provided = true)
+    protected DataGrid<CategoryDTO> categoryTable;
+
     @UiField
     protected MaterialTextBox categoryName;
 
@@ -47,19 +51,23 @@ public class AdminHomeView extends Composite implements AdminHomeActivity.IAdmin
 
     private static final int MAX_TABLE_SIZE = 100;
     private ListDataProvider<UserDTO> userDTOListDataProvider = new ListDataProvider<UserDTO>();
+    private ListDataProvider<CategoryDTO> categoryDTOListDataProvider = new ListDataProvider<CategoryDTO>();
     private SelectEventHandler<UserDTO> userBanHandler;
     private DiaryConstants constants = GWT.create(DiaryConstants.class);
 
     @Inject
     public AdminHomeView(){
         userTable = new DataGrid<UserDTO>(MAX_TABLE_SIZE);
+        categoryTable = new DataGrid<CategoryDTO>(MAX_TABLE_SIZE);
         userTable.setStyleName("striped responsive-table");
+        categoryTable.setStyleName("striped responsive-table");
         initWidget(uiBinder.createAndBindUi(this));
         categoryName.setMaxLength(25);
         categoryColor.setMaxLength(25);
         comeBackButton.getElement().getStyle().setBackgroundColor("#ff8f00");
 
-        initTable();
+        initUsersTable();
+        initCategoryTable();
         addEventHandlers();
     }
 
@@ -76,14 +84,44 @@ public class AdminHomeView extends Composite implements AdminHomeActivity.IAdmin
         });
     }
 
-    private void initTable(){
+    private void initCategoryTable(){
+        categoryDTOListDataProvider.addDataDisplay(categoryTable);
+
+        initCategoryNameColumn();
+        initCategoryColorTable();
+    }
+
+    private void initCategoryNameColumn(){
+        TextColumn nameColumn = new TextColumn<CategoryDTO>() {
+            @Override
+            public String getValue(CategoryDTO category) {
+                return category.getName();
+            }
+        };
+        categoryTable.addColumn(nameColumn, "Category name");
+        categoryTable.setColumnWidth(nameColumn, "40%");
+    }
+
+    private void initCategoryColorTable(){
+        TextColumn colorColumn = new TextColumn<CategoryDTO>() {
+            @Override
+            public String getValue(CategoryDTO category) {
+                return category.getColor();
+            }
+        };
+
+        categoryTable.addColumn(colorColumn, "Category color");
+        categoryTable.setColumnWidth(colorColumn, "40%");
+    }
+
+    private void initUsersTable(){
         userDTOListDataProvider.addDataDisplay(userTable);
 
         initFirstNameColumn();
         initLastNameColumn();
         initGroupColumn();
-        initEmailColumn();
         initStatusColumn();
+        initEmailColumn();
     }
 
     private void initFirstNameColumn(){
@@ -156,6 +194,13 @@ public class AdminHomeView extends Composite implements AdminHomeActivity.IAdmin
         userDTOListDataProvider.getList().clear();
         userDTOListDataProvider.getList().addAll(users);
         userTable.redraw();
+    }
+
+    @Override
+    public void setCategoryTable(List<CategoryDTO> categoryTable){
+        categoryDTOListDataProvider.getList().clear();
+        categoryDTOListDataProvider.getList().addAll(categoryTable);
+        this.categoryTable.redraw();
     }
 
     @Override

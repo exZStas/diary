@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.vm62.diary.common.ServiceException;
 import com.vm62.diary.frontend.server.service.dto.AdminDTO;
+import com.vm62.diary.frontend.server.service.dto.CategoryDTO;
 import com.vm62.diary.frontend.server.service.dto.UserDTO;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface AdminServiceAsync {
     void unbanUser(Long userId, AsyncCallback<Void> async);
 
     void createCategory(String categoryName, String categoryColor, AsyncCallback<Void> async);
+
+    void getAllCategories(AsyncCallback<List<CategoryDTO>> async);
 }

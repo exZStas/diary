@@ -9,6 +9,7 @@ import com.vm62.diary.common.ServiceException;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Transactional
 public class CategoryDAO {
@@ -43,5 +44,13 @@ public class CategoryDAO {
         query.setParameter("CATEGORY_COLOR", categoryColor);
 
         return query.getSingleResult();
+    }
+
+    public List<Category> getAllCategories(){
+        EntityManager em = emProvider.get();
+
+        TypedQuery<Category> query = em.createQuery("SELECT cat FROM " + Category.class.getName() + " cat " +  "ORDER BY cat.categoryName ASC", Category.class);
+
+        return query.getResultList();
     }
 }

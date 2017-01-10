@@ -138,5 +138,4 @@ public class TestEventDAO {
         eventDAO.deleteEvent(event3);
         assertEquals(eventDAO.getEventById(id),null);
     }
-
 }

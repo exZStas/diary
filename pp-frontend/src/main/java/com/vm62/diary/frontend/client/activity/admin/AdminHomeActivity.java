@@ -20,6 +20,7 @@ import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import com.vm62.diary.frontend.client.service.AdminServiceAsync;
+import com.vm62.diary.frontend.server.service.dto.CategoryDTO;
 import com.vm62.diary.frontend.server.service.dto.UserDTO;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class AdminHomeActivity implements BaseActivity {
         String getCategoryColor();
         void addComeBackClickHandler(ClickHandler handler);
         void clearCategoryNameAndColor();
+        void setCategoryTable(List<CategoryDTO> categoryTable);
     }
 
     private IAdminHomeView view;
@@ -105,7 +107,7 @@ public class AdminHomeActivity implements BaseActivity {
                                         @Override
                                         public void onSuccess(Void result) {
                                             confirmDialog.hide();
-                                            populateTable();
+                                            populateUserTable();
                                         }
                                     });
                                 }
@@ -137,7 +139,7 @@ public class AdminHomeActivity implements BaseActivity {
                                         @Override
                                         public void onSuccess(Void result) {
                                             confirmDialog.hide();
-                                            populateTable();
+                                            populateUserTable();
                                         }
                                     });
                                 }
@@ -154,11 +156,12 @@ public class AdminHomeActivity implements BaseActivity {
                 }
             }
         });
-        populateTable();
+        populateUserTable();
+        populateCategory();
 
     }
 
-    public void populateTable(){
+    public void populateUserTable(){
         adminServiceAsync.getUsers(new AsyncCallback<List<UserDTO>>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -168,6 +171,20 @@ public class AdminHomeActivity implements BaseActivity {
             @Override
             public void onSuccess(List<UserDTO> result) {
                 view.setUserTable(result);
+            }
+        });
+    }
+
+    public void populateCategory(){
+        adminServiceAsync.getAllCategories(new AsyncCallback<List<CategoryDTO>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                notificationManager.showErrorPopupWithoutDetails(constants.errorCanNotRetrieveCategory());
+            }
+
+            @Override
+            public void onSuccess(List<CategoryDTO> result) {
+                view.setCategoryTable(result);
             }
         });
     }

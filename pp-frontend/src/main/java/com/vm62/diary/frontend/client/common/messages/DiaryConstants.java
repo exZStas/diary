@@ -297,4 +297,7 @@ public interface DiaryConstants extends Constants {
 
     @Key("error.smallEventTime")
     String errorSmallEventTime();
+
+    @Key("error.canNotRetrieveCategory")
+    String errorCanNotRetrieveCategory();
 }

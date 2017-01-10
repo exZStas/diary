@@ -1,5 +1,6 @@
 package com.vm62.diary.integration.cron;
 
+import com.vm62.diary.integration.cron.jobs.EventStatusWatcher;
 import com.vm62.diary.integration.cron.jobs.MailNotificationJob;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobDetail;
@@ -33,6 +34,17 @@ public class CronJobsConfigurator {
                     .build();
             scheduler.scheduleJob(mailNotificationJob, mailNotificationTrigger);
 
+            JobDetail eventStatusWatcher = newJob(EventStatusWatcher.class)
+                    .withIdentity("EVENT_STATUS_JOB", "EVENT_STATUS_GROUP")
+                    .build();
+            Trigger eventStatusTrigger = newTrigger()
+                    .withIdentity("EVENT_STATUS_TRIGGER", "EVENT_STATUS_GROUP")
+                    .startNow()
+                    .withSchedule(simpleSchedule()
+                            .withIntervalInMinutes(1)
+                            .repeatForever())
+                    .build();
+            scheduler.scheduleJob(eventStatusWatcher, eventStatusTrigger);
 
             log.info("Job and trigger initialize successfully.");
         } catch (Exception e) {

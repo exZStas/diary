@@ -8,6 +8,9 @@ import com.vm62.diary.common.ErrorType;
 import com.vm62.diary.common.ServiceException;
 import com.vm62.diary.common.utils.ValidationUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Transactional(rollbackOn = {ServiceException.class}, ignore = {RuntimeException.class})
 public class CategoryBean {
 
@@ -32,6 +35,20 @@ public class CategoryBean {
         ValidationUtils.ifNullOrEmpty(categoryColor, ErrorType.CANNOT_ALL_BE_NULL_OR_EMPTY, "color");
 
         return categoryDAO.getCategoryByColor(categoryColor);
+    }
 
+    public List<Category> getAllCategories(){
+        List<Category> categories = new ArrayList<>();
+
+        //add default categories
+        for (com.vm62.diary.common.constants.Category category : com.vm62.diary.common.constants.Category.values()){
+            categories.add(new Category(category.getCategory(), category.getColor()));
+        }
+
+        List<Category> categoriesFromDB = categoryDAO.getAllCategories();
+
+        categories.addAll(categoriesFromDB);
+
+        return categories;
     }
 }

@@ -24,12 +24,15 @@
             display: inline-block;
             width: 20em;
             font-weight: bold;
+            flex-wrap: wrap;
+            margin-left: 0 !important;
         }
 
         .categoryTextBox {
             width: 20em;
             margin-right: 20px;
             display: inline-block;
+            flex-wrap: wrap;
         }
 
         .grid {
@@ -49,15 +52,52 @@
         }
 
         .gridRow {
-            overflow-x: hidden;
+            flex-wrap: wrap;
+            width: 100%;
+            height: 50%;
         }
 
-        .categoryViewer {
-            margin-left: 50%;
+        .categoryContainer {
+            /*display: flex;*/
+            flex-wrap: wrap;
         }
-    </ui:style>
 
-    <m:MaterialPanel>
+        .categoryCreation {
+            /*flex-wrap: nowrap;*/
+        }
+
+        .categoryView {
+            flex-wrap: wrap;
+            width: 50%;
+            height: 50%;
+            margin-left: 60%;
+        }
+
+        .cardCategory {
+            /*flex-wrap: nowrap;*/
+            width: 80%;
+            height: 50%;
+        }
+
+        .gridCategory {
+            width: 50%;
+            height: 50%;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+
+        }
+
+        .categoryNameContainer {
+            margin-left: 0 !important;
+            display: inline-block;
+        }</ui:style>
+
+    <m:MaterialPanel addStyleNames="{style.container}">
         <m:MaterialRow>
             <m:MaterialLabel ui:field="tableName" text="{i18n.text.headerUsersTable}" addStyleNames="{style.introText}"/>
         </m:MaterialRow>
@@ -68,7 +108,7 @@
             </m:MaterialCard>
         </m:MaterialRow>
 
-        <m:MaterialRow>
+        <m:MaterialRow addStyleNames="{style.categoryNameContainer}">
             <m:MaterialLabel text="{i18n.text.createCategory}" addStyleNames="{style.introText}"/>
         </m:MaterialRow>
 
@@ -77,16 +117,20 @@
             <m:MaterialTextBox ui:field="categoryName" addStyleNames="{style.categoryTextBox}" />
         </m:MaterialRow>
 
-        <m:MaterialRow>
+
+        <m:MaterialRow addStyleNames="{style.categoryCreation}">
             <m:MaterialLabel text="{i18n.text.enterColorOfCategory}" addStyleNames="{style.categoryLabel}" />
             <m:MaterialTextBox ui:field="categoryColor" addStyleNames="{style.categoryTextBox}" />
             <m:MaterialButton ui:field="createButton" text="{i18n.text.buttonCreateCategory}" addStyleNames="{style.createButtonStyle}" />
             <m:MaterialButton ui:field="comeBackButton" text="{i18n.text.buttonBack}" addStyleNames="{style.comeBackButtonStyle}" />
         </m:MaterialRow>
 
-        <!--<m:MaterialRow addStyleNames="{style.categoryViewer}">-->
-            <!--<m:MaterialLabel text="Enter category name: " addStyleNames="{style.categoryLabel}" />-->
-        <!--</m:MaterialRow>-->
+        <m:MaterialRow addStyleNames="{style.categoryView}">
+            <m:MaterialCard addStyleNames="{style.cardCategory}">
+                <d:DataGrid ui:field="categoryTable" addStyleNames="{style.gridCategory}"/>
+            </m:MaterialCard>
+        </m:MaterialRow>
+
 
     </m:MaterialPanel>
 </ui:UiBinder>
