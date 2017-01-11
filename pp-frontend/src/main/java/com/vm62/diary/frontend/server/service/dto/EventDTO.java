@@ -90,7 +90,9 @@ public class EventDTO  implements Serializable {
     }
 
     public String getSticker() {
+        if (sticker!= null)
         return sticker;
+        else return "";
     }
 
     public void setComplexity(Boolean complexity) {

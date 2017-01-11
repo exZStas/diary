@@ -43,8 +43,8 @@ public class DiaryListActivity implements BaseActivity{
         void setNewEvent(EventDTO event);
         void addChartButtonClickHandler (ClickHandler handler);
         void addEventsButtonClickHandler (ClickHandler handler);
-        void setDiaryList();
         void setChartParameters();
+        void setDiaryListParameters();
         void createPieCharts( Map<String,Long> unDone, Map<String,Long> done);
         void setDayOfList(Date today);
         void updateSchedule(ClickHandler handler);
@@ -54,13 +54,6 @@ public class DiaryListActivity implements BaseActivity{
         String getUserGroup();
     }
 
-    @ImplementedBy(EventView.class)
-    public interface IEventView extends IsWidget {
-
-        void deleteEventFromList();
-        void setEventParameters(EventDTO event);
-
-    }
     private EventServiceAsync eventServiceAsync;
     private IDiaryListView view;
     private NotificationManager notificationManager;
@@ -78,9 +71,10 @@ public class DiaryListActivity implements BaseActivity{
         this.notificationManager = notificationManager;
         this.userProfileServiceAsync = userProfileServiceAsync;
         this.navigationManager = navigationManager;
-        this.view.setDiaryList();
+        setEventForDay();
         this.view.setDayOfList(view.getToday());
         addEventHandlers();
+
 
 
     }
@@ -125,7 +119,8 @@ public class DiaryListActivity implements BaseActivity{
             public void onClick(ClickEvent event) {
                 event.preventDefault();
                 event.stopPropagation();
-                navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
+                view.setDiaryListParameters();
+                //navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
             }
         });
         view.updateSchedule(new ClickHandler() {
@@ -140,7 +135,7 @@ public class DiaryListActivity implements BaseActivity{
                     @Override
                     public void onSuccess(Date result) {
                         notificationManager.showInfoPopup(messages.updatedTo(result));
-                        setEventForDay(result);
+                        setEventForDay();
                     }
                 });
 
@@ -151,7 +146,7 @@ public class DiaryListActivity implements BaseActivity{
             public void onClick(ClickEvent event) {
                 Date today = new Date(view.getToday().getTime() + (1000 * 60 * 60 * 24));
                 view.setDayOfList(today);
-                setEventForDay(today);
+                setEventForDay();
             }
         });
         view.buttonScrollLeftClick(new ClickHandler() {
@@ -159,16 +154,16 @@ public class DiaryListActivity implements BaseActivity{
             public void onClick(ClickEvent event) {
                 Date today = new Date(view.getToday().getTime() - (1000 * 60 * 60 * 24));
                 view.setDayOfList(today);
-                setEventForDay(today);
+                setEventForDay();
             }
         });
 
     }
-    private void setEventForDay(Date day){
+    private void setEventForDay(){
         eventServiceAsync.getEventsByDayForUser(view.getToday(), new AsyncCallback<List<EventDTO>>(){
             @Override
             public void onFailure(Throwable caught) {
-                notificationManager.showErrorPopupWithoutDetails("Events is not avalible!");
+                notificationManager.showErrorPopupWithoutDetails(constants.errorEventsAreNotAvailable());
             }
 
             @Override

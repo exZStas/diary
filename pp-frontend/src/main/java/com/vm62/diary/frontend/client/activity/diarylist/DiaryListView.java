@@ -91,7 +91,7 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     private EventServiceAsync eventServiceAsync;
 
     private List<EventView> eventViewList = new ArrayList<>();
-    private List<EventDTO> eventDTOs = new ArrayList<>();
+    //private List<EventDTO> eventDTOs = new ArrayList<>();
     private NotificationManager notificationManager;
     private DiaryConstants constants = GWT.create(DiaryConstants.class);
 
@@ -124,27 +124,10 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         btnScrollLeft.setIconType(IconType.KEYBOARD_ARROW_LEFT);
         btnScrollRight.setIconType(IconType.KEYBOARD_ARROW_RIGHT);
 
-        getEventDTOs();
+
+        //getEventDTOs();
     }
 
-
-    public void getEventDTOs(){
-        Date today = new Date();
-        today.setHours(0);
-        today.setMinutes(0);
-        today.setSeconds(0);
-
-        eventServiceAsync.getEventsByDayForUser(today, new AsyncCallback<List<EventDTO>>(){
-            @Override
-            public void onFailure(Throwable caught) {
-            }
-
-            @Override
-            public void onSuccess(List<EventDTO> result) {
-                setSchedule(result);
-            }
-        });
-    }
     @UiHandler("btnAddEvent")
     void onOpenCreateEventWindow(ClickEvent e) {
         navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_CREATE_EVENT_ACTIVITY));
@@ -170,29 +153,24 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
     }
 
     @Override
-    public void setDiaryList() {
-        scheduleList.getElement().getStyle().setProperty("height", "calc(100% - 150px)");
-        scheduleList.addStyleName("schedule-list");
-        btnScrollLeft.addStyleName("scroll-btn left");
-        btnScrollRight.addStyleName("scroll-btn right");
-        btnScrollLeft.setIconType(IconType.KEYBOARD_ARROW_LEFT);
-        btnScrollRight.setIconType(IconType.KEYBOARD_ARROW_RIGHT);
-
-        getEventDTOs();
-
-        for(EventDTO eventDTO : eventDTOs){
-            scheduleList.add(new EventView(eventDTO, navigationManager, eventServiceAsync, notificationManager ));
-        }
+    public void setDiaryListParameters() {
+        scheduleList.setVisible(true);
+        btnScrollLeft.setEnabled(true);
+        btnScrollRight.setEnabled(true);
+        container.setVisible(false);
     }
 
     @Override
     public void setChartParameters() {
         setUserName(userName);
         setUserPicture(userGender);
+        container.setVisible(true);
         container.setWidth("80%");
         container.setHeight("85%");
         container.setFloat(Style.Float.RIGHT);
-        scheduleList.removeFromParent();
+        scheduleList.setVisible(false);
+        btnScrollRight.setEnabled(false);
+        btnScrollLeft.setEnabled(false);
     }
 
     @Override

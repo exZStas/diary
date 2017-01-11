@@ -118,26 +118,6 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     }
 
-//    private EventServiceAsync eventServiceAsync;
-//    private NotificationManager notificationManager;
-//
-//    void addEventHandlers(){
-//        eventServiceAsync.create(getName(), getDescription() ,getCategory(), getStartTime(),getEndTime(),getComplexity(),getDuration(), eventStickerDescription, new AsyncCallback<EventDTO>() {
-//            @Override
-//            public void onFailure(Throwable caught) {
-//                notificationManager.showErrorPopupWithoutDetails("Event was canceled!");
-//            }
-//
-//            @Override
-//            public void onSuccess(EventDTO result) {
-//                notificationManager.showInfoPopup("Event edited!");
-//                diaryListView.setNewEvent(result);
-//                // // TODO: 26.12.2016 implement
-//            }
-//        });
-//
-//    }
-
     @UiHandler("btnCreate")
     void onCreateEvent(ClickEvent e) {
         if(!eventName.validate() || tp.getTime().isEmpty()){
@@ -258,8 +238,8 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         eventName.setText(name);
         descriptArea.setText(description);
         typeBox.setValue(category.getCategory());
-        simple.setValue(complexity);
-        //complex.setValue(!complexity);
+        if (complexity) complex.setValue(true);
+        else simple.setValue(true);
         this.startTime.setTime(startTime.getTime());
         this.endTime.setTime(endTime.getTime());
         tp.setValue(startTime);
@@ -270,8 +250,6 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         Long hours = (duration / (1000 * 60 * 60)) % 24;
         minutesTextBox.setValue(min.toString());
         hourTextBox.setValue(hours.toString());
-        //SignImageListWidget signs = new SignImageListWidget();
-        //setSignImageList(signs);
 
     }
 
