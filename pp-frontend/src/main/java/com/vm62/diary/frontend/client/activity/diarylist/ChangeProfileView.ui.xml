@@ -15,6 +15,7 @@
             width: 15%;
             margin-right: 10%;
             float: right;
+            margin-bottom: 7%;
         }
 
         .regButton {
@@ -22,6 +23,7 @@
             float: left;
             color: white !important;
             margin-left: 10%;
+            margin-bottom: 7%;
         }
 
         .gender {
@@ -85,10 +87,10 @@
         <m:MaterialRow addStyleNames="{style.rows}">
             <m:MaterialTextBox ui:field="repeatNewPassword" placeholder="{i18n.text.placeholderRepeatNewPassword}" type="PASSWORD" iconType="ENHANCED_ENCRYPTION"/>
         </m:MaterialRow>
-        <m:MaterialRow textAlign="LEFT" marginBottom="0" addStyleNames="{style.regButton}">
+        <m:MaterialRow textAlign="LEFT" addStyleNames="{style.regButton}">
             <m:MaterialButton ui:field="btnBack" text="{i18n.text.buttonBack}"/>
         </m:MaterialRow>
-        <m:MaterialRow textAlign="RIGHT" marginBottom="0" addStyleNames="{style.loginButton}">
+        <m:MaterialRow textAlign="RIGHT" addStyleNames="{style.loginButton}">
             <m:MaterialButton ui:field="btnAccept" text="{i18n.text.buttonChange}"/>
         </m:MaterialRow>
     </m:MaterialPanel>

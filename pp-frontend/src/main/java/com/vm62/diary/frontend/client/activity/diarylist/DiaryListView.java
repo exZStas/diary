@@ -165,6 +165,8 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         setUserName(userName);
         setUserPicture(userGender);
         container.setVisible(true);
+        unDonePanel.clear();
+        donePanel.clear();
         container.setWidth("80%");
         container.setHeight("85%");
         container.setFloat(Style.Float.RIGHT);
