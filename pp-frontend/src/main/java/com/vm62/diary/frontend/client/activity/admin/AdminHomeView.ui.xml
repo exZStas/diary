@@ -42,13 +42,10 @@
         }
 
         .createButtonStyle {
-            margin-bottom: -10%;
-            margin-left: -36%;
+            margin-right: 5px;
         }
 
         .comeBackButtonStyle {
-            margin-bottom: -10%;
-            margin-left: 1%;
         }
 
         .gridRow {
@@ -64,23 +61,24 @@
 
         .categoryCreation {
             /*flex-wrap: nowrap;*/
+            margin-left: 0;
         }
 
         .categoryView {
             flex-wrap: wrap;
-            width: 50%;
+            width: 100%;
             height: 50%;
-            margin-left: 60%;
+            margin-left: 0;
         }
 
         .cardCategory {
             /*flex-wrap: nowrap;*/
-            width: 80%;
-            height: 50%;
+            /*width: 80%;*/
+            /*height: 50%;*/
         }
 
         .gridCategory {
-            width: 50%;
+            /*width: 50%;*/
             height: 50%;
         }
 
@@ -95,7 +93,16 @@
         .categoryNameContainer {
             margin-left: 0 !important;
             display: inline-block;
-        }</ui:style>
+        }
+
+        .categoryCreationButtons {
+            margin-left: 0;
+        }
+
+        .categoryName {
+            margin-left: 0;
+        }
+    </ui:style>
 
     <m:MaterialPanel addStyleNames="{style.container}">
         <m:MaterialRow>
@@ -112,7 +119,7 @@
             <m:MaterialLabel text="{i18n.text.createCategory}" addStyleNames="{style.introText}"/>
         </m:MaterialRow>
 
-        <m:MaterialRow>
+        <m:MaterialRow addStyleNames="{style.categoryName}">
             <m:MaterialLabel text="{i18n.text.enterCategoryName}" addStyleNames="{style.categoryLabel}" />
             <m:MaterialTextBox ui:field="categoryName" addStyleNames="{style.categoryTextBox}" />
         </m:MaterialRow>
@@ -121,6 +128,9 @@
         <m:MaterialRow addStyleNames="{style.categoryCreation}">
             <m:MaterialLabel text="{i18n.text.enterColorOfCategory}" addStyleNames="{style.categoryLabel}" />
             <m:MaterialTextBox ui:field="categoryColor" addStyleNames="{style.categoryTextBox}" />
+        </m:MaterialRow>
+
+        <m:MaterialRow addStyleNames="{style.categoryCreationButtons}">
             <m:MaterialButton ui:field="createButton" text="{i18n.text.buttonCreateCategory}" addStyleNames="{style.createButtonStyle}" />
             <m:MaterialButton ui:field="comeBackButton" text="{i18n.text.buttonBack}" addStyleNames="{style.comeBackButtonStyle}" />
         </m:MaterialRow>

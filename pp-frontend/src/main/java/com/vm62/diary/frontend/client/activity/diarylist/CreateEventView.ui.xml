@@ -5,15 +5,12 @@
 
     <ui:style>
         .crButton {
-            width: 10%;
-            margin-right: 7%;
             float: right;
             margin-bottom: 0px;
             text-align: right;
         }
 
         .backButton {
-            width: 10%;
             float: left;
             background-color: #ff8f00 !important;
             color: white !important;
