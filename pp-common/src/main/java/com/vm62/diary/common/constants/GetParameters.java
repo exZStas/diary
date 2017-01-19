@@ -1,7 +1,7 @@
 package com.vm62.diary.common.constants;
 
 public enum GetParameters {
-    REGISTRATION_ID("registration_id")
+    REGISTRATION_ID("REGISTRATION_ID")
 
     ;
 

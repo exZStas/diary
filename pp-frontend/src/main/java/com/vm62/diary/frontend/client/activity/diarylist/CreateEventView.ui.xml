@@ -63,7 +63,7 @@
         </m:MaterialRow>
         <m:MaterialRow>
             <m:MaterialIcon addStyleNames="{style.category-icon}" iconType="SCHOOL"/>
-            <m:MaterialListBox addStyleNames="{style.category-list-box}" ui:field="typeBox" placeholder="{i18n.text.placeholderCategory}" fontSize="1.5em"/>
+            <m:MaterialListBox addStyleNames="{style.category-list-box}"  visibleItemCount="5" ui:field="typeBox" placeholder="{i18n.text.placeholderCategory}" fontSize="1.5em"/>
         </m:MaterialRow>
         <m:MaterialRow ui:field="signContainer">
         </m:MaterialRow>

@@ -1,55 +1,40 @@
 package com.vm62.diary.frontend.client.activity.diarylist;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.editor.client.Editor;
-import com.google.gwt.editor.client.EditorError;
-import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+
 import com.google.inject.Singleton;
 import com.vm62.diary.common.constants.Category;
-import com.vm62.diary.common.constants.Sticker;
 import com.vm62.diary.frontend.client.activity.HeaderTitle;
 import com.vm62.diary.frontend.client.common.components.CDialogBox;
 import com.vm62.diary.frontend.client.common.components.SignImageListWidget;
-import com.vm62.diary.frontend.client.common.components.Signs;
 
-import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
-import com.vm62.diary.frontend.client.common.events.SelectEventHandler;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
 import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
-import com.vm62.diary.frontend.client.service.EventServiceAsync;
-import com.vm62.diary.frontend.server.service.dto.EventDTO;
+import com.vm62.diary.frontend.server.service.dto.CategoryDTO;
 import gwt.material.design.addins.client.timepicker.MaterialTimePicker;
 import gwt.material.design.client.base.validator.BlankValidator;
-import gwt.material.design.client.base.validator.Validator;
 import gwt.material.design.client.constants.InputType;
 import gwt.material.design.client.ui.*;
-import gwt.material.design.client.ui.html.Option;
+
 
 
 import java.lang.*;
 import java.util.Date;
+import java.util.List;
 
-import static com.vm62.diary.common.constants.Category.education;
-import static com.vm62.diary.frontend.client.resources.CommonSignResources.RESOURCES;
-
-import com.google.gwt.user.client.ui.Image;
-
-import javax.validation.constraints.Null;
 
 /**
  * Created by Ира on 15.12.2016.
  */
-//@Singleton
+@Singleton
 public class CreateEventView extends CDialogBox implements CreateEventActivity.ICreateEventView{
     private static CreateEventViewUiBinder ourUiBinder = GWT.create(CreateEventViewUiBinder.class);
     interface CreateEventViewUiBinder extends UiBinder<MaterialRow, CreateEventView> {
@@ -69,7 +54,7 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
     protected MaterialDatePicker endDate;
     @UiField
     protected MaterialTimePicker tpEnd;
-    @UiField
+    @UiField (provided = true)
     protected MaterialListBox typeBox;
     @UiField
     MaterialRow signContainer;
@@ -91,7 +76,9 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
 
     @Inject
     public CreateEventView(NavigationManager navigationManager) {
-        this.navigationManager =navigationManager;
+        typeBox = new MaterialListBox();
+        typeBox.setVisibleItemCount(5);
+        this.navigationManager = navigationManager;
         removeLangButtons();
         setWidget(ourUiBinder.createAndBindUi(this));
         setCaptionHtml(HeaderTitle.EVENT_PANEL.getText());
@@ -104,18 +91,10 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         simple.setValue(true);
         complex.setValue(false);
 
-
-        // Возможно, правильнее так добавлять категории
-        for (String category:constants.category()) {
-            typeBox.add(new Option(category));
-        }
         endDate.addValidator(new BlankValidator<Date>("Please, provide event's start date!"));
         center();
         //addEventHandlers();
         eventName.addValidator(new BlankValidator<String>("Please, provide event's name!"));
-
-
-
     }
 
     @UiHandler("btnCreate")
@@ -176,9 +155,17 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         }
     }
 
-
     @Override
     public String getName(){ return eventName.getText();}
+
+
+    @Override
+    public void setCategories(List<CategoryDTO> categoryDTOList){
+        for(CategoryDTO categoryDTO : categoryDTOList){
+            typeBox.addItem(categoryDTO.getName());
+        }
+
+    }
 
     @Override
     public Category getCategory() {

@@ -20,11 +20,14 @@ import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
 import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
 import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
+import com.vm62.diary.frontend.client.service.AdminServiceAsync;
 import com.vm62.diary.frontend.client.service.EventService;
 import com.vm62.diary.frontend.client.service.EventServiceAsync;
+import com.vm62.diary.frontend.server.service.dto.CategoryDTO;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import gwt.material.design.client.ui.MaterialRow;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import static com.vm62.diary.frontend.client.resources.CommonSignResources.RESOURCES;
@@ -49,11 +52,13 @@ public class CreateEventActivity implements BaseActivity {
         void registerPatientHandler(SimpleEventHandler handler);
         void changeForm(String name, String description, Category category, String sticker, Boolean complexity, Date startTime,
                         Date endTime, Long duration);
+        void setCategories(List<CategoryDTO> categoryDTOList);
     }
 
 
     private ICreateEventView view;
     private EventServiceAsync eventServiceAsync;
+    private AdminServiceAsync adminServiceAsync;
     private NotificationManager notificationManager;
     private SignImageListWidget signImageListWidget;
     private DiaryListActivity.IDiaryListView diaryListView;
@@ -63,13 +68,15 @@ public class CreateEventActivity implements BaseActivity {
 
     @Inject
     CreateEventActivity(ICreateEventView view, EventServiceAsync eventServiceAsync, NotificationManager notificationManager,
-                        SignImageListWidget signImageListWidget, NavigationManager navigationManager, DiaryListActivity.IDiaryListView diaryListView) {
+                        SignImageListWidget signImageListWidget, NavigationManager navigationManager, DiaryListActivity.IDiaryListView diaryListView,
+                        AdminServiceAsync adminServiceAsync) {
 
         this.view = view;
         this.diaryListView = diaryListView;
         this.navigationManager = navigationManager;
         this.signImageListWidget = signImageListWidget;
         this.eventServiceAsync = eventServiceAsync;
+        this.adminServiceAsync = adminServiceAsync;
         this.notificationManager = notificationManager;
         this.view.setSignImageList(signImageListWidget);
         this.view.setToday(diaryListView.getToday());
@@ -77,6 +84,18 @@ public class CreateEventActivity implements BaseActivity {
     }
 
     private void addEventHandlers() {
+
+        adminServiceAsync.getAllCategories(new AsyncCallback<List<CategoryDTO>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+
+            }
+
+            @Override
+            public void onSuccess(List<CategoryDTO> categories) {
+                view.setCategories(categories);
+            }
+        });
 
         signImageListWidget.addSelectHandler(new SelectEventHandler<Signs>() {
             @Override
