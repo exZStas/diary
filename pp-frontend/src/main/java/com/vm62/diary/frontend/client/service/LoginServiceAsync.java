@@ -11,4 +11,6 @@ public interface LoginServiceAsync {
     void login(String email,String password, AsyncCallback<UserDTO> async);
 
     void registration(String firstName, String lastName, String password,String gender, String studyGroup, Date birthDay, String email, AsyncCallback<UserDTO> async);
+
+    void logOut(AsyncCallback<Void> async);
 }

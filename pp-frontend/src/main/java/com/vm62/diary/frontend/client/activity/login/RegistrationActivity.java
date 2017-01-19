@@ -88,6 +88,7 @@ public class RegistrationActivity implements BaseActivity {
                             @Override
                             public void onSuccess(UserDTO result) {
                                 notificationManager.showInfoPopup(constants.successRegistrationSuccessful());
+                                navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_MAIN));
                             }
                         });
             }

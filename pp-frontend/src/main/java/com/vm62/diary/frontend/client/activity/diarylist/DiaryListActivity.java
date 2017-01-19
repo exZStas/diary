@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -20,6 +21,7 @@ import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
 import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import com.vm62.diary.frontend.client.service.EventServiceAsync;
+import com.vm62.diary.frontend.client.service.LoginServiceAsync;
 import com.vm62.diary.frontend.client.service.UserProfileServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.EventDTO;
 import com.vm62.diary.frontend.server.service.dto.UserDTO;
@@ -50,6 +52,7 @@ public class DiaryListActivity implements BaseActivity{
         void updateSchedule(ClickHandler handler);
         void buttonScrollRightClick(ClickHandler handler);
         void buttonScrollLeftClick(ClickHandler handler);
+        void onClickLogOutBtn(ClickHandler handler);
         Date getToday();
         String getUserGroup();
     }
@@ -62,15 +65,17 @@ public class DiaryListActivity implements BaseActivity{
     private NavigationManager navigationManager;
     private DiaryConstants constants = GWT.create(DiaryConstants.class);
     private CommonMessages messages = GWT.create(CommonMessages.class);
+    private LoginServiceAsync loginServiceAsync;
 
     @Inject
-    DiaryListActivity(IDiaryListView view, NotificationManager notificationManager, NavigationManager navigationManager, EventServiceAsync eventServiceAsync, UserProfileServiceAsync userProfileServiceAsync){
+    DiaryListActivity(IDiaryListView view, NotificationManager notificationManager, NavigationManager navigationManager, EventServiceAsync eventServiceAsync, UserProfileServiceAsync userProfileServiceAsync, LoginServiceAsync loginServiceAsync){
 
         this.view = view;
         this.eventServiceAsync = eventServiceAsync;
         this.notificationManager = notificationManager;
         this.userProfileServiceAsync = userProfileServiceAsync;
         this.navigationManager = navigationManager;
+        this.loginServiceAsync = loginServiceAsync;
         setEventForDay();
         this.view.setDayOfList(view.getToday());
         addEventHandlers();
@@ -155,6 +160,22 @@ public class DiaryListActivity implements BaseActivity{
                 Date today = new Date(view.getToday().getTime() - (1000 * 60 * 60 * 24));
                 view.setDayOfList(today);
                 setEventForDay();
+            }
+        });
+        view.onClickLogOutBtn(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                loginServiceAsync.logOut(new AsyncCallback<Void>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        notificationManager.showErrorPopupWithoutDetails("Connection failed - please retry.");
+                    }
+
+                    @Override
+                    public void onSuccess(Void result) {
+                        Window.Location.assign("/");
+                    }
+                });
             }
         });
 

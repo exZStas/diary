@@ -114,4 +114,8 @@ public class LoginModule {
         return userDAO.isUserEmailExists(email);
     }
 
+    public void logOut() throws ServiceException{
+        userSessionHelper.invalidateUserSession();
+    }
+
 }

@@ -238,8 +238,10 @@ public class CreateEventView extends CDialogBox implements CreateEventActivity.I
         eventName.setText(name);
         descriptArea.setText(description);
         typeBox.setValue(category.getCategory());
-        if (complexity) complex.setValue(true);
-        else simple.setValue(true);
+        if (complexity) {
+            simple.setValue(false);
+            complex.setValue(true);}
+        //else simple.setValue(true);
         this.startTime.setTime(startTime.getTime());
         this.endTime.setTime(endTime.getTime());
         tp.setValue(startTime);

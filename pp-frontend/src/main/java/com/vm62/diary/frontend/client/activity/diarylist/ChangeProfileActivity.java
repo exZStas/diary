@@ -18,7 +18,9 @@ import com.vm62.diary.frontend.client.common.BaseActivity;
 import com.vm62.diary.frontend.client.common.dialogs.NotificationManager;
 import com.vm62.diary.frontend.client.common.events.SimpleEventHandler;
 import com.vm62.diary.frontend.client.common.messages.DiaryConstants;
+import com.vm62.diary.frontend.client.common.navigation.NavigationManager;
 import com.vm62.diary.frontend.client.common.navigation.NavigationPlace;
+import com.vm62.diary.frontend.client.common.navigation.NavigationUrl;
 import com.vm62.diary.frontend.client.service.UserProfileServiceAsync;
 import com.vm62.diary.frontend.server.service.dto.UserDTO;
 
@@ -64,14 +66,16 @@ public class ChangeProfileActivity implements BaseActivity {
     private UserProfileServiceAsync userProfileServiceAsync;
     private DiaryConstants constants = GWT.create(DiaryConstants.class);
     private DiaryListActivity.IDiaryListView diaryListView;
+    private NavigationManager navigationManager;
 
     @Inject
-    ChangeProfileActivity(IChangeProfileView view, NotificationManager notificationManager,
+    ChangeProfileActivity(IChangeProfileView view, NotificationManager notificationManager, NavigationManager navigationManager,
                           UserProfileServiceAsync userProfileServiceAsync,DiaryListActivity.IDiaryListView diaryListView){
         this.view = view;
         this.diaryListView = diaryListView;
         this.notificationManager = notificationManager;
         this.userProfileServiceAsync = userProfileServiceAsync;
+        this.navigationManager = navigationManager;
         addEventHandler();
         addEventHandlers();
     }
@@ -94,6 +98,7 @@ public class ChangeProfileActivity implements BaseActivity {
                                 diaryListView.setUserName(result.getFirstName()+result.getLastName());
                                 diaryListView.setUserPicture(Gender.valueOf(result.getGender()));
                                 diaryListView.setUserGroup(result.getStudyGroup());
+                                navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_DIARY_ACTIVITY));
                             }
                         });
             }

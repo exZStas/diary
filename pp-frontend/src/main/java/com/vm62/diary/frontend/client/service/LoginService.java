@@ -15,4 +15,6 @@ public interface LoginService extends RemoteService {
 
     UserDTO registration (String firstName, String lastName, String password,String gender, String studyGroup, Date birthDay, String email) throws ServiceException;
 
+    void logOut() throws ServiceException;
+
 }

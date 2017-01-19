@@ -32,4 +32,10 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
         return new UserDTOAssembler().mapEntityToDTO(user);
     }
+
+    @Override
+    public void logOut() throws ServiceException {
+        loginModule.logOut();
+
+    }
 }

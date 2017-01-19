@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.*;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
@@ -266,9 +267,12 @@ public class DiaryListView extends Composite implements DiaryListActivity.IDiary
         return dataTable;
 
     }
-    @UiHandler("logOutBtn")
-    void onClickLogOutBtn(ClickEvent e){
-        navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_MAIN));
+    @Override
+    public void onClickLogOutBtn(ClickHandler handler){
+
+        logOutBtn.addClickHandler(handler);
+        //navigationManager.navigate(new NavigationPlace(NavigationUrl.URL_MAIN));
+        //Window.Location.reload();
     }
 
     @UiHandler("btnScrollLeft")
